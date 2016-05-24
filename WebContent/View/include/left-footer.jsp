@@ -1,7 +1,8 @@
+<%@ page pageEncoding="utf-8" %>
 	<!-- ---------- -->
 				<div class="col-sm-12 col-xs-12 center-left-td">
 				<div class="title-left">Tuyển Dụng</div>
-				<img src="../Image/tuyendung.png">
+				<img src="<%=request.getContextPath()%>/View/Image/tuyendung.png">
 					
 				</div>
 
@@ -18,7 +19,7 @@
 				<!-- --------------- -->
 					<div class="col-sm-12 col-xs-12 center-left-bd">
 						<div class="title-left">Bản Đồ</div>
-						<a href="#"><img src="../Image/bando.png"></a>
+						<a href="#"><img src="<%=request.getContextPath()%>/View/Image/bando.png"></a>
 
 					</div>
 
@@ -35,9 +36,4 @@
 
 
 
-	 				
-	 			</div>
-
-	 		</div> <!-- kết thúc  main-center-left được khai báo trong left-header -->
 	 		
-	 		<div class="col-sm-9 col-xs-12 main-center-right"> <!-- bắt đầu phần center,được đóng ở file slider.jsp -->

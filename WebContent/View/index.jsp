@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,53 +11,43 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
-	
-       	<link rel="stylesheet" href="../CSS/CssTc.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+       	<link rel="stylesheet" href="<%=request.getContextPath()%>/View/CSS/CssTc.css">
+       	<script src="<%=request.getContextPath()%>/View/JS/myjs.js"></script>
 </head>
 <body>
 
 <div class="container contai-main">
 
+<%@ include file="include/header.jsp" %>
+<%@ include file="include/slider.jsp" %>
 
+<!-- -----main center----- -->
+<div class="row">
+<div class="col-sm-12 dol-xs-12 contai-main-center">
+<div class="col-sm-3 col-xs-12 main-center-left">
+<!-- ---- -->
+<div class="col-sm-12 col-xs-12 center-left-one">
+
+<%@ include file="include/left-header.jsp" %>					
+<%@ include file="include/left-footer.jsp" %>	
+	
+ </div>
+</div> <!-- kết thúc  main-center-left được khai báo trong left-header -->
+<div class="col-sm-9 col-xs-12 main-center-right"> <!-- bắt đầu phần center -->
+
+<%@ include file="include/center.jsp" %>
+
+</div> <!-- đóng phần main-center-right -->
+</div> <!-- đóng phần contai-main-center --> 
+</div> <!-- đóng phân row center -->
+ <!-- -----end maincenter----- -->
+ 
+<%@ include file="include/slider-footer.jsp" %>
+<%@ include file="include/footer.jsp" %>
 
 
 </div>
 
 </body>
 </html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-
- $(".I").click(function(){
-
- 	var child=$(this).parents("li").find("ul");
- 	// check in tag ul have exist ul child?
- 	if($(this).parents("li").find("ul").length!=0){
-        if(child.is(':visible'))
-        {
-
-        	child.slideUp();
-        	$(this).parents("li").removeClass('li-menu-show')
-        }
-        else{
-        	child.slideDown();
-        	$(this).parents("li").addClass('li-menu-show');
-        	
-        }
-    }
-    });
-
- $(".menu-hide").click(function() {
- 	$(this).show('slow/400/fast', function() {
- 		
- 	});
- });
-
-
-
-   
-    
-});
-</script>

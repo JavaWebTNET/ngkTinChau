@@ -1,11 +1,5 @@
- <!-- -----main center----- -->
-	 <div class="row">
-
-	 	<div class="col-sm-12 dol-xs-12 contai-main-center">
-	 		<div class="col-sm-3 col-xs-12 main-center-left">
-	 			<!-- ---- -->
-
-	 			<div class="col-sm-12 col-xs-12 center-left-one">
+<%@ page pageEncoding="utf-8" %>
+ 
 
 	 			<!-- menu one -->
 	 				<div class="col-sm-12 col-xs-12 menu-left-one-child">

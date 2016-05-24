@@ -1,7 +1,5 @@
-	</div> <!-- đóng phần main-center-right được khai báo ở trang left-header -->
-	 	</div> <!-- đóng phần contai-main-center được khai báo ở trang left-footer --> 
-	 	</div> <!-- đóng phân row center -->
-	 		 <!-- -----end maincenter----- -->
+	<%@ page pageEncoding="utf-8" %>
+	
 
 	<!-- phần slider footer -->
 	 <div class="row">
@@ -25,69 +23,69 @@
 
             <div class="col-sm-12 col-xs-12 carousel-inner contai-slider-sp-img" role="listbox">
               <div class="col-sm-12 col-xs-12  item active ">
-                <a href="#"><img  src="../Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-               <a href="#"> <img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+               <a href="#"> <img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                 <a href="#"><img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-             <a href="#"> <img  src="../Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                 <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+             <a href="#"> <img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                <a href="#"> <img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+                <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
               </div>
 
 
 
               <div class="col-sm-12 col-xs-12  item">
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                 <a href="#"><img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-              <a href="#"><img  src="../Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                 <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+              <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                <a href="#"> <img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+                <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
               </div>
 
 
                <div class="col-sm-12 col-xs-12  item">
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                 <a href="#"><img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-              <a href="#"><img  src="../Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
+                 <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+              <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>
               
 
               
-                <a href="#"><img  src="../Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
+                <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>
               
             
              
-                <a href="#"> <img src="../Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+                <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
               </div>
 
 

@@ -1,10 +1,12 @@
-<div class="row">
+<%@ page pageEncoding="utf-8" %>
+<!-- baner -->
+	<div class="row">
 
 		<div class="col-sm-12 col-xs-12 contai-baner">
-		<img src="../Image/anhnenbaner.png" class="img-responsive">
+		<img src="<%=request.getContextPath()%>/View/Image/anhnenbaner.png" class="img-responsive">
 
 		<div class="col-sm-2 col-xs-2 contai-baner-logo">
-			<img src="../Image/logo.png">
+			<img src="<%=request.getContextPath()%>/View/Image/logo.png">
 
 		</div>
 
@@ -16,7 +18,6 @@
 
 		</div>
 	</div>
-	
 	<!-- end baner -->
 
 	<!--menu-->
@@ -53,3 +54,4 @@
 
 	</div>
 	</div>
+	<!-- end baner -->

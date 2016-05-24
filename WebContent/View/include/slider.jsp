@@ -1,3 +1,4 @@
+<%@ page pageEncoding="utf-8" %>
 <!----- wordrun------>
 	<div class="row">
 	<div class="col-sm-12 col-xs-12 contai-wordrun">
@@ -27,15 +28,15 @@
 
 			      <div class="carousel-inner contai-slider-img" role="listbox">
 				      <div class="item active">
-				        <img src="../Image/slider1.jpg" alt="Chania">
+				        <img src="<%=request.getContextPath()%>/View/Image/slider1.jpg" alt="Chania">
 				      </div>
 
 				      <div class="item">
-				        <img src="../Image/slider2.jpg" alt="Chania">
+				        <img src="<%=request.getContextPath()%>/View/Image/slider2.jpg" alt="Chania">
 				      </div>
 				    
 				      <div class="item">
-				        <img src="../Image/slider3.jpg" alt="Flower">
+				        <img src="<%=request.getContextPath()%>/View/Image/slider3.jpg" alt="Flower">
 				      </div>
 
 				      
