@@ -16,18 +16,8 @@ public class BaseDAO {
 		 
 	 }
 	 
-	 public ResultSet get(PreparedStatement pre) {
-	        try {
-	            return pre.executeQuery();
-	                   
-	            }catch(SQLException ex){			
-	    			System.out.println("SQLException: " + ex.getMessage());			    
-	    		    System.out.println(ConnectDB.class.getName()); 
-	    		    ex.printStackTrace();
-	    		        
-	    		}
-	         
-	        
-	        return null;
+	 public ResultSet selectBase(PreparedStatement pre) throws SQLException {	      
+	            return pre.executeQuery();	                   
+	          
 	    }
 }

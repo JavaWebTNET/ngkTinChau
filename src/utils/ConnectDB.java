@@ -31,6 +31,7 @@ public class ConnectDB {
 	
 		
 		Connection con=DriverManager.getConnection(url,username,pass);
+	
 		return con;
 		}
 		catch(SQLException ex){			

@@ -1,3 +1,9 @@
+<%@page import="dao.DanhMucDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collection"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="models.DanhMuc"%>
+<%@page import="java.util.Vector"%>
 <%@page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,6 +24,98 @@
 <body>
 
 <div class="container contai-main">
+<% HashMap<Integer, ArrayList<DanhMuc>> hmAllDM=(HashMap<Integer, ArrayList<DanhMuc>>)request.getAttribute("danhmuc");
+if(hmAllDM.size()>0){
+	%>
+	<ul>
+	<%
+ for(DanhMuc itemlv0:hmAllDM.get(0)){
+	%>
+	<li><a href="<%= itemlv0.getLink() %>>"><%= itemlv0.getTitle() %></a>
+	 <% if(hmAllDM.containsKey(itemlv0.getId())){
+		 %>
+			<ul>
+			<%
+		for(DanhMuc itemlv1:hmAllDM.get(itemlv0.getId())){
+	 %>
+		<li><a style="color: red" href="<%= itemlv1.getLink()%>"><%= itemlv1.getTitle()%></a>
+	
+		</li>	
+
+	<%}
+		%>
+		</ul>
+		<%	
+	}%>
+	</li>
+	
+<%	 
+ }	
+	%>
+	</ul>
+	<%
+}
+ %>
+<%-- if(arrAllDM.size()>0){
+ArrayList<DanhMuc> arrParents=arrAllDM.get(0);
+arrAllDM.remove(0);
+for(DanhMuc itemParents:arrParents){
+%>
+	<ul><li><a href="<%= itemParents.getLink()%>"><%= itemParents.getTitle() %></a>
+	<% if(arrAllDM.get(itemParents.getId())!=null){
+		ArrayList<DanhMuc> arrlv1=arrAllDM.get(itemParents.getId());
+		arrAllDM.remove(itemParents.getId());
+		%>
+		<ul>
+		<%
+		for(DanhMuc itemlv1:arrlv1){
+		%>	
+			<li><a href="<%= itemlv1.getLink()%>"><%= itemlv1.getTitle() %></a>
+			<% if(arrAllDM.get(itemParents.getId())!=null){
+				ArrayList<DanhMuc> arrlv2=arrAllDM.get(itemParents.getId());
+				arrAllDM.remove(itemParents.getId());
+				%>
+					<ul>
+					<%
+					for(DanhMuc itemlv2:arrlv2){
+					%>
+						<li><a href="<%= itemlv2.getLink()%>"> <%= itemlv2.getTitle() %> </a></li>
+					
+				
+					<%
+						}
+					%>
+					</ul>
+				<%
+				 } 
+				%>
+				
+				
+			</li>
+		<%
+		}
+		%>
+		</ul>
+		<%
+	 } 
+	%>
+		
+	</li>
+	
+	
+	
+	
+	</UL>
+	
+	
+<%
+	}
+} --%>
+
+<%-- <% Vector<DanhMuc> vtdm=(Vector<DanhMuc>)request.getAttribute("danhmuc"); 
+for(DanhMuc item:vtdm){ %>
+<%= item.getTitle() %>
+<%} %> --%>
 
 <%@ include file="include/header.jsp" %>
 <%@ include file="include/slider.jsp" %>
@@ -31,7 +129,7 @@
 
 <%@ include file="include/left-header.jsp" %>					
 <%@ include file="include/left-footer.jsp" %>	
-	
+
  </div>
 </div> <!-- kết thúc  main-center-left được khai báo trong left-header -->
 <div class="col-sm-9 col-xs-12 main-center-right"> <!-- bắt đầu phần center -->
