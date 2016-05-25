@@ -87,6 +87,7 @@ public class HomeController extends HttpServlet {
 		doGet(request, response);
 		DanhMucDAO dmDAO=new DanhMucDAO();
 		DanhMuc dm = dmDAO.KiemTra(request);
+		dm.getId();
 	}
 
 }
