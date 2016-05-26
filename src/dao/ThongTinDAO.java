@@ -5,28 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 import utils.ConnectDB;
 import models.ThongTin;;
 
-
 public class ThongTinDAO {
 	private PreparedStatement pre;
-	 private Connection connection;
+	private Connection connection;
 	private ResultSet rs;
 	
-	public ThongTinDAO(){		
+	public ThongTinDAO() {		
 			
 	}
 	
-	public ThongTin AllThongTin(){
-		
+	public ThongTin AllThongTin() {	
 		try {
 			connection=ConnectDB.ConnectData();	
 			String sql="select id_tt,type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run from thongtin";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
-			if(rs.next()){
+			if(rs.next()) {
 				ThongTin thongtin=new ThongTin();
 				thongtin.setId_tt(rs.getInt("id_tt"));
 				thongtin.setType_company(rs.getString("type_company"));
@@ -40,94 +37,92 @@ public class ThongTinDAO {
 				thongtin.setWord_run(rs.getString("word_run"));
 				return thongtin;			
 			}
-		}catch(SQLException ex){			
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(ThongTinDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-		finally{			
+		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);				
 		}	
 		
-		return null;
-		
-		
+		return null;	
 	}
 	
-	public boolean EditThongTin(ThongTin thongtin){
-		try{
-		connection=ConnectDB.ConnectData();	
-		String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=? where id_tt=?";
-		pre=connection.prepareStatement(sql);
-		
-		pre.setString(1,thongtin.getName_company());
-		pre.setString(2,thongtin.getType_company());
-		pre.setString(3,thongtin.getAdd_company());
-		pre.setString(4,thongtin.getTel());
-		pre.setString(5,thongtin.getFax());
-		pre.setString(6,thongtin.getEmail());
-		pre.setString(7,thongtin.getHotline());
-		pre.setString(8,thongtin.getSlogan());
-		pre.setString(9,thongtin.getWord_run());
-		pre.setInt(10,thongtin.getId_tt());
-		return executeUpdateDM(pre);		
-		
-		}catch(SQLException ex){			
-			System.out.println("SQLException: " + ex.getMessage());			    
-		    System.out.println(ThongTinDAO.class.getName()); 
-		    ex.printStackTrace();	    		        
-		} 
-	
-		finally{			
-			ConnectDB.closeConnection(connection,pre, rs);				
-		}	
-	return false;
-	
-}
-	/*thêm thông tin*/
-	public boolean AddThongTin(ThongTin thongtin){
-		try{
+	public boolean EditThongTin(ThongTin thongtin) {
+		try {
 			connection=ConnectDB.ConnectData();	
-		String sql="insert into thongtin(type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run) "
-				+ "values(?,?,?,?,?,?,?,?,?)";
-		pre=connection.prepareStatement(sql);
-		pre.setString(1,thongtin.getType_company());
-		pre.setString(2,thongtin.getName_company());
-		pre.setString(3,thongtin.getAdd_company());
-		pre.setString(4,thongtin.getTel());
-		pre.setString(5,thongtin.getFax());
-		pre.setString(6,thongtin.getEmail());
-		pre.setString(7,thongtin.getHotline());
-		pre.setString(8,thongtin.getSlogan());
-		pre.setString(9,thongtin.getWord_run());		
-		return executeUpdateDM(pre);		
+			String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=? where id_tt=?";
+			pre=connection.prepareStatement(sql);
+			
+			pre.setString(1,thongtin.getName_company());
+			pre.setString(2,thongtin.getType_company());
+			pre.setString(3,thongtin.getAdd_company());
+			pre.setString(4,thongtin.getTel());
+			pre.setString(5,thongtin.getFax());
+			pre.setString(6,thongtin.getEmail());
+			pre.setString(7,thongtin.getHotline());
+			pre.setString(8,thongtin.getSlogan());
+			pre.setString(9,thongtin.getWord_run());
+			pre.setInt(10,thongtin.getId_tt());
+			return executeUpdateDM(pre);		
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(ThongTinDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 	
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);				
+		}
 		
-		}catch(SQLException ex){			
+		return false;	
+	}
+	
+	/*thêm thông tin*/
+	public boolean AddThongTin(ThongTin thongtin) {
+		try {
+			connection=ConnectDB.ConnectData();	
+			String sql="insert into thongtin(type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run) "
+					+ "values(?,?,?,?,?,?,?,?,?)";
+			pre=connection.prepareStatement(sql);
+			pre.setString(1,thongtin.getType_company());
+			pre.setString(2,thongtin.getName_company());
+			pre.setString(3,thongtin.getAdd_company());
+			pre.setString(4,thongtin.getTel());
+			pre.setString(5,thongtin.getFax());
+			pre.setString(6,thongtin.getEmail());
+			pre.setString(7,thongtin.getHotline());
+			pre.setString(8,thongtin.getSlogan());
+			pre.setString(9,thongtin.getWord_run());		
+			return executeUpdateDM(pre);		
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(ThongTinDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-	
-		finally{			
+		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);				
 		}	
-		return false;
 		
+		return false;	
 	}
 	
 	/*hàm xử lý các executeUpdate()*/
-	 private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-	        if (pre != null) {	         
-	                int numRow = pre.executeUpdate();
-	                if (numRow>0) {                  
-	                   return true;
-	                }	            
-	                return false;
-	        }
-	        return false;
-	    }
+	private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
+        if(pre != null) {	         
+            int numRow = pre.executeUpdate();
+            if(numRow>0) {                  
+               return true;
+            }	            
+            return false;
+        }
+        return false;
+    }
 	
-	public static void main(String[] a){
+	public static void main(String[] a) {
 		ThongTinDAO ttDAO=new ThongTinDAO();
 		ThongTin tt=new ThongTin();
 		tt.setId_tt(4);
@@ -151,5 +146,4 @@ public class ThongTinDAO {
 		
 		System.out.println("gia tri duoc in ra la"+sua);
 	}
-
 }

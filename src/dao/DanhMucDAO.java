@@ -11,23 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import models.DanhMuc;
 import utils.ConnectDB;
 
-
-public class DanhMucDAO{
+public class DanhMucDAO {
 	private PreparedStatement pre;
-	 private Connection connection;
+	private Connection connection;
 	private ResultSet rs;
 	
-	public DanhMucDAO(){
+	public DanhMucDAO() {
 		connection=ConnectDB.ConnectData();		 
 	}	
+	
 	/*Lấy tất cả các danh mục trong db*/
-	public Vector<DanhMuc> AllDanhMuc(){
+	public Vector<DanhMuc> AllDanhMuc() {
 		Vector<DanhMuc> danhmucvt=new Vector<DanhMuc>();
 		try {
 			String sql="select id_dm,title,link,super_id from danhmuc order by super_id";
 			pre=connection.prepareStatement(sql);
-			 rs=pre.executeQuery();
-			while(rs.next()){
+			rs=pre.executeQuery();
+			while(rs.next()) {
 				DanhMuc dam=new DanhMuc();
 				dam.setId(rs.getInt("id_dm"));
 				dam.setLink(rs.getString("link"));
@@ -36,54 +36,49 @@ public class DanhMucDAO{
 				danhmucvt.add(dam);				
 			}
 			return danhmucvt;
-		}catch(SQLException ex){			
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(DanhMucDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-		finally{			
-			ConnectDB.closeConnection(connection,pre, rs);		
-			
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
 		}	
 		
-		return null;
-		
+		return null;	
 	}
+	
 	/*Lấy dnh muc theo id*/
-	public DanhMuc DanhMuc_ID(int id_dm){
-		
+	public DanhMuc DanhMuc_ID(int id_dm) {	
 		try {
 			String sql="select id_dm,title,link,super_id from danhmuc where id_dm=?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1,id_dm);
 			DanhMuc dam=new DanhMuc();
 			rs=pre.executeQuery();
-			if(rs.next()){				
+			if(rs.next()) {				
 				dam.setId(rs.getInt("id_dm"));
 				dam.setLink(rs.getString("link"));
 				dam.setTitle(rs.getString("title"));
 				dam.setSuper_id(rs.getInt("super_id"));
 				return dam;			
-			}
-			
-		}catch(SQLException ex){			
+			}		
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(DanhMucDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-		finally{			
-			ConnectDB.closeConnection(connection,pre, rs);		
-			
-		}	
-		return null;
-	
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);				
+		}
 		
+		return null;		
 	}
-	
-	
+
 	/*Thêm một danh mục mới, tham số truyền vào là DanhMuc*/
-	public boolean AddDanhMuc(DanhMuc dam){
-		
+	public boolean AddDanhMuc(DanhMuc dam) {	
 		try {
 			String sql="insert into danhmuc(link,title,super_id) values(?,?,?)";		
 			pre=connection.prepareStatement(sql);
@@ -91,12 +86,13 @@ public class DanhMucDAO{
 			pre.setString(2,dam.getTitle());
 			pre.setInt(3,dam.getSuper_id());			
 			return executeUpdateDM(pre);			
-		}catch(SQLException ex){			
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(DanhMucDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-		finally{			
+		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);			
 		}	
 		
@@ -104,26 +100,26 @@ public class DanhMucDAO{
 	}
 	
 	/*hàm xóa một danh mục theo id*/
-	public boolean DelDanhMuc(int id){
-		try{
-		String sql="delete from danhmuc where id_dm=?";
-		pre=connection.prepareStatement(sql);
-		pre.setInt(1,id);
-		return executeUpdateDM(pre);
-		}catch(SQLException ex){			
+	public boolean DelDanhMuc(int id) {
+		try {
+			String sql="delete from danhmuc where id_dm=?";
+			pre=connection.prepareStatement(sql);
+			pre.setInt(1,id);
+			return executeUpdateDM(pre);
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(DanhMucDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
-		finally{			
+		finally {			
 			ConnectDB.closeConnection(connection,pre,rs);			
 		}	
 		return false;
 	}
 	
 	/*Hàm sửa DanhMuc theo id,đối số truyền vào la object*/
-	public boolean editDanhMuc(DanhMuc dam){
-	
+	public boolean editDanhMuc(DanhMuc dam) {
 		try {
 			String sql="update DanhMuc set link=?,title=?,super_id=? where id_dm=?";
 			pre=connection.prepareStatement(sql);
@@ -132,32 +128,29 @@ public class DanhMucDAO{
 			pre.setInt(3,dam.getSuper_id());
 			pre.setInt(4,dam.getId());
 			return executeUpdateDM(pre);
-			}catch(SQLException ex){			
-				System.out.println("SQLException: " + ex.getMessage());			    
-			    System.out.println(DanhMucDAO.class.getName()); 
-			    ex.printStackTrace();	    		        
-			} 
-			finally{			
-				ConnectDB.closeConnection(connection,pre,rs);			
-			}	
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DanhMucDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre,rs);			
+		}	
 			
 		return false;
 	}
 	
-	
-	
-	
-	
 	/*hàm xử lý các executeUpdate()*/
-	 private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-	        if (pre != null) {	         
-	                int numRow = pre.executeUpdate();
-	                if (numRow>0) {                  
-	                   return true;
-	                }	            
-	                return false;
-	        }
-	        return false;
+	private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
+        if (pre != null) {	         
+            int numRow = pre.executeUpdate();
+            if (numRow>0) {                  
+               return true;
+            }	            
+            return false;
+        }
+        return false;
 	}
 	 
 	public DanhMuc KiemTra(HttpServletRequest request) {
@@ -166,7 +159,7 @@ public class DanhMucDAO{
 		return null;
 	}
 	
-	/*public static void main(String[] a){
+	/*public static void main(String[] a) {
 		DanhMucDAO dmdao=new DanhMucDAO();
 		DanhMuc dam=new DanhMuc();
 		dam.setLink("javascript:void(0");
