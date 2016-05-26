@@ -1,3 +1,7 @@
+<%@page import="models.ThongTin" %>
+<% ThongTin thongtin=(ThongTin) request.getAttribute("thongtin"); %>
+
+
 <%@ page pageEncoding="utf-8" %>
 <!-- baner -->
 	<div class="row">
@@ -11,9 +15,9 @@
 		</div>
 
 		<div class="col-sm-10 col-xs-10 contai-baner-namecompany">
-			<p class="namecompany-line1">CÔNG TY CỔ PHẦN SẢN XUẤT VÀ THƯƠNG MẠI</p>
-			<p class="namecompany-line2">TÍN CHÂU</p>
-			<p class="namecompany-line3">Bền vững cánh cửa ngôi nhà</p>
+			<p class="namecompany-line1"><%= thongtin.getType_company()%></p>
+			<p class="namecompany-line2"><%= thongtin.getName_company() %></p>
+			<p class="namecompany-line3"><%= thongtin.getSlogan() %></p>
 		</div>
 
 		</div>

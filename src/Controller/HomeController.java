@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.DanhMucDAO;
+import dao.ThongTinDAO;
 import models.DanhMuc;
+import models.ThongTin;
 
 /**
  * Servlet implementation class HomeController
@@ -34,6 +36,8 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		/*lay danh muc*/
 		DanhMucDAO dmDAO=new DanhMucDAO();
 		HashMap<Integer,ArrayList<DanhMuc>> hmAllDM=new HashMap<Integer,ArrayList<DanhMuc>>();		
 		
@@ -56,25 +60,12 @@ public class HomeController extends HttpServlet {
 			
 			
 		}
-		/*ArrayList<DanhMuc> arrDMItem;
-		if(vtdm.size()>0){
-		for(DanhMuc item:vtdm){
-	
-			
-				arrDMItem = arrAllDM.get(item.getSuper_id());
-				if(arrDMItem == null) {
-					arrDMItem = new ArrayList<DanhMuc>();
-					arrAllDM.put(item.getSuper_id(), arrDMItem);
-				}
-				arrDMItem.add(item);
-				
-
-	
-			
-			
-		}
-		}*/
+		
+		ThongTinDAO thongtinDAO=new ThongTinDAO();
+		ThongTin    thongtin=thongtinDAO.AllThongTin();
+		
 		request.setAttribute("danhmuc", hmAllDM);
+		request.setAttribute("thongtin", thongtin);
 		RequestDispatcher rq=request.getRequestDispatcher("/View/index.jsp");
 		rq.forward(request, response);
 	}
@@ -87,6 +78,7 @@ public class HomeController extends HttpServlet {
 		doGet(request, response);
 		DanhMucDAO dmDAO=new DanhMucDAO();
 		DanhMuc dm = dmDAO.KiemTra(request);
+		dm.getId();
 	}
 
 }

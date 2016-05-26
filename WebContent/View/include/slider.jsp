@@ -1,10 +1,13 @@
+<%@page import="models.ThongTin" %>
+<% ThongTin thongtinslider=(ThongTin) request.getAttribute("thongtin"); %>
 <%@ page pageEncoding="utf-8" %>
+
 <!----- wordrun------>
 	<div class="row">
 	<div class="col-sm-12 col-xs-12 contai-wordrun">
 
 	 <marquee loop="-1" >
-            <center>Công ty cổ phần sản xuất và thương mại Tín Châu - Chuyên sản xuất - tư vấn thiết kế - lắp đặt nhôm kính....!</center>
+            <center><%= thongtinslider.getWord_run() %></center>
     </marquee>
 
 

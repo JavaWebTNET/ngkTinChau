@@ -1,3 +1,5 @@
+<%@page import="models.ThongTin" %>
+<% ThongTin thongtinfooter=(ThongTin) request.getAttribute("thongtin"); %>
 <%@ page pageEncoding="utf-8" %>
 <!-- beging footer -->
 <div class="row">
@@ -5,7 +7,7 @@
 				<img src="<%=request.getContextPath()%>/View/Image/anhnenbaner.png">
 				<div class="contai-p">
 				<p>
-				<span class="footer-name-company">CÔNG TY CỔ PHẦN SẢN XUẤT VÀ THƯƠNG MẠI TÍN CHÂU<br>
+				<span class="footer-name-company"><%=thongtinfooter.getType_company()%> <%= thongtinfooter.getName_company() %><br>
 
 				Địa chỉ: Lô 33C đường Mẹ Thứ, Phường Hòa Xuân, Quận Cẩm Lệ, Thành phố Đà Nẵng</span><br>
 
