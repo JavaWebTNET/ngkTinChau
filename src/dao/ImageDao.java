@@ -59,7 +59,7 @@ public class ImageDao {
 	}
 
 	public static String imageLink(HttpServletRequest request, String dir, String name) {
-		String path = request.getContextPath() + "View/Image/";
+		String path = request.getContextPath() + "/View/Image/";
 		return path + dir + "/" + name;
 	}
 }

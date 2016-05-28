@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<% String fmsg = (String)request.getAttribute("flash_success");
+<% String fmsg = (String)request.getSession().getAttribute("flash_success");
+	request.getSession().removeAttribute("flash_success");
    if(fmsg!=null){
 %>
     <div class="alert alert-success">
@@ -10,7 +11,8 @@
     </div>
 <%} %>
 
-<% fmsg = (String)request.getAttribute("flash_error");
+<% fmsg = (String)request.getSession().getAttribute("flash_error");
+	request.getSession().removeAttribute("flash_error");
    if(fmsg!=null){
 %>
     <div class="alert alert-danger">
@@ -19,7 +21,8 @@
     </div>
 <%} %>
 
-<% fmsg = (String)request.getAttribute("flash_info");
+<% fmsg = (String)request.getSession().getAttribute("flash_info");
+	request.getSession().removeAttribute("flash_info");
    if(fmsg!=null){
 %>
 	<div class="alert alert-info">
@@ -28,7 +31,8 @@
     </div>
 <%} %>
 
-<% String[] fvalids = (String[])request.getAttribute("flash_valid");
+<% String[] fvalids = (String[])request.getSession().getAttribute("flash_valid");
+	request.getSession().removeAttribute("flash_valid");
    if(fmsg!=null) {
 %>
     <div class="alert alert-danger">

@@ -39,13 +39,13 @@ if(request.getAttribute("slider")!=null){
 			      <div class="carousel-inner contai-slider-img" role="listbox">
 			      	 <%if(vtslider.size()>0){ %>
 				      <div class="item active">
-				        <img src="<%=request.getContextPath()%><%= vtslider.get(0).getImage() %>" >
+				        <img src="<%= vtslider.get(0).imageLink(request) %>" >
 				      </div>
 				      <% 
 				      for(int i=1;i<vtslider.size();i++){
 				      %>
 				      <div class="item">
-				        <img src="<%=request.getContextPath()%><%= vtslider.get(i).getImage() %>" >
+				        <img src="<%= vtslider.get(i).imageLink(request) %>" >
 				      </div>
 				      <%}} %>
 						 
