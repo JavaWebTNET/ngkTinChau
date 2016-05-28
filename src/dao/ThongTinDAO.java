@@ -18,13 +18,16 @@ public class ThongTinDAO {
 	}
 	
 	public ThongTin AllThongTin() {	
+		ThongTin thongtin=new ThongTin();
 		try {
+			
 			connection=ConnectDB.ConnectData();	
 			String sql="select id_tt,type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run,logo from thongtin";
 			pre=connection.prepareStatement(sql);
+			
 			rs=pre.executeQuery();
 			if(rs.next()) {
-				ThongTin thongtin=new ThongTin();
+			
 				thongtin.setId_tt(rs.getInt("id_tt"));
 				thongtin.setType_company(rs.getString("type_company"));
 				thongtin.setName_company(rs.getString("name_company"));
@@ -36,7 +39,7 @@ public class ThongTinDAO {
 				thongtin.setSlogan(rs.getString("slogan"));
 				thongtin.setWord_run(rs.getString("word_run"));
 				thongtin.setLogo(rs.getString("logo"));
-				return thongtin;			
+							
 			}
 		}
 		catch(SQLException ex) {			
@@ -48,7 +51,7 @@ public class ThongTinDAO {
 			ConnectDB.closeConnection(connection,pre, rs);				
 		}	
 		
-		return null;	
+		return thongtin;	
 	}
 	
 	public boolean EditThongTin(ThongTin thongtin) {
@@ -56,7 +59,6 @@ public class ThongTinDAO {
 			connection=ConnectDB.ConnectData();	
 			String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=? where id_tt=?";
 			pre=connection.prepareStatement(sql);
-			
 			pre.setString(1,thongtin.getName_company());
 			pre.setString(2,thongtin.getType_company());
 			pre.setString(3,thongtin.getAdd_company());
@@ -85,18 +87,19 @@ public class ThongTinDAO {
 	public boolean AddThongTin(ThongTin thongtin) {
 		try {
 			connection=ConnectDB.ConnectData();	
-			String sql="insert into thongtin(type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run) "
+			String sql="insert into thongtin(type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run,logo) "
 					+ "values(?,?,?,?,?,?,?,?,?)";
 			pre=connection.prepareStatement(sql);
-			pre.setString(1,thongtin.getType_company());
-			pre.setString(2,thongtin.getName_company());
-			pre.setString(3,thongtin.getAdd_company());
+			pre.setNString(1,thongtin.getType_company());
+			pre.setNString(2,thongtin.getName_company());
+			pre.setNString(3,thongtin.getAdd_company());
 			pre.setString(4,thongtin.getTel());
 			pre.setString(5,thongtin.getFax());
 			pre.setString(6,thongtin.getEmail());
 			pre.setString(7,thongtin.getHotline());
-			pre.setString(8,thongtin.getSlogan());
-			pre.setString(9,thongtin.getWord_run());		
+			pre.setNString(8,thongtin.getSlogan());
+			pre.setNString(9,thongtin.getWord_run());
+			pre.setNString(10,thongtin.getLogo());
 			return executeUpdateDM(pre);		
 		}
 		catch(SQLException ex) {			

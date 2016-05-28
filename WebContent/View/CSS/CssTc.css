@@ -727,7 +727,7 @@ padding:0px !important;
 
 .center-right-main-admin{
 	/* background:blue; */
-       padding: 1.5vw 0vw 1vw 0vw;
+       padding: 1.5vw 0vw 5vw 0vw;
 }
 .center-right-main-admin-child{
 	height: 300px;
@@ -745,6 +745,7 @@ padding:0px !important;
  .table-thongtin>tfoot>tr>td {
 	padding:3px 1px 3px 1px !important;
 	text-align: center;
+
 }
 .btn-sua{
 	
@@ -754,4 +755,26 @@ padding:0px !important;
 	color:white !important;
 	text-decoration:none;
 }
+.td-title{
+	
+	font-weight:bold;
+	color:red;
+	
+}
+.table-suathongtin>thead>tr>th, 
+.table-suathongtin>tbody>tr>th,
+.table-suathongtin>foot>tr>th,
+.table-suathongtin>thead>tr>td,
+.table-suathongtin>tbody>tr>td,
+.table-suathongtin>tfoot>tr>td {
+border: none 0px !important;
 
+}
+
+.input-suathongtin{
+	min-width:300px !important;
+	max-width:600px !important;
+}
+.btn-suathongtin{
+	float:right;
+}

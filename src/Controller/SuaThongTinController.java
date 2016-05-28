@@ -46,7 +46,44 @@ public class SuaThongTinController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		String name_company=request.getParameter("name_company");
+		String type_company=request.getParameter("type_company");
+		String add_company=request.getParameter("add_company");
+		String tell=request.getParameter("tell");
+		String fax=request.getParameter("fax");
+		String email=request.getParameter("email");
+		String hotline=request.getParameter("hotline");
+		String slogan=request.getParameter("slogan");
+		String word_run=request.getParameter("word_run");
+		String logo=request.getParameter("logo");
+		int id_tt=Integer.parseInt(request.getParameter("id_tt"));
+		
+		ThongTin thongtin=new ThongTin();
+		thongtin.setName_company(name_company);
+		thongtin.setType_company(type_company);
+		thongtin.setAdd_company(add_company);
+		thongtin.setEmail(email);
+		thongtin.setFax(fax);
+		thongtin.setHotline(hotline);
+		thongtin.setId_tt(id_tt);
+		thongtin.setSlogan(slogan);
+		thongtin.setWord_run(word_run);
+		thongtin.setTel(tell);
+		thongtin.setLogo(logo);
+		
+		ThongTinDAO thongtinDAO=new ThongTinDAO();
+		boolean result=thongtinDAO.EditThongTin(thongtin);
+		if(result){
+			PrintWriter out = response.getWriter();  
+			out.print("vao post"+result+"\n"+name_company); 
+		}
+		else{
+			PrintWriter out = response.getWriter();  
+			out.print("vao post"+result); 
+		}
+		
 	}
 
 }

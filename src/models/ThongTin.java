@@ -1,5 +1,9 @@
 package models;
 
+import javax.servlet.http.HttpServletRequest;
+
+import dao.ImageDao;
+
 public class ThongTin {
 	private int id_tt;
 	private String type_company;
@@ -12,6 +16,7 @@ public class ThongTin {
 	private String slogan;
 	private String word_run;
 	private String logo;
+	public static String uploadDir = "thongtin";
 	public String getLogo() {
 		return logo;
 	}
@@ -100,5 +105,8 @@ public class ThongTin {
 	
 	public void setWord_run(String word_run) {
 		this.word_run = word_run;
+	}
+	public String imageLink(HttpServletRequest request) {
+		return ImageDao.imageLink(request, ThongTin.uploadDir, this.getLogo());
 	}
 }
