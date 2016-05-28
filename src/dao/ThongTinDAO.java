@@ -20,7 +20,7 @@ public class ThongTinDAO {
 	public ThongTin AllThongTin() {	
 		try {
 			connection=ConnectDB.ConnectData();	
-			String sql="select id_tt,type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run from thongtin";
+			String sql="select id_tt,type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run,logo from thongtin";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			if(rs.next()) {
@@ -35,6 +35,7 @@ public class ThongTinDAO {
 				thongtin.setHotline(rs.getString("hotline"));
 				thongtin.setSlogan(rs.getString("slogan"));
 				thongtin.setWord_run(rs.getString("word_run"));
+				thongtin.setLogo(rs.getString("logo"));
 				return thongtin;			
 			}
 		}

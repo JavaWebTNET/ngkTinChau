@@ -1,36 +1,26 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.DanhMucDAO;
-import dao.DichVuDAO;
-import dao.SliderDAO;
-import dao.ThongTinDAO;
-import models.DanhMuc;
-import models.DichVu;
+import dao.ImageDao;
 import models.Slider;
-import models.ThongTin;
 
 /**
- * Servlet implementation class HomeController
+ * Servlet implementation class taoanh
  */
-//@WebServlet("/HomeController")
-public class HomeController extends HttpServlet {
+@WebServlet("/taoimage")
+public class taoanh extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeController() {
+    public taoanh() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,9 +29,8 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-		RequestDispatcher rq=request.getRequestDispatcher("/View/index.jsp");
-		rq.forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -49,10 +38,8 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		DanhMucDAO dmDAO=new DanhMucDAO();
-		DanhMuc dm = dmDAO.KiemTra(request);
-		dm.getId();
+		String hh=ImageDao.imageUpload(request,Slider.uploadDir,"file");
+		System.out.println("ten anh "+hh);
 	}
 
 }

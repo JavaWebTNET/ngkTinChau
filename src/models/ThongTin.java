@@ -11,6 +11,15 @@ public class ThongTin {
 	private String hotline;
 	private String slogan;
 	private String word_run;
+	private String logo;
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	public ThongTin(){}
 	
 	public int getId_tt() {

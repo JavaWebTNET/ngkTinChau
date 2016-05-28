@@ -1,5 +1,12 @@
+<%@page import="models.Slider"%>
+<%@page import="java.util.Vector"%>
 <%@page import="models.ThongTin" %>
 <% ThongTin thongtinslider=(ThongTin) request.getAttribute("thongtin"); %>
+
+<% 
+Vector<Slider> vtslider=new Vector<Slider>();
+if(request.getAttribute("slider")!=null){
+ vtslider=(Vector<Slider>) request.getAttribute("slider"); }%>
 <%@ page pageEncoding="utf-8" %>
 
 <!----- wordrun------>
@@ -30,18 +37,18 @@
 			    </ol>
 
 			      <div class="carousel-inner contai-slider-img" role="listbox">
+			      	 <%if(vtslider.size()>0){ %>
 				      <div class="item active">
-				        <img src="<%=request.getContextPath()%>/View/Image/slider1.jpg" alt="Chania">
+				        <img src="<%=request.getContextPath()%><%= vtslider.get(0).getImage() %>" >
 				      </div>
-
+				      <% 
+				      for(int i=1;i<vtslider.size();i++){
+				      %>
 				      <div class="item">
-				        <img src="<%=request.getContextPath()%>/View/Image/slider2.jpg" alt="Chania">
+				        <img src="<%=request.getContextPath()%><%= vtslider.get(i).getImage() %>" >
 				      </div>
-				    
-				      <div class="item">
-				        <img src="<%=request.getContextPath()%>/View/Image/slider3.jpg" alt="Flower">
-				      </div>
-
+				      <%}} %>
+						 
 				      
   				  </div>
 

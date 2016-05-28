@@ -35,7 +35,7 @@ public class DanhMucDAO {
 				dam.setSuper_id(rs.getInt("super_id"));
 				danhmucvt.add(dam);				
 			}
-			return danhmucvt;
+			
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -46,7 +46,7 @@ public class DanhMucDAO {
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}	
 		
-		return null;	
+		return danhmucvt;	
 	}
 	
 	/*Lấy dnh muc theo id*/

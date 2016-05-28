@@ -1,9 +1,16 @@
 package models;
 
+import javax.servlet.http.HttpServletRequest;
+
+import dao.ImageDao;
+
 public class Slider {	
 	private int id_sd;
 	private String title;
 	private String image;
+	public static String uploadDir = "slider";
+	
+	public Slider(){}
 	
 	public int getId_sd() {
 		return id_sd;
@@ -27,5 +34,9 @@ public class Slider {
 	
 	public void setImage(String image) {
 		this.image = image;
-	}	
+	}
+	
+	public String imageLink(HttpServletRequest request) {
+		return ImageDao.imageLink(request, Slider.uploadDir, this.getImage());
+	}
 }
