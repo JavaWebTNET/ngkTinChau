@@ -19,6 +19,7 @@ import dao.DanhMucDAO;
 import dao.DichVuDAO;
 import dao.SliderDAO;
 import dao.ThongTinDAO;
+import dao.UserDao;
 import models.DanhMuc;
 import models.DichVu;
 import models.Slider;
@@ -50,6 +51,13 @@ public class HomeFilterAdmin implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
+		HttpServletRequest rq = (HttpServletRequest)request;
+		Integer userID = (Integer)rq.getSession().getAttribute("user_id");
+		if(userID==null || !UserDao.isUser(userID)) {
+			rq.getSession().setAttribute("prevURL", rq.getServletPath());
+			((HttpServletResponse) response).sendRedirect(rq.getContextPath() + "/login");
+			return;
+		}
 		DanhMucDAO dmDAO=new DanhMucDAO();
 		
 		HashMap<Integer,ArrayList<DanhMuc>> hmAllDM=new HashMap<Integer,ArrayList<DanhMuc>>();		
