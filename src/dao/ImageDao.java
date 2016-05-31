@@ -30,7 +30,7 @@ public class ImageDao {
 	    		if(item.getFieldName().equals(field)) {
 	    			String contentType = item.getContentType();
 	    			if(contentType.equals("image/png")
-	    					|| contentType.equals("image/jpg")
+	    					|| contentType.equals("image/jpeg")
 	    					|| contentType.equals("image/gif") 
 	    					&& !(item.getSize()<=1024)) {			
 		    			File uploadDir = new File(path + sp + dir);
