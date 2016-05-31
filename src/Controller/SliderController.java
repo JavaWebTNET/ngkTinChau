@@ -2,11 +2,15 @@ package Controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.SliderDAO;
+import dao.isNumberDAO;
 
 /**
  * Servlet implementation class SliderController
@@ -33,7 +37,23 @@ public class SliderController extends HttpServlet {
 			index(request, response);
 		} else if(pathInfo.equals("/create")) {
 			create(request, response);
-		} else {
+		} 
+		else if(pathInfo.equals("/delete")){
+			System.out.println("dsds"+request.getQueryString());
+			String[] pathParts = request.getQueryString().split("=");
+			System.out.println("dsdddds"+pathParts[1]);
+			if(pathParts.length==2 && pathParts[0].equals("id") && isNumberDAO.isNumber(pathParts[1]))
+			{
+				delete(request, response,Integer.parseInt(pathParts[1]));			
+			}
+			else{
+				
+				errorPage(request, response, "Đường dẫn không chính xác..!");
+			}
+			
+		}
+		
+		else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
 			try {
@@ -61,6 +81,9 @@ public class SliderController extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
 			store(request, response);
+		}
+		else if(pathInfo.equals("/create")) {
+			create(request, response);
 		} else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
@@ -87,12 +110,15 @@ public class SliderController extends HttpServlet {
 	
 	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("index");
+		SliderDAO sliderDAO=new SliderDAO();
+		request.setAttribute("slider",sliderDAO.AllSlider());
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLslider.jsp");
+		rq.forward(request,response);
 	}
 	
 	protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("create");
+		System.out.println("da vao create");
 		
 	}
 	
@@ -118,11 +144,30 @@ public class SliderController extends HttpServlet {
 	
 	protected void delete(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("delete " +id);
+		SliderDAO sliderDAO=new SliderDAO();
+		boolean result=sliderDAO.DelSlider(id);
+		if(result==true){
+			 request.getSession().setAttribute("flash_success", "Xóa thành công..!");
+			 response.sendRedirect(request.getContextPath()+"/admin/slider");
+		}
+		else{
+			 request.getSession().setAttribute("flash_error", "Xử lý thất bại..!");
+			 response.sendRedirect(request.getContextPath()+"/admin/slider");
+		
+		}
+		
 	}
 
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("errorPage");
+	}
+	protected void errorPage(HttpServletRequest request, HttpServletResponse response,String error) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("errorPage");
+	}
+	
+	public  void show(String hh){
+		System.out.println("in ra duong dan "+hh);
 	}
 }

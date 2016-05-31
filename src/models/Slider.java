@@ -36,7 +36,7 @@ public class Slider {
 		this.image = image;
 	}
 	
-	public String imageLink(HttpServletRequest request) {
+	public  String imageLink(HttpServletRequest request) {
 		return ImageDao.imageLink(request, Slider.uploadDir, this.getImage());
 	}
 }

@@ -29,7 +29,7 @@ public class UserDao {
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
-		    System.out.println(DanhMucDAO.class.getName()); 
+		    System.out.println(UserDao.class.getName()); 
 		    ex.printStackTrace();	    		        
 		} 
 		finally {			
@@ -62,6 +62,8 @@ public class UserDao {
 		return false;
 	}
 	
+
+	
 	public static boolean changepw(int id, String pass, String newpass) {
 		Connection connection = ConnectDB.ConnectData();
 		PreparedStatement pre = null;
@@ -86,12 +88,23 @@ public class UserDao {
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
-		    System.out.println(DanhMucDAO.class.getName()); 
-		    ex.printStackTrace();	    		        
+		    System.out.println(UserDao.class.getName()); 
+		    ex.printStackTrace();	
+		    
 		} 
 		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);				
 		}
 		return false;
 	}
+	
+	/*public static void text(){
+	System.out.println(""+BCrypt.checkpw("1234","$2a$10$zMDwHrewWvprL4S9oai4jeS8KVoIusJLiMx4BSwaEwnGWT/8u.mUu"));
+	$2a$10$zMDwHrewWvprL4S9oai4jeS8KVoIusJLiMx4BSwaEwnGWT/8u.mUu
+
+	}
+	
+	public static void main(String[] a){
+		UserDao.text();
+	}*/
 }

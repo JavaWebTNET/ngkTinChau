@@ -1,9 +1,7 @@
 <%@page import="dao.ThongTinDAO"%>
 <%@page import="models.ThongTin"%>
 <%@ page pageEncoding="utf-8" %>
-<%ThongTinDAO thongtinDAO=new ThongTinDAO();
-  ThongTin thongtin=thongtinDAO.AllThongTin();
-%>
+<%  ThongTin thongtin=(ThongTin)request.getAttribute("thongtin"); %>
 				<div class="center-right-title">Quản lý thông tin</div>
 
 	 			<div class="col-sm-12 col-xs-12 center-right-main-admin">
@@ -11,7 +9,7 @@
 	 			
 	 			
 	 			<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
-        <table class="table table-bordered table-thongtin">
+        <table class="table table-bordered table-condensed table-thongtin">
             <tr class="title-table" style="color:#00ff21;height:45px;background-color:#808080">
                 
                 <th>
@@ -86,8 +84,8 @@
                           
                         </td>
                         
-                        <td>
-                           <%= thongtin.getLogo()%>                          
+                        <td class="td-qltt-imglogo">
+                            <img src="<%= thongtin.imageLink(request) %>" >                  
                         </td>
                         
                         <td>

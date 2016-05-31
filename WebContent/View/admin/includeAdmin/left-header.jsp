@@ -13,65 +13,15 @@
 <div class="menu-left-one-admin">
 					
 					 <ul class="nav ul-menu-one">
-					<li><a href="#">Quản Lý Danh Mục</a>
-						<ul class="nav menu-hide">
-							<li><a href="#">Thêm danh mục</a></li>
-							<li><a href="#">Xóa danh mục</a></li>
-							<li><a href="#">Sửa danh mục</a></li>
+					<li><a href="#">Quản Lý Danh Mục</a></li>
+					
+					<li><a href="${ pageContext.request.contextPath}/admin/quanlythongtin">Quản lý thông tin</a></li>
+					
+					<li><a href="#">Quản lý sản phẩm</a></li>			
 						
-						</ul>
+					<li><a href="#">Quản lý dich vụ </a></li>
 					
-					
-					<span class="I"></span> 
-					</li>
-					
-					<li><a href="${ pageContext.request.contextPath}/admin/quanlythongtin">Quản lý thông tin</a>						
-						<span class="I"></span> 
-					</li>
-					
-					<li><a href="#">Quản lý sản phẩm</a>
-						<ul class="nav menu-hide">
-							
-							<li><a href="#">Thêm sản phẩm</a></li>
-							<li><a href="#">Sửa sản phẩm</a></li>
-							<li><a href="#">Xóa sản phẩm</a></li>
-						
-						</ul>
-						<span class="I"></span> 
-					</li>
-					
-					<li><a href="#">Quản lý sản phẩm</a>
-						<ul class="nav menu-hide">
-							
-							<li><a href="#">Thêm sản phẩm</a></li>
-							<li><a href="#">Sửa sản phẩm</a></li>
-							<li><a href="#">Xóa sản phẩm</a></li>
-						
-						</ul>
-						<span class="I"></span> 
-					</li>
-					
-					<li><a href="#">Quản lý dich vụ</a>
-						<ul class="nav menu-hide">
-							
-							<li><a href="#">Thêm dich vụ</a></li>
-							<li><a href="#">Sửa dich vụ</a></li>
-							<li><a href="#">Xóa dich vụ</a></li>
-						
-						</ul>
-						<span class="I"></span> 
-					</li>
-					
-					<li><a href="#">Quản lý slider</a>
-						<ul class="nav menu-hide">
-							
-							<li><a href="#">Thêm dich vụ</a></li>
-							<li><a href="#">Sửa dich vụ</a></li>
-							<li><a href="#">Xóa dich vụ</a></li>
-						
-						</ul>
-						<span class="I"></span> 
-					</li>
+					<li><a href="${ pageContext.request.contextPath}/admin/slider/">Quản lý slider</a> </li>
 					
 					</ul>
 					

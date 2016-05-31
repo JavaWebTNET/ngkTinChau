@@ -1,5 +1,5 @@
-
 <%@page pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,9 +49,11 @@
 				<!-- kết thúc  main-center-left được khai báo trong left-header -->
 				<div class="col-sm-9 col-xs-12 main-center-right">
 					<!-- bắt đầu phần center -->
-
-					<%@ include file="/View/admin/includeAdmin/center.jsp"%>
-
+					<div class="col-sm-12 col-xs-12 center-right-one">
+					
+						<%@ include file="/View/admin/includeAdmin/quanlyslider.jsp"%>
+						
+					
 				</div>
 				<!-- đóng phần main-center-right -->
 			</div>
@@ -65,6 +67,6 @@
 
 
 	</div>
-
+</div>
 </body>
 </html>

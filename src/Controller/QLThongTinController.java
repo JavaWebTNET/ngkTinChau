@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ThongTinDAO;
+import models.ThongTin;
+
 /**
  * Servlet implementation class QLThongTinController
  */
@@ -29,7 +32,9 @@ public class QLThongTinController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+		ThongTinDAO thongtinDAO=new ThongTinDAO();
+		ThongTin thongtin=thongtinDAO.AllThongTin();
+		request.setAttribute("thongtin", thongtin);
 		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLthongtin.jsp");
 		rq.forward(request,response);
 	}

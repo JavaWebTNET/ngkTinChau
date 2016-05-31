@@ -1,8 +1,8 @@
+<%@page pageEncoding="UTF-8"%>
 <%@page import="models.ThongTin" %>
 <% ThongTin thongtin1=(ThongTin) request.getAttribute("thongtin"); %>
 
 
-<%@ page pageEncoding="utf-8" %>
 <!-- baner -->
 	<div class="row">
 
