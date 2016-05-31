@@ -778,3 +778,39 @@ border: none 0px !important;
 .btn-suathongtin{
 	float:right;
 }
+
+.td-qltt-imglogo>img{
+	max-width:58px !important;
+}
+.div-stt-imglogo{
+	padding-left:0px !important;
+}
+.div-stt-imglogo>img{
+	max-width:80px !important;
+}
+.div-uploadimage{
+	margin-top:20px !important; 
+}
+.div-uploadimage>input{
+	color:red !important;
+}
+
+.slider-td-img>img{
+	max-width:150px !important;
+	max-height:150px !important;
+}
+.btn-qlslider>a{
+	color:white !important;
+	text-decoration:none;
+}
+
+.table-qlslider>thead>tr>th, 
+.table-qlslider>tbody>tr>th,
+.table-qlslider>foot>tr>th,
+.table-qlsliderthead>tr>td,
+.table-qlslider>tbody>tr>td,
+.table-qlslider>tfoot>tr>td {
+	padding:3px 1px 3px 1px !important;
+	text-align: center;
+	
+}

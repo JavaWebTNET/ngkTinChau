@@ -15,10 +15,55 @@ import lang.Lang;
 
 public class ImageDao {
 	
+public static String Uploadimage(HttpServletRequest request,String dir, FileItem item) {
+		
+	Lang lang = new Lang();
+	String sp = File.separator;
+	String path = request.getServletContext().getRealPath("")+ sp + "View" + sp + "Image";
+	//String path = request.getContextPath()+ sp + "View" + sp + "Image";
+	
+    try{
+    	
+    	
+    		
+    			String contentType = item.getContentType();
+    			if(contentType.equals("image/png")
+    					|| contentType.equals("image/jpg")
+    					|| contentType.equals("image/gif") 
+    					&& !(item.getSize()<=1024)) {			
+	    			File uploadDir = new File(path + sp + dir);
+	    			System.out.println(uploadDir);
+	    			if(!uploadDir.exists()) {
+	    				uploadDir.mkdirs();
+	    			}
+	    			File file = File.createTempFile("img","."+contentType.substring(contentType.length()-3),uploadDir);
+	    			item.write(file);
+	    			return file.getName();
+	    			//return path;
+	    			
+    			}
+    
+    			else {
+    				System.out.println(contentType);
+    				request.setAttribute("error", lang.getValMsg("wrong_image"));
+    			}
+    			}
+    			catch(FileUploadException e) {
+    			    e.printStackTrace(); 		    
+    			}
+			    catch(Exception ex){	     
+			    	ex.printStackTrace();
+			    }
+    	
+			return null;
+		
+	}
+	
 	public static String imageUpload(HttpServletRequest request, String dir, String field) {
 		Lang lang = new Lang();
 		String sp = File.separator;
-		String path = request.getServletContext().getRealPath("") + sp + "View" + sp + "Image";
+		String path = request.getServletContext().getRealPath("")+ sp + "View" + sp + "Image";
+		//String path = request.getContextPath()+ sp + "View" + sp + "Image";
 		if(!ServletFileUpload.isMultipartContent(request)) {
 		    return null; 
 		}
@@ -40,7 +85,9 @@ public class ImageDao {
 		    			}
 		    			File file = File.createTempFile("img","."+contentType.substring(contentType.length()-3),uploadDir);
 		    			item.write(file);
-		    			return file.getName();
+		    			/*return file.getName();*/
+		    			return path;
+		    			
 	    			}
 	    			else {
 	    				System.out.println(contentType);

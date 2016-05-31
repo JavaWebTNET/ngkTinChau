@@ -7,15 +7,16 @@ if(request.getAttribute("thongtinsua")!=null){
  thongtin= (ThongTin) request.getAttribute("thongtinsua"); 
 }%>
 <div class="center-right-title">Quản lý thông tin</div>
-
+<%@ include file="/View/flash.jsp" %>	
 <div class="col-sm-12 col-xs-12 center-right-main-admin">
   <div class="center-right-main-admin-child"> 	
   
   			<% if(thongtin!=null){ %>
   
-		  <form class="form-horizontal" role="form" action="${ pageContext.request.contextPath}/admin/suathongtin" method="post">
-		  <input type="hidden" class="form-control" id="id_tt" name="id_tt"  value="<%= thongtin.getId_tt()%>">
+		  <form class="form-horizontal" role="form" enctype="multipart/form-data" action="${ pageContext.request.contextPath}/admin/suathongtin" method="post" >
+		  <input type="hidden" id="id_tt" name="id_tt"  value="<%= thongtin.getId_tt()%>">
 		  <div class="form-group">
+		  
 		    <label class="control-label td-title col-sm-2" >Tên Công Ty (*)</label>
 		    <div class="col-sm-10">
 		      <input type="text" class="form-control" id="name_company" name="name_company"  value="<%= thongtin.getName_company()%>">
@@ -75,7 +76,10 @@ if(request.getAttribute("thongtinsua")!=null){
 		   <div class="form-group">
 		    <label class="control-label td-title col-sm-2" >Logo</label>
 		    <div class="col-sm-10"> 
-		      <input type="text" class="form-control" id="logo" name="logo" value="<%= thongtin.getLogo()%>">
+		    	 <div class="col-sm-2 div-stt-imglogo"> <img src="<%= thongtin.imageLink(request) %>" ></div>
+		    	<div class="col-sm-8 div-uploadimage"><input type="file" name="file-image"  /></div>
+		    	<!--   <input type="file" name="file-image" value=""/> -->
+		       
 		    </div>
 		  </div>
 		
@@ -224,4 +228,6 @@ if(request.getAttribute("thongtinsua")!=null){
 	  
 	         return true;
 	 }
+	 
+	
 </script>

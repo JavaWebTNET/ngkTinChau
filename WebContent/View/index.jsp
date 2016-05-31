@@ -24,7 +24,7 @@
 
 
 <%@ include file="/View/include/header.jsp" %>
-<%@ include file="/View/include/slider.jsp" %>
+ <%@ include file="/View/include/slider.jsp" %>
 
 <!-- -----main center----- -->
 <div class="row">

@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.ImageDao;
 import models.Slider;
+import models.ThongTin;
 
 /**
  * Servlet implementation class taoanh
  */
 @WebServlet("/taoimage")
+@MultipartConfig
 public class taoanh extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,7 +33,7 @@ public class taoanh extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	//	response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -38,8 +41,8 @@ public class taoanh extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String hh=ImageDao.imageUpload(request,Slider.uploadDir,"file");
-		System.out.println("ten anh "+hh);
+	//	String hh=ImageDao.imageUpload(request,ThongTin.uploadDir,"file");
+		System.out.println("ten anh "+request.getParameter("name"));
 	}
 
 }

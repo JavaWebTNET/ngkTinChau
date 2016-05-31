@@ -57,7 +57,7 @@ public class ThongTinDAO {
 	public boolean EditThongTin(ThongTin thongtin) {
 		try {
 			connection=ConnectDB.ConnectData();	
-			String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=? where id_tt=?";
+			String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=?,logo=? where id_tt=?";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,thongtin.getName_company());
 			pre.setString(2,thongtin.getType_company());
@@ -68,7 +68,8 @@ public class ThongTinDAO {
 			pre.setString(7,thongtin.getHotline());
 			pre.setString(8,thongtin.getSlogan());
 			pre.setString(9,thongtin.getWord_run());
-			pre.setInt(10,thongtin.getId_tt());
+			pre.setString(10,thongtin.getLogo());
+			pre.setInt(11,thongtin.getId_tt());
 			return executeUpdateDM(pre);		
 		}
 		catch(SQLException ex) {			
