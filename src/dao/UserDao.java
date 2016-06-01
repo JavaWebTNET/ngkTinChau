@@ -97,14 +97,4 @@ public class UserDao {
 		}
 		return false;
 	}
-	
-	/*public static void text(){
-	System.out.println(""+BCrypt.checkpw("1234","$2a$10$zMDwHrewWvprL4S9oai4jeS8KVoIusJLiMx4BSwaEwnGWT/8u.mUu"));
-	$2a$10$zMDwHrewWvprL4S9oai4jeS8KVoIusJLiMx4BSwaEwnGWT/8u.mUu
-
-	}
-	
-	public static void main(String[] a){
-		UserDao.text();
-	}*/
 }

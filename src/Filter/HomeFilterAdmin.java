@@ -62,7 +62,7 @@ public class HomeFilterAdmin implements Filter {
 		
 		HashMap<Integer,ArrayList<DanhMuc>> hmAllDM=new HashMap<Integer,ArrayList<DanhMuc>>();		
 		
-		Vector<DanhMuc> vtdm=dmDAO.AllDanhMuc();
+		Vector<DanhMuc> vtdm=dmDAO.allDanhMuc();
 		for(DanhMuc itemdm:vtdm){
 			
 			if(hmAllDM.containsKey(itemdm.getSuper_id())){
@@ -83,13 +83,13 @@ public class HomeFilterAdmin implements Filter {
 		}
 		
 		ThongTinDAO thongtinDAO=new ThongTinDAO();
-		ThongTin    thongtin=thongtinDAO.AllThongTin();
+		ThongTin    thongtin=thongtinDAO.allThongTin();
 		
 		SliderDAO slider=new SliderDAO();
-		Vector<Slider> vtsd=slider.AllSlider();
+		Vector<Slider> vtsd=slider.allSlider();
 		
 		DichVuDAO dvDAO=new DichVuDAO();
-		Vector<DichVu> dichvu=dvDAO.AllDichVu();
+		Vector<DichVu> dichvu=dvDAO.allDichVu();
 		
 		request.setAttribute("danhmuc", hmAllDM);
 		request.setAttribute("dichvu", dichvu);

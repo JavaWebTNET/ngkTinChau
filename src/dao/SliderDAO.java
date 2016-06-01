@@ -1,11 +1,18 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+
+import lang.Lang;
 import models.Slider;
 import utils.ConnectDB;
 
@@ -18,11 +25,10 @@ public class SliderDAO {
 		connection=ConnectDB.ConnectData();		
 	}
 	/*hàm lấy hết dữ liêu trong bang slider*/
-	public Vector<Slider> AllSlider(){
+	public Vector<Slider> allSlider() {
 		Vector<Slider> vtsd=new Vector<Slider>();
-		try {
-			
-			String sql="SELECT id_sd,title,image FROM slider";
+		try {			
+			String sql="SELECT id_sd,title,image FROM slider where delete_at is null";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			while(rs.next()){
@@ -31,31 +37,30 @@ public class SliderDAO {
 				sl.setTitle(rs.getString("title"));
 				sl.setImage(rs.getString("image"));
 				vtsd.add(sl);				
-			}
-			
-			}catch(SQLException ex) {			
+			}	
+		}
+		catch(SQLException ex) {			
 				System.out.println("SQLException: " + ex.getMessage());			    
 			    System.out.println(SliderDAO.class.getName()); 
 			    ex.printStackTrace();	    		        
-			} 
-			finally {			
-				ConnectDB.closeConnection(connection,pre, rs);					
-			}	
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}	
 			
 		return vtsd;	
-		
 	}
 	
 /*	thêm một ảnh vào bảng slider*/
-	public boolean AddSlider(Slider sld){
-		
+	public boolean addSlider(Slider sld) {		
 		try {
-			String sql="insert into slider(title,image) values(?,?)";
+			String sql="insert into slider(title,image,create_at) values(?,?,now())";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,sld.getTitle());
-			pre.setString(2,sld.getImage());
-			return executeUpdateDM(pre);
-		}catch(SQLException ex) {			
+			pre.setString(2,sld.getImage());	
+			return (pre.executeUpdate()>0);
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(SliderDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
@@ -63,18 +68,37 @@ public class SliderDAO {
 		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}	
-		return false;
-		
+		return false;		
 	}
 	
-public boolean DelSlider(int id){
-		
+	public boolean delSlider(int id){	
 		try {
-			String sql="delete from slider where id_sd=?";
+			String sql="update slider set delete_at=now() where id_sd=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1,id);			
-			return executeUpdateDM(pre);
-		}catch(SQLException ex) {			
+			return (pre.executeUpdate()>0);
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(SliderDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}	
+		return false;		
+	}
+	
+	public boolean udtSlider(Slider sld) {
+		try {
+			String sql="update slider set title=?, image=?, update_at=now() where id_sd=? and delete_at is null";
+			pre=connection.prepareStatement(sql);
+			pre.setString(1,sld.getTitle());	
+			pre.setString(2,sld.getImage());	
+			pre.setInt(3,sld.getId_sd());			
+			return (pre.executeUpdate()>0);
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(SliderDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
@@ -83,39 +107,50 @@ public boolean DelSlider(int id){
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}	
 		return false;
-		
 	}
 	
-	
-	/*hàm xử lý các executeUpdate()*/
-	private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-        if (pre != null) {	         
-            int numRow = pre.executeUpdate();
-            if (numRow>0) {                  
-               return true;
-            }	            
-            return false;
-        }
-        return false;
-	}
-	
-	/*public static void main(String[] a){
-		
-		Slider sl=new Slider();
-		SliderDAO slDAO=new SliderDAO();
-		sl.setTitle("anh 4");
-		sl.setImage("/View/Image/slider4.jpg");
-		
-		boolean jj=slDAO.DelSlider(4);
-		System.out.println("ket qua "+jj);
-		
-		Vector<Slider> vt=slDAO.AllSlider();
-		for(Slider item:vt)
-		{
-			System.out.println("in ra gia tri duong dan anh "+item.getImage());
+	public Slider validAdd(HttpServletRequest request) throws IOException, ServletException {
+		ArrayList<String> loi = new ArrayList<String>();
+		Lang lang = new Lang();
+		Part part = request.getPart("file-image");
+		if(part.getSubmittedFileName().equals("")) {
+			loi.add(lang.getValMsg("image_null"));
 		}
-		
-		
-	}*/
+		else {
+			String image_slider = ImageDao.imageUpload(request, Slider.uploadDir, part);  
+			Slider slider=new Slider();
 
+			if(image_slider!=null) {
+				 slider.setTitle(image_slider);
+				 slider.setImage(image_slider);
+				 return slider;					
+			}
+		}
+		if(loi.size()>0)
+			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+		return null;
+	}
+	
+	public Slider validUdt(HttpServletRequest request, int id) throws IOException, ServletException {
+		ArrayList<String> loi = new ArrayList<String>();
+		Lang lang = new Lang();
+		Part part = request.getPart("file-image");
+		if(part.getSubmittedFileName().equals("")) {
+			loi.add(lang.getValMsg("image_null"));
+		}
+		else {
+			String image_slider = ImageDao.imageUpload(request, Slider.uploadDir, part);  
+			Slider slider=new Slider();
+
+			if(image_slider!=null) {
+				 slider.setId_sd(id);
+				 slider.setTitle(image_slider);
+				 slider.setImage(image_slider);
+				 return slider;					
+			}
+		}
+		if(loi.size()>0)
+			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+		return null;
+	}
 }

@@ -1,8 +1,8 @@
 
-<%@page import="models.Slider"%>
+<%@page import="models.DichVu"%>
 <%@page import="java.util.Vector"%>
 <%@ page pageEncoding="utf-8" %>
-<% Vector<Slider> vtslider=(Vector<Slider>) request.getAttribute("slider"); %>
+<% Vector<DichVu> vtslider=(Vector<DichVu>) request.getAttribute("dichvu"); %>
 <div class="center-right-title">Quản lý slider</div>
 
 	<div class="col-sm-12 col-xs-12 center-right-main-admin">
@@ -17,7 +17,7 @@
             </tr>
        		<% if(vtslider.size()>0) {
        		int i=1;
-       		for(Slider item:vtslider){
+       		for(DichVu item:vtslider){
        		%>
                 <tr class="title-noidung">
                     <td>
@@ -28,14 +28,14 @@
                     </td>
                     <td> 
                      <form role="form" method="post" enctype="multipart/form-data"
-                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_sd()%>/update">
+                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_dv()%>/update">
                      	<div class="col-sm-10"><input class="form-control" type="file" name="file-image" /></div>
                         <div class="col-sm-2"><button type="submit" class="btn btn-info">Sửa</button></div>
                      </form>
                     </td>  
                     <td> 
                      <form role="form" method="post" 
-                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_sd()%>/delete">
+                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_dv()%>/delete">
                        <button type="submit" class="btn btn-danger" onclick="return window.confirm('Xoá?');">Xoá</button>
                      </form>
                     </td>                                          

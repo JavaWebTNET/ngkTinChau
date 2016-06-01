@@ -1,9 +1,14 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import utils.ConnectDB;
 import models.ThongTin;;
@@ -17,10 +22,9 @@ public class ThongTinDAO {
 			
 	}
 	
-	public ThongTin AllThongTin() {	
+	public ThongTin allThongTin() {	
 		ThongTin thongtin=new ThongTin();
-		try {
-			
+		try {		
 			connection=ConnectDB.ConnectData();	
 			String sql="select id_tt,type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run,logo from thongtin";
 			pre=connection.prepareStatement(sql);
@@ -54,7 +58,7 @@ public class ThongTinDAO {
 		return thongtin;	
 	}
 	
-	public boolean EditThongTin(ThongTin thongtin) {
+	public boolean udtThongTin(ThongTin thongtin) {
 		try {
 			connection=ConnectDB.ConnectData();	
 			String sql="update thongtin set name_company=?,type_company=?,add_company=?,tel=?,fax=?,email=?,hotline=?,slogan=?,word_run=?,logo=? where id_tt=?";
@@ -70,7 +74,7 @@ public class ThongTinDAO {
 			pre.setString(9,thongtin.getWord_run());
 			pre.setString(10,thongtin.getLogo());
 			pre.setInt(11,thongtin.getId_tt());
-			return executeUpdateDM(pre);		
+			return pre.executeUpdate()>0;		
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -85,7 +89,7 @@ public class ThongTinDAO {
 	}
 	
 	/*thêm thông tin*/
-	public boolean AddThongTin(ThongTin thongtin) {
+	public boolean addThongTin(ThongTin thongtin) {
 		try {
 			connection=ConnectDB.ConnectData();	
 			String sql="insert into thongtin(type_company,name_company,add_company,tel,fax,email,hotline,slogan,word_run,logo) "
@@ -101,7 +105,7 @@ public class ThongTinDAO {
 			pre.setNString(8,thongtin.getSlogan());
 			pre.setNString(9,thongtin.getWord_run());
 			pre.setNString(10,thongtin.getLogo());
-			return executeUpdateDM(pre);		
+			return pre.executeUpdate()>0;		
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -115,40 +119,29 @@ public class ThongTinDAO {
 		return false;	
 	}
 	
-	/*hàm xử lý các executeUpdate()*/
-	private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-        if(pre != null) {	         
-            int numRow = pre.executeUpdate();
-            if(numRow>0) {                  
-               return true;
-            }	            
-            return false;
-        }
-        return false;
-    }
-	
-	public static void main(String[] a) {
-		ThongTinDAO ttDAO=new ThongTinDAO();
-		ThongTin tt=new ThongTin();
-		tt.setId_tt(4);
-		tt.setName_company("Skyline");
-		tt.setType_company("CÔNG TY CỔ PHẦN SẢN XUẤT VÀ THƯƠNG MẠI");
-		tt.setSlogan("Bền vững cánh cửa ngôi nhà");
-		tt.setAdd_company("Địa chỉ: Lô 33C đường Mẹ Thứ, Phường Hòa Xuân, Quận Cẩm Lệ, Thành phố Đà Nẵng");
-		tt.setEmail("tin.tinchauwindow@gmail.com");
-		tt.setHotline("0935 443 117");
-		tt.setFax("05113.663.117");
-		tt.setTel("05113.663.117");
-		tt.setWord_run("Công ty cổ phần sản xuất và thương mại Tín Châu - Chuyên sản xuất - tư vấn thiết kế - lắp đặt nhôm kính....!");
-		//boolean hh=ttDAO.AddThongTin(tt);	
+	public ThongTin validUdt(HttpServletRequest request) throws IOException, ServletException {
+		Part part = request.getPart("file-image");
+		String image_slider = null;
+		System.out.println(part.getSize());
+		if(!part.getSubmittedFileName().equals("")) {
+			image_slider = ImageDao.imageUpload(request, ThongTin.uploadDir, part);  
+		}
+			
+		ThongTin thongtin= allThongTin();
 		
-		/*tt=ttDAO.AllThongTin();
-				if(tt==null){
-					System.out.println("khong co gia tri trong data");
-					return;
-				}*/
-		boolean sua=ttDAO.EditThongTin(tt);
-		
-		System.out.println("gia tri duoc in ra la"+sua);
+		thongtin.setName_company(request.getParameter("name_company"));
+		thongtin.setType_company(request.getParameter("type_company"));
+		thongtin.setAdd_company(request.getParameter("add_company"));
+		thongtin.setEmail(request.getParameter("email"));
+		thongtin.setFax(request.getParameter("fax"));
+		thongtin.setHotline(request.getParameter("hotline"));
+		thongtin.setSlogan(request.getParameter("slogan"));
+		thongtin.setWord_run(request.getParameter("word_run"));
+		thongtin.setTel(request.getParameter("tell"));
+
+		if(image_slider!=null) {
+			 thongtin.setLogo(image_slider);
+		}
+		return thongtin;
 	}
 }

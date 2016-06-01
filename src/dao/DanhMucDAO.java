@@ -21,10 +21,10 @@ public class DanhMucDAO {
 	}	
 	
 	/*Lấy tất cả các danh mục trong db*/
-	public Vector<DanhMuc> AllDanhMuc() {
+	public Vector<DanhMuc> allDanhMuc() {
 		Vector<DanhMuc> danhmucvt=new Vector<DanhMuc>();
 		try {
-			String sql="select id_dm,title,link,super_id from danhmuc order by super_id";
+			String sql="select id_dm,title,link,super_id from danhmuc where delete_at is null order by super_id";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			while(rs.next()) {
@@ -50,9 +50,9 @@ public class DanhMucDAO {
 	}
 	
 	/*Lấy dnh muc theo id*/
-	public DanhMuc DanhMuc_ID(int id_dm) {	
+	public DanhMuc findDM(int id_dm) {	
 		try {
-			String sql="select id_dm,title,link,super_id from danhmuc where id_dm=?";
+			String sql="select id_dm,title,link,super_id from danhmuc where id_dm=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1,id_dm);
 			DanhMuc dam=new DanhMuc();
@@ -78,14 +78,14 @@ public class DanhMucDAO {
 	}
 
 	/*Thêm một danh mục mới, tham số truyền vào là DanhMuc*/
-	public boolean AddDanhMuc(DanhMuc dam) {	
+	public boolean addDanhMuc(DanhMuc dam) {	
 		try {
-			String sql="insert into danhmuc(link,title,super_id) values(?,?,?)";		
+			String sql="insert into danhmuc(link,title,super_id,create_at) values(?,?,?,now())";		
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,dam.getLink());
 			pre.setString(2,dam.getTitle());
 			pre.setInt(3,dam.getSuper_id());			
-			return executeUpdateDM(pre);			
+			return pre.executeUpdate()>0;			
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -100,12 +100,12 @@ public class DanhMucDAO {
 	}
 	
 	/*hàm xóa một danh mục theo id*/
-	public boolean DelDanhMuc(int id) {
+	public boolean delDanhMuc(int id) {
 		try {
-			String sql="delete from danhmuc where id_dm=?";
+			String sql="update danhmuc set delete_at=now() where id_dm=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1,id);
-			return executeUpdateDM(pre);
+			return pre.executeUpdate()>0;
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -119,15 +119,15 @@ public class DanhMucDAO {
 	}
 	
 	/*Hàm sửa DanhMuc theo id,đối số truyền vào la object*/
-	public boolean editDanhMuc(DanhMuc dam) {
+	public boolean udtDanhMuc(DanhMuc dam) {
 		try {
-			String sql="update DanhMuc set link=?,title=?,super_id=? where id_dm=?";
+			String sql="update DanhMuc set link=?,title=?,super_id=?,update_at=now() where id_dm=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,dam.getLink());
 			pre.setString(2,dam.getTitle());
 			pre.setInt(3,dam.getSuper_id());
 			pre.setInt(4,dam.getId());
-			return executeUpdateDM(pre);
+			return pre.executeUpdate()>0;
 		}
 		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
@@ -140,51 +140,10 @@ public class DanhMucDAO {
 			
 		return false;
 	}
-	
-	/*hàm xử lý các executeUpdate()*/
-	private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-        if (pre != null) {	         
-            int numRow = pre.executeUpdate();
-            if (numRow>0) {                  
-               return true;
-            }	            
-            return false;
-        }
-        return false;
-	}
 	 
 	public DanhMuc KiemTra(HttpServletRequest request) {
 		String[] loi = {"loi"};
 		request.setAttribute("loi", loi);
 		return null;
 	}
-	
-	/*public static void main(String[] a) {
-		DanhMucDAO dmdao=new DanhMucDAO();
-		DanhMuc dam=new DanhMuc();
-		dam.setLink("javascript:void(0");
-		dam.setTitle("Cửa đi 4 cánh mở quay");
-		dam.setSuper_id(7);
-		dam.setId(14);
-//		boolean bo=dmdao.AddDanhMuc(dam);
-		//boolean bo=dmdao.DellDanhMuc(12);
-		//boolean bo=dmdao.editDanhMuc(dam);
-		//System.out.println("add ?"+bo);
-		
-		
-		Vector<DanhMuc> vt=dmdao.AllDanhMuc();
-//		if(vt.size()==0){
-//			System.out.println("khong co gia tri");
-//		}
-	//	DanhMuc vt=dmdao.DanhMuc_ID(11);
-		for(DanhMuc item:vt){
-			System.out.println(item.getSuper_id());
-		}
-		
-		if(vt!=null){
-		System.out.println("dsds"+vt.getTitle());
-		}
-		
-	}
-*/
 }

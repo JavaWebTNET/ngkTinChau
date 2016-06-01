@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import models.DichVu;
-import models.Slider;
 import utils.ConnectDB;
 
 public class DichVuDAO {
@@ -19,22 +18,22 @@ public class DichVuDAO {
 		connection=ConnectDB.ConnectData();		 
 	}	
 	
-	public Vector<DichVu> AllDichVu(){
+	public Vector<DichVu> allDichVu() {
 		Vector<DichVu> vtdv=new Vector<DichVu>();
-		try{
-		
-		String sql="SELECT id_dv,name_dv,image,detail from dichvu";
-		pre=connection.prepareStatement(sql);
-		rs=pre.executeQuery();
-		while(rs.next()){
-			DichVu dv=new DichVu();
-			dv.setId_dv(rs.getInt("id_dv"));
-			dv.setName_dv(rs.getString("name_dv"));
-			dv.setImage(rs.getString("image"));
-			dv.setDetail(rs.getString("detail"));
-			vtdv.add(dv);
-		}		
-		}catch(SQLException ex) {			
+		try {		
+			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null";
+			pre=connection.prepareStatement(sql);
+			rs=pre.executeQuery();
+			while(rs.next()) {
+				DichVu dv=new DichVu();
+				dv.setId_dv(rs.getInt("id_dv"));
+				dv.setName_dv(rs.getString("name_dv"));
+				dv.setImage(rs.getString("image"));
+				dv.setDetail(rs.getString("detail"));
+				vtdv.add(dv);
+			}		
+		}
+		catch(SQLException ex) {			
 			System.out.println("SQLException: " + ex.getMessage());			    
 		    System.out.println(DanhMucDAO.class.getName()); 
 		    ex.printStackTrace();	    		        
@@ -43,57 +42,92 @@ public class DichVuDAO {
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}
 		return vtdv;	
-		
-	
-
 	}
 	
-		public boolean AddDichVu(DichVu dv){
+	public boolean addDichVu(DichVu dv) {			
+		try {
+			String sql="insert into dichvu(name_dv,image,detail,create_at) values(?,?,?,now())";
+			pre=connection.prepareStatement(sql);
 			
-			try {
-				String sql="insert into dichvu(name_dv,image,detail) values(?,?,?)";
-				pre=connection.prepareStatement(sql);
-				
-				pre.setString(1,dv.getName_dv());
-				pre.setString(2,dv.getImage());
-				pre.setString(3,dv.getDetail());
-				
-				return executeUpdateDM(pre);
-			}catch(SQLException ex) {			
-				System.out.println("SQLException: " + ex.getMessage());			    
-			    System.out.println(DichVuDAO.class.getName()); 
-			    ex.printStackTrace();	    		        
-			} 
-			finally {			
-				ConnectDB.closeConnection(connection,pre, rs);					
-			}	
-			return false;
+			pre.setString(1,dv.getName_dv());
+			pre.setString(2,dv.getImage());
+			pre.setString(3,dv.getDetail());
 			
+			return pre.executeUpdate()>0;
 		}
-		
-		/*hàm xử lý các executeUpdate()*/
-		private boolean executeUpdateDM(PreparedStatement pre) throws SQLException {
-	        if (pre != null) {	         
-	            int numRow = pre.executeUpdate();
-	            if (numRow>0) {                  
-	               return true;
-	            }	            
-	            return false;
-	        }
-	        return false;
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DichVuDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}	
+		return false;			
+	}
+	
+	public DichVu findDV(int id) {
+		try {		
+			String sql="SELECT id_dv,name_dv,image,detail from dichvu where id_dv=? and delete_at is null";
+			pre=connection.prepareStatement(sql);
+			pre.setInt(1, id);
+			rs=pre.executeQuery();
+			if(rs.next()) {
+				DichVu dv=new DichVu();
+				dv.setId_dv(rs.getInt("id_dv"));
+				dv.setName_dv(rs.getString("name_dv"));
+				dv.setImage(rs.getString("image"));
+				dv.setDetail(rs.getString("detail"));
+				return dv;
+			}		
 		}
-		
-		public static void main(String[] a){
-			DichVu dv=new DichVu();
-			DichVuDAO dvdao=new DichVuDAO();
-			Vector<DichVu> vt=dvdao.AllDichVu();
-			/*dv.setDetail("Với bề dày kinh nghiệm được tích lũy và không ngừng nâng cao chất lượng sản phẩm, công ty CPSX & TM TÍN CHÂU đến nay đã mở rộng hoạt động sản xuất kinh doanh trên nhiều lĩnh vực..");
-			dv.setImage("/View/Image/anhsx.png");
-			dv.setName_dv("Sản Xuất");
-			boolean bl=dvdao.AddDichVu(dv);*/
-			for(DichVu item:vt){
-			System.out.println("ket qua cua truy van "+item.getImage());
-			}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DanhMucDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}	
+		return null;
+	}
+	
+	public boolean udtDichVu(DichVu dv) {
+		try {		
+			String sql="update dichvu set name_dv=?,image=?,detail=?,update_at=now() where id_dv=? and delete_at is null";
+			pre=connection.prepareStatement(sql);
+			pre.setString(1, dv.getName_dv());
+			pre.setString(2, dv.getImage());
+			pre.setString(3, dv.getDetail());
+			pre.setInt(4, dv.getId_dv());
+			return pre.executeUpdate()>0;	
 		}
- 
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DanhMucDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}	
+		return false;
+	}
+	
+	public boolean delDichVu(int id) {
+		try {		
+			String sql="update dichvu set delete_at=now() where id_dv=? and delete_at is null";
+			pre=connection.prepareStatement(sql);
+			pre.setInt(1, id);
+			return pre.executeUpdate()>0;	
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DanhMucDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}
+		return false;
+	}
 }

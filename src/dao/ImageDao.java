@@ -1,112 +1,67 @@
 package dao;
 
 import java.io.File;
-import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import javax.servlet.http.Part;
 
 import lang.Lang;
 
 public class ImageDao {
 	
-public static String Uploadimage(HttpServletRequest request,String dir, FileItem item) {
-		
-	Lang lang = new Lang();
-	String sp = File.separator;
-	String path = request.getServletContext().getRealPath("")+ sp + "View" + sp + "Image";
-	//String path = request.getContextPath()+ sp + "View" + sp + "Image";
-	
-    try{
-    	
-    	
-    		
-    			String contentType = item.getContentType();
-    			if(contentType.equals("image/png")
-    					|| contentType.equals("image/jpg")
-    					|| contentType.equals("image/gif") 
-    					&& !(item.getSize()<=1024)) {			
-	    			File uploadDir = new File(path + sp + dir);
-	    			System.out.println(uploadDir);
-	    			if(!uploadDir.exists()) {
-	    				uploadDir.mkdirs();
-	    			}
-	    			File file = File.createTempFile("img","."+contentType.substring(contentType.length()-3),uploadDir);
-	    			item.write(file);
-	    			return file.getName();
-	    			//return path;
-	    			
-    			}
-    
-    			else {
-    				System.out.println(contentType);
-    				request.setAttribute("error", lang.getValMsg("wrong_image"));
-    			}
-    			}
-    			catch(FileUploadException e) {
-    			    e.printStackTrace(); 		    
-    			}
-			    catch(Exception ex){	     
-			    	ex.printStackTrace();
-			    }
-    	
-			return null;
-		
-	}
-	
-	public static String imageUpload(HttpServletRequest request, String dir, String field) {
+	public static String imageUpload(HttpServletRequest request, String uploadKey, Part part) {
 		Lang lang = new Lang();
-		String sp = File.separator;
-		String path = request.getServletContext().getRealPath("")+ sp + "View" + sp + "Image";
-		//String path = request.getContextPath()+ sp + "View" + sp + "Image";
-		if(!ServletFileUpload.isMultipartContent(request)) {
-		    return null; 
-		}
-	    FileItemFactory itemfactory = new DiskFileItemFactory(); 
-	    ServletFileUpload upload = new ServletFileUpload(itemfactory);
-	    try{
-	    	List<FileItem>  items = upload.parseRequest(request);
-	    	for(FileItem item:items) {
-	    		if(item.getFieldName().equals(field)) {
-	    			String contentType = item.getContentType();
-	    			if(contentType.equals("image/png")
-	    					|| contentType.equals("image/jpeg")
-	    					|| contentType.equals("image/gif") 
-	    					&& !(item.getSize()<=1024)) {			
-		    			File uploadDir = new File(path + sp + dir);
-		    			System.out.println(uploadDir);
-		    			if(!uploadDir.exists()) {
-		    				uploadDir.mkdirs();
-		    			}
-		    			File file = File.createTempFile("img","."+contentType.substring(contentType.length()-3),uploadDir);
-		    			item.write(file);
-		    			/*return file.getName();*/
-		    			return path;
-		    			
-	    			}
-	    			else {
-	    				System.out.println(contentType);
-	    				request.setAttribute("error", lang.getValMsg("wrong_image"));
-	    			}
-	    		}   
-	    	}
-	    }
-		catch(FileUploadException e) {
-		    e.printStackTrace(); 		    
-		}
-	    catch(Exception ex){	     
-	    	ex.printStackTrace();
-	    }
-		return null;
+		try {				
+			String contentType = part.getContentType();
+			boolean validType = contentType.equals("image/png")
+					|| contentType.equals("image/jpeg")
+					|| contentType.equals("image/gif");
+			boolean validSize = part.getSize()<=1024*1024;
+			if(validType && validSize) {
+				String appPath = request.getServletContext().getRealPath("");
+	            String s = File.separator;         
+	            String savePath = appPath + s + "View" + s + "Image" + s + uploadKey;
+	            File fileSaveDir = new File(savePath);
+	            if (!fileSaveDir.exists()) {
+	                fileSaveDir.mkdir();
+	            }
+	            String fileName = getFileName(savePath, contentType);
+	            part.write(savePath + s + fileName);
+	            return fileName;
+			}
+			else {
+				String validKey = "image_larg";
+				if(!validType) validKey = "wrong_image";
+				request.getSession().setAttribute("flash_error", lang.getValMsg(validKey));
+				return null;
+			}
+		} 
+		catch(Exception ex) {
+			request.getSession().setAttribute("flash_error", lang.getValMsg("upload_error"));
+			ex.printStackTrace();
+			return null;
+		}		
 	}
 
 	public static String imageLink(HttpServletRequest request, String dir, String name) {
 		String path = request.getContextPath() + "/View/Image/";
 		return path + dir + "/" + name;
+	}
+	
+	private static String getFileName(String savePath, String contentType) {
+		String s = File.separator;
+		String fileP = "img";
+        String fileS = "." + contentType.substring(6);
+        Random ran = new Random();
+        String fileN = ""+ ran.nextInt(1000);
+        String fileName = fileP + fileN + fileS;
+        File file = new File(savePath + s + fileName);	            
+        while (file.exists()) {
+        	fileN = ran.nextInt(100) + fileN;
+        	fileName = fileP + fileN + fileS;
+        	file = new File(savePath + s + fileName);
+        }
+		return fileName;
 	}
 }

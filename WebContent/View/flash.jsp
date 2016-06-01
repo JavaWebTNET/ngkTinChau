@@ -33,7 +33,7 @@
 
 <% String[] fvalids = (String[])request.getSession().getAttribute("flash_valid");
 	request.getSession().removeAttribute("flash_valid");
-   if(fmsg!=null) {
+   if(fvalids!=null) {
 %>
     <div class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

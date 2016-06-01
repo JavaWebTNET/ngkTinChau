@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import lang.Lang;
 
 /**
- * Servlet implementation class ProductController
+ * Servlet implementation class ServiceController
  */
-@WebServlet("/admin/danhmuc/*")
-public class ProductController extends HttpServlet {
+@WebServlet("/admin/dichvu/*")
+public class ServiceController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductController() {
+    public ServiceController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -86,7 +86,7 @@ public class ProductController extends HttpServlet {
 			}
 		}
 	}
-	
+
 	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("index");
@@ -131,5 +131,4 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("errorPage");
 	}
-	
 }

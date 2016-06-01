@@ -1,10 +1,15 @@
 package models;
 
+import javax.servlet.http.HttpServletRequest;
+
+import dao.ImageDao;
+
 public class DichVu {
 	private int id_dv;
 	private String name_dv;
 	private String image;
 	private String detail;
+	public static String uploadDir = "dichvu";
 	
 	public int getId_dv() {
 		return id_dv;
@@ -37,4 +42,8 @@ public class DichVu {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}	
+	
+	public  String imageLink(HttpServletRequest request) {
+		return ImageDao.imageLink(request, DichVu.uploadDir, this.getImage());
+	}
 }

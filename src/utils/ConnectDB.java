@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConnectDB {
 	private static String username;
@@ -27,9 +26,6 @@ public class ConnectDB {
 		
 	     	Class.forName("com.mysql.jdbc.Driver");				
 			Connection con=DriverManager.getConnection(url,username,pass);
-			/*Statement stmt = con.createStatement();
-			stmt.executeUpdate("SET CHARACTER SET UTF8");
-			stmt.close();*/
 			return con;		
 		} 
 		catch(SQLException ex) {			

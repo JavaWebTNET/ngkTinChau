@@ -13,7 +13,7 @@ if(request.getAttribute("thongtinsua")!=null){
   
   			<% if(thongtin!=null){ %>
   
-		  <form class="form-horizontal" role="form" enctype="multipart/form-data" action="${ pageContext.request.contextPath}/admin/suathongtin" method="post" >
+		  <form class="form-horizontal" role="form" enctype="multipart/form-data" action="${ pageContext.request.contextPath}/admin/thongtin/update" method="post" >
 		  <input type="hidden" id="id_tt" name="id_tt"  value="<%= thongtin.getId_tt()%>">
 		  <div class="form-group">
 		  
