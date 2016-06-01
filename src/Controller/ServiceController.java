@@ -1,19 +1,25 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.DichVuDAO;
 import lang.Lang;
+import models.DichVu;
 
 /**
  * Servlet implementation class ServiceController
  */
 @WebServlet("/admin/dichvu/*")
+@MultipartConfig
 public class ServiceController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -89,15 +95,31 @@ public class ServiceController extends HttpServlet {
 
 	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("index");
-		Lang lang = new Lang("en");
-		System.out.println(lang.getMessage("host"));
-		System.out.println(lang.getMessage("database"));
+		DichVuDAO dichvuDao = new DichVuDAO();
+		int offsets = dichvuDao.offsets();
+		int totalPage = offsets/DichVuDAO.limit;
+		if(offsets%DichVuDAO.limit>0) totalPage++;
+		request.setAttribute("totalPage", totalPage);
+		int pageno = 1;
+		try {
+			pageno = Integer.parseInt(request.getParameter("page"));
+			if(pageno<1) pageno=1;
+			if(pageno>totalPage) pageno=totalPage;
+		} catch (Exception ex) {
+			
+		}
+		request.setAttribute("pageno", pageno);
+		dichvuDao = new DichVuDAO();
+		Vector<DichVu> allDV = dichvuDao.pageDichVu(pageno);
+		request.setAttribute("dichvu", allDV);
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLdichvu.jsp");
+		rq.forward(request,response);
 	}
 	
 	protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("create");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themdichvu.jsp");
+		rq.forward(request,response);
 	}
 	
 	protected void show(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
@@ -107,24 +129,56 @@ public class ServiceController extends HttpServlet {
 	
 	protected void store(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("store");
-		String referer = request.getHeader("Referer");
-		response.sendRedirect(referer);
+		request.setCharacterEncoding("utf-8");
+		Lang lang = new Lang();
+		DichVuDAO dichvuDao = new DichVuDAO();
+		DichVu dichvu = dichvuDao.validAdd(request);
+		if(dichvu!=null) {
+			if(dichvuDao.addDichVu(dichvu))
+				request.getSession().setAttribute("flash_success", lang.getMessage("create_service_success"));
+			else
+				request.getSession().setAttribute("flash_error", lang.getMessage("create_service_fail"));
+		}
+		response.sendRedirect(request.getContextPath() + "/admin/dichvu");
 	}
 	
 	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("edit " +id);
+		DichVuDAO dichvuDao = new DichVuDAO();
+		DichVu dichvu = dichvuDao.findDV(id);
+		if(dichvu!=null) {
+			request.setAttribute("dichvu", dichvu);
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suadichvu.jsp");
+			rq.forward(request,response);
+		}
+		else errorPage(request, response);		
 	}
 	
 	protected void update(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("update " +id);
+		request.setCharacterEncoding("utf-8");
+		Lang lang = new Lang();
+		DichVuDAO dichvuDao = new DichVuDAO();
+		DichVu dichvu = dichvuDao.validUdt(request, id);
+		if(dichvu!=null) {
+			dichvuDao = new DichVuDAO();
+			if(dichvuDao.udtDichVu(dichvu))
+				request.getSession().setAttribute("flash_success", lang.getMessage("update_service_success"));
+			else
+				request.getSession().setAttribute("flash_error", lang.getMessage("update_service_fail"));
+		}
+		response.sendRedirect(request.getContextPath() + "/admin/dichvu");
 	}
 	
 	protected void delete(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("delete " +id);
+		Lang lang = new Lang();
+		DichVuDAO dichvuDao = new DichVuDAO();
+		if(dichvuDao.delDichVu(id))
+			request.getSession().setAttribute("flash_success", lang.getMessage("delete_service_success"));
+		else
+			request.getSession().setAttribute("flash_success", lang.getMessage("delete_service_success"));
+		response.sendRedirect(request.getContextPath() + "/admin/dichvu");
 	}
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

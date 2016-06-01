@@ -157,15 +157,13 @@ public class SliderController extends HttpServlet {
 		// TODO Auto-generated method stub
 		Lang lang = new Lang();
 		SliderDAO sliderDAO=new SliderDAO();
-		boolean result=sliderDAO.delSlider(id);
-		if(result==true) {
+		if(sliderDAO.delSlider(id)) {
 			 request.getSession().setAttribute("flash_success", lang.getMessage("delete_slider_success"));
-			 response.sendRedirect(request.getContextPath()+"/admin/slider");
 		}
 		else {
-			 request.getSession().setAttribute("flash_error", lang.getMessage("delete_slider_fail"));
-			 response.sendRedirect(request.getContextPath()+"/admin/slider");		
-		}	
+			 request.getSession().setAttribute("flash_error", lang.getMessage("delete_slider_fail"));			 		
+		}
+		response.sendRedirect(request.getContextPath()+"/admin/slider");
 	}
 
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

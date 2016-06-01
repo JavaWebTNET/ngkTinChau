@@ -122,7 +122,6 @@ public class ThongTinDAO {
 	public ThongTin validUdt(HttpServletRequest request) throws IOException, ServletException {
 		Part part = request.getPart("file-image");
 		String image_slider = null;
-		System.out.println(part.getSize());
 		if(!part.getSubmittedFileName().equals("")) {
 			image_slider = ImageDao.imageUpload(request, ThongTin.uploadDir, part);  
 		}
