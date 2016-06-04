@@ -24,7 +24,7 @@
  	for(DanhMuc itemlv0:hmAllDM.get(0)){
 	%>
 	
-	 <li><a href="<%= itemlv0.getLink() %>>"><%= itemlv0.getTitle() %></a>
+	 <li><a href="#"><%= itemlv0.getTitle() %></a>
 	 
 			<!-- 	2------- -->
 		 <% if(hmAllDM.containsKey(itemlv0.getId())){
@@ -35,7 +35,7 @@
 				<%
 				for(DanhMuc itemlv1:hmAllDM.get(itemlv0.getId())){
 				%>
-				  <li class="li-lv1"><a href="<%= itemlv1.getLink()%>"><%= itemlv1.getTitle()%></a></li>
+				  <li class="li-lv1"><a href="#"><%= itemlv1.getTitle()%></a></li>
 					
 				<!-- 	3------- -->
 					 <% 
@@ -45,7 +45,7 @@
 							<%
 							for(DanhMuc itemlv2:hmAllDM.get(itemlv1.getId())){
 							%>
-								<li><a  href="<%= itemlv2.getLink()%>"><%= itemlv2.getTitle()%></a>								</li>
+								<li><a  href="#"><%= itemlv2.getTitle()%></a>								</li>
 									
 							<%
 							}

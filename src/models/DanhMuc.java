@@ -3,7 +3,6 @@ package models;
 public class DanhMuc {
 	private int id;
 	private String title;
-	private String link;
 	private int super_id;
 	
 	public DanhMuc() {
@@ -24,14 +23,6 @@ public class DanhMuc {
 	
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	
-	public String getLink() {
-		return link;
-	}
-	
-	public void setLink(String link) {
-		this.link = link;
 	}
 	
 	public int getSuper_id() {

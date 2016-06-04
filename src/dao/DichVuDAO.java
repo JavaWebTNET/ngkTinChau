@@ -20,13 +20,14 @@ public class DichVuDAO {
 	private PreparedStatement pre;
 	private Connection connection;
 	private ResultSet rs;
-	public static int limit = 2;
+	public static int limit = 10;
 	
 	public DichVuDAO() { 
-		connection=ConnectDB.ConnectData();		 
+				 
 	}	
 	
 	public Vector<DichVu> allDichVu() {
+		connection=ConnectDB.ConnectData();
 		Vector<DichVu> vtdv=new Vector<DichVu>();
 		try {		
 			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null";
@@ -53,6 +54,7 @@ public class DichVuDAO {
 	}
 	
 	public int offsets() {
+		connection=ConnectDB.ConnectData();
 		try {		
 			String sql="SELECT count(id_dv) as offset from dichvu where delete_at is null";
 			pre=connection.prepareStatement(sql);			
@@ -73,6 +75,7 @@ public class DichVuDAO {
 	}
 	
 	public Vector<DichVu> pageDichVu(int page) {
+		connection=ConnectDB.ConnectData();
 		Vector<DichVu> vtdv=new Vector<DichVu>();
 		try {		
 			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null limit ? offset ?";
@@ -100,7 +103,8 @@ public class DichVuDAO {
 		return vtdv;	
 	}
 	
-	public boolean addDichVu(DichVu dv) {			
+	public boolean addDichVu(DichVu dv) {	
+		connection=ConnectDB.ConnectData();
 		try {
 			String sql="insert into dichvu(name_dv,image,detail,create_at) values(?,?,?,now())";
 			pre=connection.prepareStatement(sql);
@@ -123,6 +127,7 @@ public class DichVuDAO {
 	}
 	
 	public DichVu findDV(int id) {
+		connection=ConnectDB.ConnectData();
 		try {		
 			String sql="SELECT id_dv,name_dv,image,detail from dichvu where id_dv=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
@@ -149,6 +154,7 @@ public class DichVuDAO {
 	}
 	
 	public boolean udtDichVu(DichVu dv) {
+		connection=ConnectDB.ConnectData();
 		try {		
 			String sql="update dichvu set name_dv=?,image=?,detail=?,update_at=now() where id_dv=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
@@ -170,6 +176,7 @@ public class DichVuDAO {
 	}
 	
 	public boolean delDichVu(int id) {
+		connection=ConnectDB.ConnectData();
 		try {		
 			String sql="update dichvu set delete_at=now() where id_dv=? and delete_at is null";
 			pre=connection.prepareStatement(sql);

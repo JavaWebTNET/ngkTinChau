@@ -109,7 +109,6 @@ public class ServiceController extends HttpServlet {
 			
 		}
 		request.setAttribute("pageno", pageno);
-		dichvuDao = new DichVuDAO();
 		Vector<DichVu> allDV = dichvuDao.pageDichVu(pageno);
 		request.setAttribute("dichvu", allDV);
 		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLdichvu.jsp");
@@ -161,7 +160,6 @@ public class ServiceController extends HttpServlet {
 		DichVuDAO dichvuDao = new DichVuDAO();
 		DichVu dichvu = dichvuDao.validUdt(request, id);
 		if(dichvu!=null) {
-			dichvuDao = new DichVuDAO();
 			if(dichvuDao.udtDichVu(dichvu))
 				request.getSession().setAttribute("flash_success", lang.getMessage("update_service_success"));
 			else

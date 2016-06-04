@@ -22,10 +22,11 @@ public class SliderDAO {
 	private ResultSet rs;
 	
 	public SliderDAO(){
-		connection=ConnectDB.ConnectData();		
+			
 	}
 	/*hàm lấy hết dữ liêu trong bang slider*/
 	public Vector<Slider> allSlider() {
+		connection=ConnectDB.ConnectData();	
 		Vector<Slider> vtsd=new Vector<Slider>();
 		try {			
 			String sql="SELECT id_sd,title,image FROM slider where delete_at is null";
@@ -53,6 +54,7 @@ public class SliderDAO {
 	
 /*	thêm một ảnh vào bảng slider*/
 	public boolean addSlider(Slider sld) {		
+		connection=ConnectDB.ConnectData();	
 		try {
 			String sql="insert into slider(title,image,create_at) values(?,?,now())";
 			pre=connection.prepareStatement(sql);
@@ -72,6 +74,7 @@ public class SliderDAO {
 	}
 	
 	public boolean delSlider(int id){	
+		connection=ConnectDB.ConnectData();	
 		try {
 			String sql="update slider set delete_at=now() where id_sd=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
@@ -90,6 +93,7 @@ public class SliderDAO {
 	}
 	
 	public boolean udtSlider(Slider sld) {
+		connection=ConnectDB.ConnectData();	
 		try {
 			String sql="update slider set title=?, image=?, update_at=now() where id_sd=? and delete_at is null";
 			pre=connection.prepareStatement(sql);

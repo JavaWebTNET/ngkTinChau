@@ -730,7 +730,7 @@ padding:0px !important;
        padding: 1.5vw 0vw 5vw 0vw;
 }
 .center-right-main-admin-child{
-	height: 300px;
+	min-height: 300px;
 	padding:0px !important;
 /* 	background:red; */
 }

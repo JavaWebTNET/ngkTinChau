@@ -1,15 +1,20 @@
 package models;
 
+import javax.servlet.http.HttpServletRequest;
+
+import dao.ImageDao;
+
 public class SanPham {
 	private int id;
 	private String title;
 	private String image;
-	private int prominent;
+	private boolean prominent;
 	private String detail;
 	private int super_id;
+	public static String uploadDir = "sanpham";
 	
 	public SanPham(){
-		
+		prominent = false;
 	}
 	
 	public int getId() {
@@ -36,14 +41,14 @@ public class SanPham {
 		this.image = image;
 	}
 	
-	public int getProminent() {
+	public boolean isProminent() {
 		return prominent;
 	}
-	
-	public void setProminent(int prominent) {
+
+	public void setProminent(boolean prominent) {
 		this.prominent = prominent;
 	}
-	
+
 	public String getDetail() {
 		return detail;
 	}
@@ -58,5 +63,9 @@ public class SanPham {
 	
 	public void setSuper_id(int super_id) {
 		this.super_id = super_id;
+	}
+	
+	public  String imageLink(HttpServletRequest request) {
+		return ImageDao.imageLink(request, SanPham.uploadDir, this.getImage());
 	}
 }

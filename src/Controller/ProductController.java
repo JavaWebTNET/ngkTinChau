@@ -1,19 +1,27 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.DanhMucDAO;
+import dao.SanPhamDAO;
 import lang.Lang;
+import models.DanhMuc;
+import models.SanPham;
 
 /**
  * Servlet implementation class ProductController
  */
 @WebServlet("/admin/danhmuc/*")
+@MultipartConfig
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,9 +40,7 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
-			index(request, response);
-		} else if(pathInfo.equals("/create")) {
-			create(request, response);
+			index(request, response, 0);
 		} else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
@@ -46,7 +52,9 @@ public class ProductController extends HttpServlet {
 			if(id <= 0 || pathParts.length > 3) {
 				errorPage(request, response);
 			} else if(pathParts.length == 2) {
-				show(request, response, id);
+				index(request, response, id);
+			} else if(pathParts[2].equals("create")) {
+				create(request, response, id);
 			} else if(pathParts[2].equals("edit")) {
 				edit(request, response, id);
 			} else {
@@ -62,7 +70,7 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
-			store(request, response);
+			store(request, response, 0);
 		} else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
@@ -73,11 +81,21 @@ public class ProductController extends HttpServlet {
 			}
 			if(id <= 0 || pathParts.length > 3) {
 				errorPage(request, response);
+			} else if(pathParts.length == 2) {
+				store(request, response, id);
 			} else if(pathParts.length == 3) {
-				if(pathParts[2].equals("update")) {
+				if(pathParts[2].equals("store")) {
+					storeSP(request, response, id);
+				} else if(pathParts[2].equals("update")) {
 					update(request, response, id);
+				} else if(pathParts[2].equals("updatesp")) {
+					updateSP(request, response, id);
 				} else if(pathParts[2].equals("delete")) {
 					delete(request, response, id);
+				} else if(pathParts[2].equals("deletesp")) {
+					deleteSP(request, response, id);
+				} else if(pathParts[2].equals("prosp")) {
+					proSP(request, response, id);
 				} else {
 					errorPage(request, response);
 				}
@@ -87,44 +105,173 @@ public class ProductController extends HttpServlet {
 		}
 	}
 	
-	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void index(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("index");
-		Lang lang = new Lang("en");
-		System.out.println(lang.getMessage("host"));
-		System.out.println(lang.getMessage("database"));
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(supId);
+		if(danhmuc!=null || supId==0) {
+			request.setAttribute("canAddDM", danhmucDao.canAddDM(supId));
+			request.setAttribute("dam", danhmuc);
+			Vector<DanhMuc> vtdm = danhmucDao.allDanhMuc(supId);
+			request.setAttribute("danhmuc", vtdm);
+			SanPhamDAO sanphamDao = new SanPhamDAO();
+			int offsets = sanphamDao.offsets(supId);
+			int totalPage = offsets/SanPhamDAO.limit;
+			if(offsets%SanPhamDAO.limit>0) totalPage++;
+			request.setAttribute("totalPage", totalPage);
+			int pageno = 1;
+			try {
+				pageno = Integer.parseInt(request.getParameter("page"));
+				if(pageno<1) pageno=1;
+				if(pageno>totalPage) pageno=totalPage;
+			} catch (Exception ex) {
+				
+			}
+			request.setAttribute("pageno", pageno);
+			Vector<SanPham> vtsp = sanphamDao.pageSanPham(pageno, supId);
+			request.setAttribute("sanpham", vtsp);
+			
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLdanhmuc.jsp");
+			rq.forward(request,response);
+		}
+		else {
+			errorPage(request, response);
+		}
 	}
 	
-	protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void create(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("create");
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(supId);
+		if(danhmuc != null) {
+			request.setAttribute("dam", danhmuc);
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themsanpham.jsp");
+			rq.forward(request,response);
+		}
+		else
+			errorPage(request, response);
 	}
 	
-	protected void show(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+	protected void store(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("show " +id);
+		Lang lang = new Lang();
+		request.setCharacterEncoding("utf-8");
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		if(danhmucDao.canAddDM(supId)) {
+			DanhMuc danhmuc = danhmucDao.validAdd(request, supId);
+			if(danhmuc!=null) {
+				if(danhmucDao.addDanhMuc(danhmuc)) 
+					request.getSession().setAttribute("flash_success", lang.getMessage("create_category_success"));
+				else
+					request.getSession().setAttribute("flash_error", lang.getMessage("create_category_fail"));				
+			}
+		}
+		else
+			request.getSession().setAttribute("flash_error", lang.getMessage("create_category_fail"));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId:""));
 	}
 	
-	protected void store(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void storeSP(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("store");
-		String referer = request.getHeader("Referer");
-		response.sendRedirect(referer);
+		Lang lang = new Lang();
+		request.setCharacterEncoding("utf-8");
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(supId);
+		if(danhmuc!=null) {
+			SanPham sanpham = sanphamDao.validAdd(request, supId);
+			if(sanpham!=null) {
+				if(sanphamDao.addSanPham(sanpham)) 
+					request.getSession().setAttribute("flash_success", lang.getMessage("create_product_success"));
+				else
+					request.getSession().setAttribute("flash_error", lang.getMessage("create_product_fail"));			
+			}
+		}
+		else
+			request.getSession().setAttribute("flash_error", lang.getMessage("create_product_fail"));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + supId);
+		
 	}
 	
 	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("edit " +id);
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		SanPham sanpham = sanphamDao.findSP(id);
+		if(sanpham != null) {
+			request.setAttribute("sp", sanpham);
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suasanpham.jsp");
+			rq.forward(request,response);
+		}
+		else
+			errorPage(request, response);
 	}
 	
 	protected void update(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("update " +id);
+		Lang lang = new Lang();
+		request.setCharacterEncoding("utf-8");
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.validUdt(request, id);
+		if(danhmuc!=null) {
+			if(danhmucDao.udtDanhMuc(danhmuc))
+				request.getSession().setAttribute("flash_success", lang.getMessage("update_category_success"));
+			else
+				request.getSession().setAttribute("flash_error", lang.getMessage("update_category_fail"));	
+		}
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null?danhmuc.getSuper_id():""));
+	}
+	
+	protected void updateSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Lang lang = new Lang();
+		request.setCharacterEncoding("utf-8");
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		SanPham sanpham = sanphamDao.validUdt(request, id);
+		if(sanpham!=null) {
+			if(sanphamDao.udtSanPham(sanpham))
+				request.getSession().setAttribute("flash_success", lang.getMessage("update_product_success"));
+			else
+				request.getSession().setAttribute("flash_error", lang.getMessage("update_product_fail"));			
+		}
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (sanpham!=null?sanpham.getSuper_id():""));
 	}
 	
 	protected void delete(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("delete " +id);
+		Lang lang = new Lang();
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(id);
+		if(danhmucDao.delDanhMuc(id))
+			request.getSession().setAttribute("flash_success", lang.getMessage("delete_category_success"));
+		else
+			request.getSession().setAttribute("flash_error", lang.getMessage("delete_category_fail"));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null && danhmuc.getSuper_id()>0?danhmuc.getSuper_id():""));
+	}
+	
+	protected void deleteSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Lang lang = new Lang();
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		SanPham sanpham = sanphamDao.findSP(id);
+		if(sanphamDao.delSanPham(id))
+			request.getSession().setAttribute("flash_success", lang.getMessage("delete_product_success"));
+		else
+			request.getSession().setAttribute("flash_error", lang.getMessage("delete_product_fail"));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (sanpham!=null?sanpham.getSuper_id():""));
+	}
+	
+	protected void proSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Lang lang = new Lang();
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		SanPham sanpham = sanphamDao.findSP(id);
+		if(sanphamDao.proSanPham(id))
+			request.getSession().setAttribute("flash_success", 
+					lang.getMessage("pro_"+(sanpham.isProminent()?"off":"on")+"_product_success"));
+		else
+			request.getSession().setAttribute("flash_error", 
+					lang.getMessage("pro_"+(sanpham!=null && sanpham.isProminent()?"off":"on")+"_product_fail"));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (sanpham!=null?sanpham.getSuper_id():""));
 	}
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
