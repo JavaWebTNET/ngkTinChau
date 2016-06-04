@@ -30,16 +30,15 @@ public class SanPhamDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,detail,super_ID from sanpham where delete_at is null";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where delete_at is null";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();
-				sp.setId(rs.getInt("is_sp"));
+				sp.setId(rs.getInt("id_sp"));
 				sp.setTitle(rs.getString("title"));
 				sp.setImage(rs.getString("image"));
 				sp.setProminent(rs.getBoolean("prominent"));
-				sp.setDetail(rs.getString("detail"));
 				sp.setSuper_id(rs.getInt("super_ID"));
 				vtsp.add(sp);
 			}		
@@ -128,18 +127,17 @@ public class SanPhamDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,detail,super_ID from sanpham where delete_at is null limit ? offset ?";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where delete_at is null limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, limit);
 			pre.setInt(2, (page-1)*limit);
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();
-				sp.setId(rs.getInt("is_sp"));
+				sp.setId(rs.getInt("id_sp"));
 				sp.setTitle(rs.getString("title"));
 				sp.setImage(rs.getString("image"));
 				sp.setProminent(rs.getBoolean("prominent"));
-				sp.setDetail(rs.getString("detail"));
 				sp.setSuper_id(rs.getInt("super_ID"));
 				vtsp.add(sp);
 			}		
@@ -159,7 +157,7 @@ public class SanPhamDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,detail,super_ID from sanpham where super_ID=? and delete_at is null limit ? offset ?";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where super_ID=? and delete_at is null limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, idDM);
 			pre.setInt(2, limit);
@@ -167,11 +165,10 @@ public class SanPhamDAO {
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();
-				sp.setId(rs.getInt("is_sp"));
+				sp.setId(rs.getInt("id_sp"));
 				sp.setTitle(rs.getString("title"));
 				sp.setImage(rs.getString("image"));
 				sp.setProminent(rs.getBoolean("prominent"));
-				sp.setDetail(rs.getString("detail"));
 				sp.setSuper_id(rs.getInt("super_ID"));
 				vtsp.add(sp);
 			}		
@@ -195,7 +192,7 @@ public class SanPhamDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,detail,super_ID from sanpham where superID in (?) and delete_at is null limit ? offset ?";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where superID in (?) and delete_at is null limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1, subIds.substring(1, subIds.length() -1));
 			pre.setInt(2, limit);
@@ -203,11 +200,10 @@ public class SanPhamDAO {
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();
-				sp.setId(rs.getInt("is_sp"));
+				sp.setId(rs.getInt("id_sp"));
 				sp.setTitle(rs.getString("title"));
 				sp.setImage(rs.getString("image"));
 				sp.setProminent(rs.getBoolean("prominent"));
-				sp.setDetail(rs.getString("detail"));
 				sp.setSuper_id(rs.getInt("super_ID"));
 				vtsp.add(sp);
 			}		
@@ -226,14 +222,13 @@ public class SanPhamDAO {
 	public boolean addSanPham(SanPham sp) {			
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="insert into sanpham(title,image,prominent,detail,super_ID,create_at) values(?,?,?,?,?,now())";
+			String sql="insert into sanpham(title,image,prominent,super_ID,create_at) values(?,?,?,?,now())";
 			pre=connection.prepareStatement(sql);
 			
 			pre.setString(1,sp.getTitle());
 			pre.setString(2,sp.getImage());
 			pre.setBoolean(3, sp.isProminent());
-			pre.setString(4,sp.getDetail());
-			pre.setInt(5, sp.getSuper_id());
+			pre.setInt(4, sp.getSuper_id());
 			
 			return pre.executeUpdate()>0;
 		}
@@ -251,17 +246,16 @@ public class SanPhamDAO {
 	public SanPham findSP(int id) {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,detail,super_ID from sanpham where id_sp=? and delete_at is null";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where id_sp=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, id);
 			rs=pre.executeQuery();
 			if(rs.next()) {
 				SanPham sp=new SanPham();
-				sp.setId(rs.getInt("is_sp"));
+				sp.setId(rs.getInt("id_sp"));
 				sp.setTitle(rs.getString("title"));
 				sp.setImage(rs.getString("image"));
 				sp.setProminent(rs.getBoolean("prominent"));
-				sp.setDetail(rs.getString("detail"));
 				sp.setSuper_id(rs.getInt("super_ID"));
 				return sp;
 			}		
@@ -280,12 +274,11 @@ public class SanPhamDAO {
 	public boolean udtSanPham(SanPham sp) {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="update sanpham set title=?,image=?,detail=?,update_at=now() where id_sp=? and delete_at is null";
+			String sql="update sanpham set title=?,image=?,update_at=now() where id_sp=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1, sp.getTitle());
 			pre.setString(2, sp.getImage());
-			pre.setString(3, sp.getDetail());
-			pre.setInt(4, sp.getId());
+			pre.setInt(3, sp.getId());
 			return pre.executeUpdate()>0;	
 		}
 		catch(SQLException ex) {			
@@ -350,7 +343,6 @@ public class SanPhamDAO {
 			
 			if(image_sp!=null) {
 				sanpham.setTitle(request.getParameter("title"));
-				sanpham.setDetail(request.getParameter("detail"));
 				sanpham.setImage(image_sp);
 				sanpham.setSuper_id(supID);
 				return sanpham;
@@ -371,7 +363,6 @@ public class SanPhamDAO {
 		
 		SanPham sanpham = findSP(id);
 		sanpham.setTitle(request.getParameter("title"));
-		sanpham.setDetail(request.getParameter("detail"));
 		if(image_sp!=null)
 			sanpham.setImage(image_sp);
 		return sanpham;

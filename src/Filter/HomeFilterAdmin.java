@@ -1,9 +1,6 @@
 package Filter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,15 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.DanhMucDAO;
-import dao.DichVuDAO;
-import dao.SliderDAO;
-import dao.ThongTinDAO;
 import dao.UserDao;
-import models.DanhMuc;
-import models.DichVu;
-import models.Slider;
-import models.ThongTin;
 
 /**
  * Servlet Filter implementation class HomeFilter

@@ -22,7 +22,7 @@
                 <th>STT</th>
                 <th>Hình ảnh</th> 
                 <th>Tiêu đề</th>                                           
-                <th style="color:red;" colspan=2>Chức năng</th>
+                <th style="color:red;" colspan=3>Chức năng</th>
             </tr>
        		<% if(vtsanpham.size()>0) {
        		int i=1;
@@ -39,6 +39,13 @@
                     	<%=item.getTitle() %>
                     </td>
                     <td> 
+                     <form role="form" method="post" 
+                     action="${ pageContext.request.contextPath}/admin/danhmuc/<%= item.getId()%>/prosp">
+                        <button type="submit" class="btn btn-<%=item.isProminent()?"info":"primary" %>">
+                        <%=item.isProminent()?"Tắt nổi bật":"Chọn nổi bật" %></button>
+                     </form>
+                    </td>  
+                    <td> 
                      <form role="form" method="get" 
                      action="${ pageContext.request.contextPath}/admin/danhmuc/<%= item.getId()%>/edit">
                         <button type="submit" class="btn btn-info">Sửa</button>
@@ -46,7 +53,7 @@
                     </td>  
                     <td> 
                      <form role="form" method="post" 
-                     action="${ pageContext.request.contextPath}/admin/danhmuc/<%= item.getId()%>/delete">
+                     action="${ pageContext.request.contextPath}/admin/danhmuc/<%= item.getId()%>/deletesp">
                        <button type="submit" class="btn btn-danger" onclick="return window.confirm('Xoá?');">Xoá</button>
                      </form>
                     </td>                                          

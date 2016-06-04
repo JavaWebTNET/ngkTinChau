@@ -55,8 +55,12 @@ public class ProductController extends HttpServlet {
 				index(request, response, id);
 			} else if(pathParts[2].equals("create")) {
 				create(request, response, id);
+			} else if(pathParts[2].equals("createsp")) {
+				createSP(request, response, id);
 			} else if(pathParts[2].equals("edit")) {
 				edit(request, response, id);
+			} else if(pathParts[2].equals("editsp")) {
+				editSP(request, response, id);
 			} else {
 				errorPage(request, response);
 			}
@@ -152,6 +156,19 @@ public class ProductController extends HttpServlet {
 			errorPage(request, response);
 	}
 	
+	protected void createSP(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(supId);
+		if(danhmuc != null) {
+			request.setAttribute("dam", danhmuc);
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themsanpham.jsp");
+			rq.forward(request,response);
+		}
+		else
+			errorPage(request, response);
+	}
+	
 	protected void store(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Lang lang = new Lang();
@@ -194,6 +211,19 @@ public class ProductController extends HttpServlet {
 	}
 	
 	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		SanPhamDAO sanphamDao = new SanPhamDAO();
+		SanPham sanpham = sanphamDao.findSP(id);
+		if(sanpham != null) {
+			request.setAttribute("sp", sanpham);
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suasanpham.jsp");
+			rq.forward(request,response);
+		}
+		else
+			errorPage(request, response);
+	}
+	
+	protected void editSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		SanPhamDAO sanphamDao = new SanPhamDAO();
 		SanPham sanpham = sanphamDao.findSP(id);

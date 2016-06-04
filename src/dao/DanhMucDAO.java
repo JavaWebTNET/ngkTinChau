@@ -113,7 +113,7 @@ public class DanhMucDAO {
 	public DanhMuc findDM(int id_dm) {	
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="select id_dm,title,super_id from danhmuc where id_dm=? and delete_at is null";
+			String sql="select id_dm,title,detail,super_id from danhmuc where id_dm=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1,id_dm);
 			DanhMuc dam=new DanhMuc();
@@ -121,6 +121,7 @@ public class DanhMucDAO {
 			if(rs.next()) {				
 				dam.setId(rs.getInt("id_dm"));
 				dam.setTitle(rs.getString("title"));
+				dam.setDetail(rs.getString("detail"));
 				dam.setSuper_id(rs.getInt("super_id"));
 				return dam;			
 			}		
@@ -141,10 +142,11 @@ public class DanhMucDAO {
 	public boolean addDanhMuc(DanhMuc dam) {	
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="insert into danhmuc(title,super_id,create_at) values(?,?,now())";		
+			String sql="insert into danhmuc(title,detail,super_id,create_at) values(?,?,?,now())";		
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,dam.getTitle());
-			pre.setInt(2,dam.getSuper_id());			
+			pre.setString(2, dam.getDetail());
+			pre.setInt(3,dam.getSuper_id());			
 			return pre.executeUpdate()>0;			
 		}
 		catch(SQLException ex) {			
@@ -183,10 +185,11 @@ public class DanhMucDAO {
 	public boolean udtDanhMuc(DanhMuc dam) {
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="update danhmuc set title=?,update_at=now() where id_dm=? and delete_at is null";
+			String sql="update danhmuc set title=?,detail=?,update_at=now() where id_dm=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,dam.getTitle());
-			pre.setInt(2,dam.getId());
+			pre.setString(2, dam.getDetail());
+			pre.setInt(3,dam.getId());
 			return pre.executeUpdate()>0;
 		}
 		catch(SQLException ex) {			
@@ -204,14 +207,17 @@ public class DanhMucDAO {
 	public DanhMuc validAdd(HttpServletRequest request, int supID) {
 		DanhMuc danhmuc = new DanhMuc();
 		danhmuc.setTitle(request.getParameter("title"));
+		danhmuc.setDetail(request.getParameter("detail"));
 		danhmuc.setSuper_id(supID);
 		return danhmuc;
 	}
 	
 	public DanhMuc validUdt(HttpServletRequest request, int id) {
 		DanhMuc danhmuc = findDM(id);
-		if(danhmuc!=null)
+		if(danhmuc!=null) {
 			danhmuc.setTitle(request.getParameter("title"));
+			danhmuc.setDetail(request.getParameter("detail"));
+		}
 		return danhmuc;
 	}
 	

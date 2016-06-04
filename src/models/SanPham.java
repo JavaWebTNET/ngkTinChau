@@ -9,7 +9,6 @@ public class SanPham {
 	private String title;
 	private String image;
 	private boolean prominent;
-	private String detail;
 	private int super_id;
 	public static String uploadDir = "sanpham";
 	
@@ -47,14 +46,6 @@ public class SanPham {
 
 	public void setProminent(boolean prominent) {
 		this.prominent = prominent;
-	}
-
-	public String getDetail() {
-		return detail;
-	}
-	
-	public void setDetail(String detail) {
-		this.detail = detail;
 	}
 	
 	public int getSuper_id() {

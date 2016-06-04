@@ -31,7 +31,7 @@
                     <td> 
                      <form role="form" method="post" 
                      action="${ pageContext.request.contextPath}/admin/danhmuc/<%= item.getId()%>/update">
-                     	<div class="col-sm-10"><input class="form-control" type="text" name="title" /></div>
+                     	<div class="col-sm-10"><input class="form-control" type="text" name="title" placeholder="Tiêu đề mới"/></div>
                         <div class="col-sm-2"><button type="submit" class="btn btn-info">Sửa</button></div>
                      </form>
                     </td>  
@@ -50,7 +50,7 @@
    	<% if(canAddDM) {%>		
 	<form class="form-horizontal" role="form" action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam!=null?dam.getId():""%>" method="post" >
 	 	<div class="form-group"> 	
-	    	<div class="col-sm-8"><input class="form-control" type="text" name="title" /></div>
+	    	<div class="col-sm-8"><input class="form-control" type="text" name="title" placeholder="Danh mục mới"/></div>
 	    	<div class="col-sm-4"><input class="btn btn-primary" type="submit" value="Thêm Danh Mục" /></div>       
 	    </div>		 				 				 			
 	</form>

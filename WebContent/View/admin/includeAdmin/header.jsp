@@ -10,7 +10,8 @@
 		<img src="<%=request.getContextPath()%>/View/Image/anhnenbaner.png" class="img-responsive">
 
 		<div class="col-sm-2 col-xs-2 contai-baner-logo">
-			<img src="<%=request.getContextPath()%>/View/Image/logo.png">
+			<a href="<%=request.getContextPath()%>">
+			<img src="<%=thongtin1.imageLink(request) %>"></a>
 
 		</div>
 
@@ -36,23 +37,19 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                        	 </button>
-							<a class="navbar-brand visible-xs-block" href="#">Danh Mục</a>
+							<p class="navbar-brand visible-xs-block" href="#">MENU</p>
 				</div>
 
 
 				<div class="navbar-collapse collapse div-menu-main-collaspe" id="menu">
 					<ul class="nav navbar-nav " >
-						<li class="icon-alt"> <A HREF="#" >Trang Chủ</A></li>	
+						<li class="icon-alt"> <A HREF="<%=request.getContextPath() %>" >Trang Chủ</A></li>	
 
                         <li><a href="#"  title="SỰ KIỆN">Giới Thiệu</a></li>
                         <li><a href="#" title="THẾ GIỚI" >Sản Phẩm</a></li>
                         <li><a href="#" title="KHUYẾN MẠI"  >Dịch Vụ</a></li>
-                       
-                        <li><a href="#" title=""  >Tin Tức</a></li>
-                          <li class="menu-cuoi"><a href="#" title="VISA"  >Tuyển Dụng</a></li>
-                           <li class="menu-cuoi"><a href="#" title="VISA"  >Liên Hệ</a></li>
-
-
+                        <li class="menu-cuoi"><a href="#" title="VISA"  >Tuyển Dụng</a></li>
+                        <li class="menu-cuoi"><a href="#" title="VISA"  >Liên Hệ</a></li>
 					</ul>
 				</div>
 

@@ -4,6 +4,7 @@ public class DanhMuc {
 	private int id;
 	private String title;
 	private int super_id;
+	private String detail;
 	
 	public DanhMuc() {
 		
@@ -25,6 +26,14 @@ public class DanhMuc {
 		this.title = title;
 	}
 	
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
 	public int getSuper_id() {
 		return super_id;
 	}
