@@ -111,13 +111,15 @@ public class ServiceController extends HttpServlet {
 		request.setAttribute("pageno", pageno);
 		Vector<DichVu> allDV = dichvuDao.pageDichVu(pageno);
 		request.setAttribute("dichvu", allDV);
-		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLdichvu.jsp");
+		request.setAttribute("center", "QLdichvu");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 		rq.forward(request,response);
 	}
 	
 	protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themdichvu.jsp");
+		request.setAttribute("center", "Themdichvu");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 		rq.forward(request,response);
 	}
 	
@@ -147,7 +149,8 @@ public class ServiceController extends HttpServlet {
 		DichVu dichvu = dichvuDao.findDV(id);
 		if(dichvu!=null) {
 			request.setAttribute("dichvu", dichvu);
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suadichvu.jsp");
+			request.setAttribute("center", "Suadichvu");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else errorPage(request, response);		
@@ -181,6 +184,8 @@ public class ServiceController extends HttpServlet {
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("errorPage");
+		request.setAttribute("center", "Error");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
+		rq.forward(request, response);
 	}
 }

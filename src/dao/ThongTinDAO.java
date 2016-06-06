@@ -58,6 +58,29 @@ public class ThongTinDAO {
 		return thongtin;	
 	}
 	
+	public String allThongTin(String key) {	
+		try {		
+			connection=ConnectDB.ConnectData();	
+			String sql="select "+key+" from thongtin where id_tt=?";
+			pre=connection.prepareStatement(sql);
+			pre.setInt(1, 1);
+			rs=pre.executeQuery();
+			if(rs.next()) {
+				return rs.getString(key);
+			}
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(ThongTinDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);				
+		}	
+		
+		return null;	
+	}
+	
 	public boolean udtThongTin(ThongTin thongtin) {
 		try {
 			connection=ConnectDB.ConnectData();	
@@ -74,6 +97,27 @@ public class ThongTinDAO {
 			pre.setString(9,thongtin.getWord_run());
 			pre.setString(10,thongtin.getLogo());
 			pre.setInt(11,thongtin.getId_tt());
+			return pre.executeUpdate()>0;		
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(ThongTinDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 	
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);				
+		}
+		
+		return false;	
+	}
+	
+	public boolean udtThongTin(String key, String value) {
+		try {
+			connection=ConnectDB.ConnectData();	
+			String sql="update thongtin set "+key+"=? where id_tt=?";
+			pre=connection.prepareStatement(sql);
+			pre.setString(1,value);
+			pre.setInt(2,1);
 			return pre.executeUpdate()>0;		
 		}
 		catch(SQLException ex) {			

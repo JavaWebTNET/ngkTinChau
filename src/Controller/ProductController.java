@@ -135,7 +135,8 @@ public class ProductController extends HttpServlet {
 			Vector<SanPham> vtsp = sanphamDao.pageSanPham(pageno, supId);
 			request.setAttribute("sanpham", vtsp);
 			
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLdanhmuc.jsp");
+			request.setAttribute("center", "QLdanhmuc");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else {
@@ -149,7 +150,8 @@ public class ProductController extends HttpServlet {
 		DanhMuc danhmuc = danhmucDao.findDM(supId);
 		if(danhmuc != null) {
 			request.setAttribute("dam", danhmuc);
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themsanpham.jsp");
+			request.setAttribute("center", "Themdanhmuc");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else
@@ -162,7 +164,8 @@ public class ProductController extends HttpServlet {
 		DanhMuc danhmuc = danhmucDao.findDM(supId);
 		if(danhmuc != null) {
 			request.setAttribute("dam", danhmuc);
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Themsanpham.jsp");
+			request.setAttribute("center", "Themsanpham");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else
@@ -212,11 +215,12 @@ public class ProductController extends HttpServlet {
 	
 	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		SanPhamDAO sanphamDao = new SanPhamDAO();
-		SanPham sanpham = sanphamDao.findSP(id);
-		if(sanpham != null) {
-			request.setAttribute("sp", sanpham);
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suasanpham.jsp");
+		DanhMucDAO danhmucDao = new DanhMucDAO();
+		DanhMuc danhmuc = danhmucDao.findDM(id);
+		if(danhmuc != null) {
+			request.setAttribute("dm", danhmuc);
+			request.setAttribute("center", "Suadanhmuc");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else
@@ -229,7 +233,8 @@ public class ProductController extends HttpServlet {
 		SanPham sanpham = sanphamDao.findSP(id);
 		if(sanpham != null) {
 			request.setAttribute("sp", sanpham);
-			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/Suasanpham.jsp");
+			request.setAttribute("center", "Suasanpham");
+			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 			rq.forward(request,response);
 		}
 		else
@@ -248,7 +253,7 @@ public class ProductController extends HttpServlet {
 			else
 				request.getSession().setAttribute("flash_error", lang.getMessage("update_category_fail"));	
 		}
-		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null?danhmuc.getSuper_id():""));
+		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null && danhmuc.getSuper_id()>0?danhmuc.getSuper_id():""));
 	}
 	
 	protected void updateSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
@@ -306,7 +311,9 @@ public class ProductController extends HttpServlet {
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("errorPage");
+		request.setAttribute("center", "Error");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
+		rq.forward(request, response);
 	}
 	
 }

@@ -1,72 +1,58 @@
-<%@page pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="w@idth=device-width, initial-scale=1.0">
-<title>Bootstrap 3 Tabs</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
-	media="all" rel="stylesheet" type="text/css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/View/CSS/CssTc.css">
-<script src="<%=request.getContextPath()%>/View/JS/myjs.js"></script>
-</head>
-<body>
+<%@page import="models.Slider"%>
+<%@page import="java.util.Vector"%>
+<%@ page pageEncoding="utf-8" %>
 
+<% @SuppressWarnings("unchecked")
+Vector<Slider> vtslider=(Vector<Slider>) request.getAttribute("slider"); %>
+<div class="center-right-title">Quản lý slider</div>
 
-
-	<div class="container contai-main">
-
-
-		<%@ include file="/View/admin/includeAdmin/header.jsp"%>
-		
-
-		<!-- -----main center----- -->
-		<div class="row">
-			<div class="col-sm-12 dol-xs-12 contai-main-center">
-				<div class="col-sm-3 col-xs-12 main-center-left">
-					<!-- ---- -->
-					<div class="col-sm-12 col-xs-12 center-left-one">
-
-						<%@ include file="/View/admin/includeAdmin/left-header.jsp"%>
-						
-
-					</div>
-				</div>
-				<!-- kết thúc  main-center-left được khai báo trong left-header -->
-				<div class="col-sm-9 col-xs-12 main-center-right">
-					<!-- bắt đầu phần center -->
-					<div class="col-sm-12 col-xs-12 center-right-one">
-					
-						<%@ include file="/View/admin/includeAdmin/quanlyslider.jsp"%>
-						
-					
-				</div>
-				<!-- đóng phần main-center-right -->
-			</div>
-			<!-- đóng phần contai-main-center -->
-		</div>
-		<!-- đóng phân row center -->
-		<!-- -----end maincenter----- -->
-
-		
-		<%@ include file="/View/admin/includeAdmin/footer.jsp"%>
-
-
-	</div>
+	<div class="col-sm-12 col-xs-12 center-right-main-admin">
+	<div class="center-right-main-admin-child"> 				
+	<%@include file="/View/flash.jsp" %>
+	<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
+        <table class="table table-bordered table-condensed table-qlslider">
+            <tr class="title-table" style="color:#00ff21;height:45px;background-color:#808080">       
+                <th>STT</th>
+                <th>Hình Ảnh</th>                                           
+                <th style="color:red;" colspan=2>Chức năng</th>
+            </tr>
+       		<% if(vtslider.size()>0) {
+       		int i=1;
+       		for(Slider item:vtslider){
+       		%>
+                <tr class="title-noidung">
+                    <td>
+                      <%= i %>
+                    </td>
+                    <td class="slider-td-img">
+                     <img src="<%=item.imageLink(request) %>">
+                    </td>
+                    <td> 
+                     <form role="form" method="post" enctype="multipart/form-data"
+                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_sd()%>/update">
+                     	<div class="col-sm-10"><input class="form-control" type="file" name="file-image" /></div>
+                        <div class="col-sm-2"><button type="submit" class="btn btn-info">Sửa</button></div>
+                     </form>
+                    </td>  
+                    <td> 
+                     <form role="form" method="post" 
+                     action="${ pageContext.request.contextPath}/admin/slider/<%= item.getId_sd()%>/delete">
+                       <button type="submit" class="btn btn-danger" onclick="return window.confirm('Xoá?');">Xoá</button>
+                     </form>
+                    </td>                                          
+                </tr>                            
+			<%i++;
+			}
+       		}%>
+      	</table>
+   	</div> 			
+	<form class="form-horizontal" role="form" enctype="multipart/form-data" action="${ pageContext.request.contextPath}/admin/slider" method="post" >
+	 	<div class="form-group"> 	
+	    	<div class="col-sm-8"><input class="form-control" type="file" name="file-image" /></div>
+	    	<div class="col-sm-4"><input class="btn btn-primary" type="submit" value="Thêm ảnh" /></div>       
+	    </div>		 				 				 			
+	</form>
+	</div>	
 </div>
-</body>
-</html>
+	 			

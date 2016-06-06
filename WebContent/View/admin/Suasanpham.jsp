@@ -1,66 +1,38 @@
-<%@page pageEncoding="UTF-8"%>
+<%@ page pageEncoding="utf-8" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="w@idth=device-width, initial-scale=1.0">
-<title>Bootstrap 3 Tabs</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
-	media="all" rel="stylesheet" type="text/css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/View/CSS/CssTc.css">
-<script src="<%=request.getContextPath()%>/View/JS/myjs.js"></script>
-</head>
-<body>
-
-
-
-	<div class="container contai-main">
-
-
-		<%@ include file="/View/admin/includeAdmin/header.jsp"%>
-		
-
-		<!-- -----main center----- -->
-		<div class="row">
-			<div class="col-sm-12 dol-xs-12 contai-main-center">
-				<div class="col-sm-3 col-xs-12 main-center-left">
-					<!-- ---- -->
-					<div class="col-sm-12 col-xs-12 center-left-one">
-
-						<%@ include file="/View/admin/includeAdmin/left-header.jsp"%>
-						
-
-					</div>
-				</div>
-				<!-- kết thúc  main-center-left được khai báo trong left-header -->
-				<div class="col-sm-9 col-xs-12 main-center-right">
-					<!-- bắt đầu phần center -->
-					<div class="col-sm-12 col-xs-12 center-right-one">				
-						<%@ include file="/View/admin/includeAdmin/suasanpham.jsp"%>	
-					</div>
-				<!-- đóng phần main-center-right -->
-				</div>
-			<!-- đóng phần contai-main-center -->
-		</div>
-		<!-- đóng phân row center -->
-		<!-- -----end maincenter----- -->
-
-	</div>	
-		<%@ include file="/View/admin/includeAdmin/footer.jsp"%>
+<%@ page import="models.SanPham" %>
+<% SanPham sp = (SanPham)request.getAttribute("sp"); %>
+<div class="center-right-title">Cập nhật Sản phẩm</div>
+<%@ include file="/View/flash.jsp" %>	
+<div class="col-sm-12 col-xs-12 center-right-main-admin">
+  <div class="center-right-main-admin-child"> 	
+		  <form class="form-horizontal" role="form" enctype="multipart/form-data" 
+		  action="${ pageContext.request.contextPath}/admin/danhmuc/<%=sp.getId() %>/updatesp" method="post" >
+		  <div class="form-group">	  
+		    <label class="control-label td-title col-sm-2" >Tiêu đề (*)</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" value="<%=sp.getTitle() %>"
+		      id="title" name="title"  placeholder="Tiêu đề">
+		    </div>
+		  </div>	  
+		   <div class="form-group">
+		    <label class="control-label td-title col-sm-2" >Hình ảnh (*)</label>
+		    <div class="col-sm-10"> 
+		    	<div class="div-stt-imglogo">
+		    	<img src="<%=sp.imageLink(request) %>" >
+		    	</div>
+		    	<input class="form-control" type="file" name="file-image"  />	       
+		    </div>
+		  </div>	
+		  <div class="form-group"> 
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-success" id="btn-themdichvu">Submit</button>
+		    </div>
+		  </div>
+		</form>
+  </div>
 </div>
-</body>
-</html>
+<script src="<%=request.getContextPath()%>/View/ckeditor/ckeditor.js"></script>
+<SCRIPT> 
+	CKEDITOR.replace( 'detail' );
+</script>

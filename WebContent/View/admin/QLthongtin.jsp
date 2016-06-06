@@ -1,72 +1,101 @@
-<%@page pageEncoding="UTF-8"%>
+<%@page import="dao.ThongTinDAO"%>
+<%@page import="models.ThongTin"%>
+<%@ page pageEncoding="utf-8" %>
+<%  ThongTin thongtin=(ThongTin)request.getAttribute("thongtin"); %>
+	<div class="center-right-title">Quản lý thông tin</div>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="w@idth=device-width, initial-scale=1.0">
-<title>Bootstrap 3 Tabs</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
-	media="all" rel="stylesheet" type="text/css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/View/CSS/CssTc.css">
-<script src="<%=request.getContextPath()%>/View/JS/myjs.js"></script>
-</head>
-<body>
+	<div class="col-sm-12 col-xs-12 center-right-main-admin">
+	<%@ include  file="/View/flash.jsp"%>
+	<div class="center-right-main-admin-child"> 			
+			
+	<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
+       <table class="table table-bordered table-condensed table-thongtin">
+           <tr class="title-table" style="color:#00ff21;height:45px;background-color:#808080">               
+               <th>
+                  Tên Công Ty
+               </th>
+               <th>
+                 Loại Hình
+               </th>
+               <th>
+                  Địa chỉ
+               </th>
+               <th>
+                   Tel
+               </th>
+               <th>
+                  Fax
+               </th>
+               <th>
+                   Email
+               </th>
+               <th>
+                  Hotline
+               </th>
+                <th>
+                  Slogan
+               </th>
+               <th>
+                   Word_run
+               </th>
+               <th>
+                   logo
+               </th>
+           </tr>
 
-
-
-	<div class="container contai-main">
-
-
-		<%@ include file="/View/admin/includeAdmin/header.jsp"%>
-		
-
-		<!-- -----main center----- -->
-		<div class="row">
-			<div class="col-sm-12 dol-xs-12 contai-main-center">
-				<div class="col-sm-3 col-xs-12 main-center-left">
-					<!-- ---- -->
-					<div class="col-sm-12 col-xs-12 center-left-one">
-
-						<%@ include file="/View/admin/includeAdmin/left-header.jsp"%>
-						
-
-					</div>
-				</div>
-				<!-- kết thúc  main-center-left được khai báo trong left-header -->
-				<div class="col-sm-9 col-xs-12 main-center-right">
-					<!-- bắt đầu phần center -->
-					<div class="col-sm-12 col-xs-12 center-right-one">
-					
-						<%@ include file="/View/admin/includeAdmin/quanlythongtin.jsp"%>
-						
-					
-				</div>
-				<!-- đóng phần main-center-right -->
-			</div>
-			<!-- đóng phần contai-main-center -->
-		</div>
-		<!-- đóng phân row center -->
-		<!-- -----end maincenter----- -->
-
-		
-		<%@ include file="/View/admin/includeAdmin/footer.jsp"%>
-
-
+      		<% if(thongtin!=null) {
+      		%>
+              <tr class="title-noidung">
+                  <td>
+                    <%= thongtin.getName_company() %>
+                  </td>
+                  <td>
+                      <%= thongtin.getType_company() %>
+                  </td>
+                  <td>
+                     <%= thongtin.getAdd_company() %>
+                  </td>
+                  <td>
+                      <%= thongtin.getTel() %>
+                  </td>
+                  <td>
+                      <%= thongtin.getFax() %>
+                  </td>
+                  <td>
+                     <%= thongtin.getEmail() %>
+                  </td>                
+                  <td>
+                     <%= thongtin.getHotline()  %>                          
+                  </td>
+                  <td>
+                     <%= thongtin.getSlogan() %>                     
+                  </td>
+                  <td>
+                     <%= thongtin.getWord_run() %>                     
+                  </td>                  
+                  <td class="td-qltt-imglogo">
+                      <img src="<%= thongtin.imageLink(request) %>" >                  
+                  </td>                                    
+              </tr>                
+			<%} %>
+		 </table>
+		 <form role="form" method="get" enctype="multipart/form-data"
+               		action="${ pageContext.request.contextPath}/admin/thongtin/edit">
+         	<button type="submit" class="btn btn-danger">Sửa Thông tin</button>  
+         </form><br/>
+         <form role="form" method="get" enctype="multipart/form-data"
+               		action="${ pageContext.request.contextPath}/admin/thongtin/aboutus">
+         	<button type="submit" class="btn btn-primary">Cập nhật trang Giới thiệu</button>  
+         </form><br/>
+         <form role="form" method="get" enctype="multipart/form-data"
+               		action="${ pageContext.request.contextPath}/admin/thongtin/recruit">
+         	<button type="submit" class="btn btn-primary">Cập nhật trang Tuyển dụng</button>  
+         </form><br/>
+         <form role="form" method="get" enctype="multipart/form-data"
+               		action="${ pageContext.request.contextPath}/admin/thongtin/contact">
+         	<button type="submit" class="btn btn-primary">Cập nhật trang Liên hệ</button>  
+         </form> 
+	</div>	 
+		 				 				 				 				 				 			 			
+	</div>		 				
 	</div>
-
-</body>
-</html>

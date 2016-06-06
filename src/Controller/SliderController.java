@@ -38,25 +38,8 @@ public class SliderController extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
 			index(request, response);
-		} else if(pathInfo.equals("/create")) {
-			create(request, response);
-		} else {
-			String[] pathParts = pathInfo.split("/");
-			int id;
-			try {
-				id = Integer.parseInt(pathParts[1]);
-			} catch(Exception ex) {
-				id = 0;
-			}
-			if(id <= 0 || pathParts.length > 3) {
-				errorPage(request, response);
-			} else if(pathParts.length == 2) {
-				show(request, response, id);
-			} else if(pathParts[2].equals("edit")) {
-				edit(request, response, id);
-			} else {
-				errorPage(request, response);
-			}
+		} else {			
+			errorPage(request, response);
 		}
 	}
 
@@ -68,9 +51,6 @@ public class SliderController extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
 			store(request, response);
-		}
-		else if(pathInfo.equals("/create")) {
-			create(request, response);
 		} else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
@@ -99,19 +79,9 @@ public class SliderController extends HttpServlet {
 		// TODO Auto-generated method stub
 		SliderDAO sliderDAO=new SliderDAO();
 		request.setAttribute("slider",sliderDAO.allSlider());
-		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/QLslider.jsp");
+		request.setAttribute("center","QLslider");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 		rq.forward(request,response);
-	}
-	
-	protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("da vao create");
-		
-	}
-	
-	protected void show(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("show " +id);
 	}
 	
 	protected void store(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -129,11 +99,6 @@ public class SliderController extends HttpServlet {
 			 }
 		}
 		response.sendRedirect(request.getContextPath() + "/admin/slider");
-	}
-	
-	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("edit " +id);
 	}
 	
 	protected void update(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
@@ -168,6 +133,8 @@ public class SliderController extends HttpServlet {
 
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("errorPage");
+		request.setAttribute("center", "Error");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
+		rq.forward(request, response);
 	}
 }

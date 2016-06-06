@@ -1,57 +1,134 @@
-<%@page pageEncoding="UTF-8"%>
+<%@page import="java.util.Vector"%>
+<%@page import="models.DichVu" %>
+<%@ page pageEncoding="utf-8" %>
+<% @SuppressWarnings("unchecked")
+Vector<DichVu> vtdv=(Vector<DichVu>)request.getAttribute("dichvu"); %>
+	
+	<div class="col-sm-12 col-xs-12 center-right-one">
+	<div class="center-right-title">Sản Phẩm</div>
 
-<!DOCTYPE html>
-<html>
-<head>
-		<title></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="w@idth=device-width, initial-scale=1.0">
-        <title>Bootstrap 3 Tabs</title>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-       	<link rel="stylesheet" href="<%=request.getContextPath()%>/View/CSS/CssTc.css">
-       	<script src="<%=request.getContextPath()%>/View/JS/myjs.js"></script>
-</head>
-<body>
+	<div class="col-sm-12 col-xs-12 center-right-main">
+	<!-- ---- -->
+	<div class="row">
+		<div class="col-sm-4 col-xs-12 center-right-main-child-one">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp1.png">
+				<a>Cửa sổ mở trượt</a>
+			</div>
+		</div>
 
+		<div class="col-sm-4 col-xs-12 center-right-main-child-tow">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp2.png">
+				<a>Vách ngăn hệ</a>
+			</div>
+		</div>
 
+		<div class="col-sm-4 col-xs-12 center-right-main-child-three">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp3.png">
+				<a>Cửa mở quay</a>
+			</div>
+		</div>
+	</div>
 
-<div class="container contai-main">
+	<!-- ---- -->
+	<div class="row">
+		<div class="col-sm-4 col-xs-12 center-right-main-child-one">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp1.png">
+				<a>Cửa sổ mở trượt</a>
+			</div>
+		</div>
 
+		<div class="col-sm-4 col-xs-12 center-right-main-child-tow">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp2.png">
+				<a>Vách ngăn hệ</a>
+			</div>
+		</div>
 
-<%@ include file="/View/include/header.jsp" %>
- <%@ include file="/View/include/slider.jsp" %>
+		<div class="col-sm-4 col-xs-12 center-right-main-child-three">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp3.png">
+				<a>Cửa mở quay</a>
+			</div>
+		</div>
+	</div>
+		
+	<!-- 	-- -->
+	<div class="row">
+		<div class="col-sm-4 col-xs-12 center-right-main-child-one">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp1.png">
+				<a>Cửa sổ mở trượt</a>
+			</div>
+		</div>
 
-<!-- -----main center----- -->
-<div class="row">
-<div class="col-sm-12 dol-xs-12 contai-main-center">
-<div class="col-sm-3 col-xs-12 main-center-left">
-<!-- ---- -->
-<div class="col-sm-12 col-xs-12 center-left-one">
+		<div class="col-sm-4 col-xs-12 center-right-main-child-tow">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp2.png">
+				<a>Vách ngăn hệ</a>
+			</div>
+		</div>
 
-<%@ include file="/View/include/left-header.jsp" %>					
-<%@ include file="/View/include/left-footer.jsp" %>	
+		<div class="col-sm-4 col-xs-12 center-right-main-child-three">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp3.png">
+				<a>Cửa mở quay</a>
+			</div>
+		</div>
+	</div>
+	<!-- -- -->
+	<div class="row">
+		<div class="col-sm-4 col-xs-12 center-right-main-child-one">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp1.png">
+				<a>Cửa sổ mở trượt</a>
+			</div>
+		</div>
 
- </div>
-</div> <!-- kết thúc  main-center-left được khai báo trong left-header -->
-<div class="col-sm-9 col-xs-12 main-center-right"> <!-- bắt đầu phần center -->
+		<div class="col-sm-4 col-xs-12 center-right-main-child-tow">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp2.png">
+				<a>Vách ngăn hệ</a>
+			</div>
+		</div>
 
-<%@ include file="include/center.jsp" %>
+		<div class="col-sm-4 col-xs-12 center-right-main-child-three">
+			<div class="center-right-main-child-sp">
+				<img src="<%=request.getContextPath()%>/View/Image/sp3.png">
+				<a>Cửa mở quay</a>
+			</div>
+		</div>
+	</div>
 
-</div> <!-- đóng phần main-center-right -->
-</div> <!-- đóng phần contai-main-center --> 
-</div> <!-- đóng phân row center -->
- <!-- -----end maincenter----- -->
- 
-<%@ include file="include/slider-footer.jsp" %>
-<%@ include file="include/footer.jsp" %>
+	<!-- ---- -->
 
+	</div>
 
-</div>
+	</div>
 
-</body>
-</html>
+	<!-- ------ -->
+	<div class="col-sm-12 col-xs-12 contai-right-dichvu">
+	<div class="center-right-title">Dịch Vụ</div>
+	<% for(DichVu item:vtdv){ %>
+	
+	<div class="contai-right-dichvu-main">
+		<div class="col-sm-12 col-xs-12 right-dichvu-main-title"><%= item.getName_dv() %></div>
+		<div class="col-sm-3 col-xs-12 right-dichvu-main-img">
+			
+			<img src="<%= item.imageLink(request) %>">
+		</div>
+		<div class="col-sm-9 col-xs-12 right-dichvu-main-nd">
+		<p><%= item.getDetail() %></p>
+			
+		</div>
+
+	</div>
+		
+	<%} %>
+		
+	</div>
+		
+	<!-- ------ -->

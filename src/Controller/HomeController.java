@@ -54,10 +54,10 @@ public class HomeController extends HttpServlet {
 			contact(request, response);
 		} else if(path.equals("/tuyendung")) {
 			recruit(request, response);
-		} else {
-			pathInfo = pathInfo.substring(1);
+		} else {		
 			int id;
 			try {
+				pathInfo = pathInfo.substring(1);
 				id = Integer.parseInt(pathInfo);
 			} catch(Exception ex) {
 				id = 0;
@@ -75,7 +75,7 @@ public class HomeController extends HttpServlet {
 			} else {
 				errorPage(request, response);
 			}
-		}
+		} 
 	}
 
 	/**
@@ -94,14 +94,16 @@ public class HomeController extends HttpServlet {
 	}
 	
 	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-		RequestDispatcher rq=request.getRequestDispatcher("/View/index.jsp");
+		// TODO Auto-generated method stub	
+		request.setAttribute("center", "index");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/template.jsp");
 		rq.forward(request, response);
 	}
 	
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rq=request.getRequestDispatcher("/View/login.jsp");
+		request.setAttribute("center", "login");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/template.jsp");
 		rq.forward(request, response);
 	}
 	
@@ -160,6 +162,8 @@ public class HomeController extends HttpServlet {
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("errorPage");
+		request.setAttribute("center", "Error");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/template.jsp");
+		rq.forward(request, response);
 	}
 }

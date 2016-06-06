@@ -58,13 +58,15 @@ public class HomeControllerAdmin extends HttpServlet {
 
 	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/index.jsp");
+		request.setAttribute("center", "index");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 		rq.forward(request,response);
 	}
 	
 	protected void changePW(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/changepw.jsp");
+		request.setAttribute("center", "changepw");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
 		rq.forward(request, response);
 	}
 	
@@ -90,6 +92,8 @@ public class HomeControllerAdmin extends HttpServlet {
 	
 	protected void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setAttribute("center", "Error");
+		RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
+		rq.forward(request, response);
 	}
 }
