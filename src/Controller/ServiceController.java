@@ -139,8 +139,10 @@ public class ServiceController extends HttpServlet {
 				request.getSession().setAttribute("flash_success", lang.getMessage("create_service_success"));
 			else
 				request.getSession().setAttribute("flash_error", lang.getMessage("create_service_fail"));
+			response.sendRedirect(request.getContextPath() + "/admin/dichvu");
 		}
-		response.sendRedirect(request.getContextPath() + "/admin/dichvu");
+		else
+			response.sendRedirect(request.getContextPath() + "/admin/dichvu/create");
 	}
 	
 	protected void edit(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
@@ -167,8 +169,10 @@ public class ServiceController extends HttpServlet {
 				request.getSession().setAttribute("flash_success", lang.getMessage("update_service_success"));
 			else
 				request.getSession().setAttribute("flash_error", lang.getMessage("update_service_fail"));
+			response.sendRedirect(request.getContextPath() + "/admin/dichvu");
 		}
-		response.sendRedirect(request.getContextPath() + "/admin/dichvu");
+		else
+			response.sendRedirect(request.getContextPath() + "/admin/dichvu/" + id + "/edit");
 	}
 	
 	protected void delete(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {

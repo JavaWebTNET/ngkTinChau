@@ -333,38 +333,52 @@ public class SanPhamDAO {
 	public SanPham validAdd(HttpServletRequest request, int supID) throws IOException, ServletException {
 		ArrayList<String> loi = new ArrayList<String>();
 		Lang lang = new Lang();
+		SanPham sanpham = new SanPham();
+		
+		sanpham.setTitle(request.getParameter("title").trim());
+		sanpham.setSuper_id(supID);
+		if(sanpham.getTitle() == null || sanpham.getTitle().equals(""))
+			loi.add(lang.getValMsg("title_require"));
+		
 		Part part = request.getPart("file-image");
 		if(part.getSubmittedFileName().equals("")) {
 			loi.add(lang.getValMsg("image_null"));
 		}
 		else {
-			String image_sp = ImageDao.imageUpload(request, SanPham.uploadDir, part);
-			SanPham sanpham = new SanPham();
-			
-			if(image_sp!=null) {
-				sanpham.setTitle(request.getParameter("title"));
+			String image_sp = ImageDao.imageUpload(request, SanPham.uploadDir, part);			
+			if(image_sp!=null) {			
 				sanpham.setImage(image_sp);
-				sanpham.setSuper_id(supID);
-				return sanpham;
-			}
-			
+			}			
 		}
-		if(loi.size()>0)
+		if(loi.size()>0) {
 			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
-		return null;
+			sanpham = null;
+		}
+		return sanpham;
 	}
 	
 	public SanPham validUdt(HttpServletRequest request, int id) throws IOException, ServletException {
-		Part part = request.getPart("file-image");
-		String image_sp = null;
-		if(!part.getSubmittedFileName().equals("")) {
-			image_sp = ImageDao.imageUpload(request, SanPham.uploadDir, part);  
+		ArrayList<String> loi = new ArrayList<String>();
+		Lang lang = new Lang();
+		SanPham sanpham = findSP(id);
+		
+		if(sanpham!=null) {
+			sanpham.setTitle(request.getParameter("title"));
+			if(sanpham.getTitle() == null || sanpham.getTitle().equals(""))
+				loi.add(lang.getValMsg("title_require"));
+			
+			Part part = request.getPart("file-image");
+			if(!part.getSubmittedFileName().equals("")) {
+				String image_sp = ImageDao.imageUpload(request, SanPham.uploadDir, part);
+				if(image_sp!=null)
+					sanpham.setImage(image_sp);
+			}
+			if(loi.size()>0) {
+				request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+				sanpham = null;
+			}
 		}
 		
-		SanPham sanpham = findSP(id);
-		sanpham.setTitle(request.getParameter("title"));
-		if(image_sp!=null)
-			sanpham.setImage(image_sp);
 		return sanpham;
 	}
 }

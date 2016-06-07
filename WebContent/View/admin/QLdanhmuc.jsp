@@ -48,7 +48,7 @@ Vector<DanhMuc> vtdanhmuc=(Vector<DanhMuc>) request.getAttribute("danhmuc"); %>
        		}%>
       	</table>
    	</div> 			
-	<form class="form-horizontal" role="form" action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam!=null?dam.getId():""%>/create" method="get" >
+	<form class="form-horizontal" role="form" action="${ pageContext.request.contextPath}/admin/danhmuc<%=dam!=null?"/"+dam.getId():""%>/create" method="get" >
 	 	<div class="form-group"> 	
 	    	<div class="col-sm-4"><input class="btn btn-primary" type="submit" value="Thêm Danh Mục" /></div>       
 	    </div>		 				 				 			
@@ -61,7 +61,7 @@ Vector<SanPham> vtsanpham=(Vector<SanPham>) request.getAttribute("sanpham"); %>
 	
 	<%if(dam != null) {%>
 	<div class="col-sm-12 col-xs-12 center-right-main-admin">
-	<div class="center-right-title">Quản lý Sản Phẩm</div>
+	<div class="center-right-title">Quản lý Sản Phẩm<%=(dam!=null)? " - "+ dam.getTitle(): "" %></div>
 	<div class="center-right-main-admin-child"> 				
 	
 	<form role="form" action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam.getId()%>/createsp" method="get" >

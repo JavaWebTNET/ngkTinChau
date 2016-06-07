@@ -16,7 +16,7 @@
 		    </div>
 		  </div>	  
 		   <div class="form-group">
-		    <label class="control-label td-title col-sm-2" >Hình ảnh (*)</label>
+		    <label class="control-label td-title col-sm-2" >Hình ảnh</label>
 		    <div class="col-sm-10"> 
 		    	<div class="div-stt-imglogo">
 		    	<img src="<%=sp.imageLink(request) %>" >

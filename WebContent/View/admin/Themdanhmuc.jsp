@@ -8,7 +8,7 @@
   <div class="center-right-main-admin-child"> 	
    
 		  <form class="form-horizontal" role="form" enctype="multipart/form-data" 
-		  action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam.getId() %>" method="post" >
+		  action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam!=null?dam.getId():"" %>" method="post" >
 		  <div class="form-group">	  
 		    <label class="control-label td-title col-sm-2" >Tiêu đề (*)</label>
 		    <div class="col-sm-10">

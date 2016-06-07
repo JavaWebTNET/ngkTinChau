@@ -197,39 +197,56 @@ public class DichVuDAO {
 	public DichVu validAdd(HttpServletRequest request) throws IOException, ServletException {
 		ArrayList<String> loi = new ArrayList<String>();
 		Lang lang = new Lang();
+		DichVu dichvu = new DichVu();
+		
+		dichvu.setName_dv(request.getParameter("name_dv").trim());
+		dichvu.setDetail(request.getParameter("detail"));
+		if(dichvu.getName_dv() == null || dichvu.getName_dv().equals(""))
+			loi.add(lang.getValMsg("name_require"));
+		
 		Part part = request.getPart("file-image");
 		if(part.getSubmittedFileName().equals("")) {
 			loi.add(lang.getValMsg("image_null"));
 		}
 		else {
 			String image_dv = ImageDao.imageUpload(request, DichVu.uploadDir, part);
-			DichVu dichvu = new DichVu();
-			
 			if(image_dv!=null) {
-				dichvu.setName_dv(request.getParameter("name_dv"));
-				dichvu.setDetail(request.getParameter("detail"));
 				dichvu.setImage(image_dv);
-				return dichvu;
 			}
 			
 		}
-		if(loi.size()>0)
+		
+		if(loi.size()>0) {
 			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
-		return null;
+			dichvu = null;
+		}
+		return dichvu;
 	}
 	
 	public DichVu validUdt(HttpServletRequest request, int id) throws IOException, ServletException {
-		Part part = request.getPart("file-image");
-		String image_dv = null;
-		if(!part.getSubmittedFileName().equals("")) {
-			image_dv = ImageDao.imageUpload(request, DichVu.uploadDir, part);  
+		ArrayList<String> loi = new ArrayList<String>();
+		Lang lang = new Lang();
+		DichVu dichvu = findDV(id);
+		
+		if(dichvu!=null) {
+			dichvu.setName_dv(request.getParameter("name_dv"));
+			dichvu.setDetail(request.getParameter("detail"));
+			if(dichvu.getName_dv() == null || dichvu.getName_dv().equals(""))
+				loi.add(lang.getValMsg("name_require"));
+			
+			Part part = request.getPart("file-image");
+			if(!part.getSubmittedFileName().equals("")) {
+				String image_dv = ImageDao.imageUpload(request, DichVu.uploadDir, part); 
+				if(image_dv!=null)
+					dichvu.setImage(image_dv);
+			}
+			
+			if(loi.size()>0) {
+				request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+				dichvu = null;
+			}
 		}
 		
-		DichVu dichvu = findDV(id);
-		dichvu.setName_dv(request.getParameter("name_dv"));
-		dichvu.setDetail(request.getParameter("detail"));
-		if(image_dv!=null)
-			dichvu.setImage(image_dv);
 		return dichvu;
 	}
 }

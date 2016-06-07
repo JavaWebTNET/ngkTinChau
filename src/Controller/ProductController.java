@@ -41,6 +41,8 @@ public class ProductController extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		if(pathInfo == null || pathInfo.equals("/")) {
 			index(request, response, 0);
+		} else if(pathInfo.equals("/create")) {
+			create(request, response, 0);
 		} else {
 			String[] pathParts = pathInfo.split("/");
 			int id;
@@ -148,7 +150,7 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		DanhMucDAO danhmucDao = new DanhMucDAO();
 		DanhMuc danhmuc = danhmucDao.findDM(supId);
-		if(danhmuc != null) {
+		if(danhmuc != null && danhmucDao.canAddDM(supId) || supId == 0) {
 			request.setAttribute("dam", danhmuc);
 			request.setAttribute("center", "Themdanhmuc");
 			RequestDispatcher rq=request.getRequestDispatcher("/View/admin/template.jsp");
@@ -183,12 +185,16 @@ public class ProductController extends HttpServlet {
 				if(danhmucDao.addDanhMuc(danhmuc)) 
 					request.getSession().setAttribute("flash_success", lang.getMessage("create_category_success"));
 				else
-					request.getSession().setAttribute("flash_error", lang.getMessage("create_category_fail"));				
+					request.getSession().setAttribute("flash_error", lang.getMessage("create_category_fail"));
+				response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId:""));
 			}
+			else
+				response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId+"/":"") + "create");
 		}
-		else
+		else {
 			request.getSession().setAttribute("flash_error", lang.getMessage("create_category_fail"));
-		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId:""));
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId:""));
+		}
 	}
 	
 	protected void storeSP(HttpServletRequest request, HttpServletResponse response, int supId) throws ServletException, IOException {
@@ -205,11 +211,15 @@ public class ProductController extends HttpServlet {
 					request.getSession().setAttribute("flash_success", lang.getMessage("create_product_success"));
 				else
 					request.getSession().setAttribute("flash_error", lang.getMessage("create_product_fail"));			
+				response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + supId);
 			}
+			else
+				response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (supId>0?supId+"/":"") + "createsp");
 		}
-		else
+		else {
 			request.getSession().setAttribute("flash_error", lang.getMessage("create_product_fail"));
-		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + supId);
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + supId);
+		}
 		
 	}
 	
@@ -251,9 +261,11 @@ public class ProductController extends HttpServlet {
 			if(danhmucDao.udtDanhMuc(danhmuc))
 				request.getSession().setAttribute("flash_success", lang.getMessage("update_category_success"));
 			else
-				request.getSession().setAttribute("flash_error", lang.getMessage("update_category_fail"));	
+				request.getSession().setAttribute("flash_error", lang.getMessage("update_category_fail"));
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null && danhmuc.getSuper_id()>0?danhmuc.getSuper_id():""));
 		}
-		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (danhmuc!=null && danhmuc.getSuper_id()>0?danhmuc.getSuper_id():""));
+		else
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + id + "/edit");
 	}
 	
 	protected void updateSP(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
@@ -266,9 +278,11 @@ public class ProductController extends HttpServlet {
 			if(sanphamDao.udtSanPham(sanpham))
 				request.getSession().setAttribute("flash_success", lang.getMessage("update_product_success"));
 			else
-				request.getSession().setAttribute("flash_error", lang.getMessage("update_product_fail"));			
+				request.getSession().setAttribute("flash_error", lang.getMessage("update_product_fail"));
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (sanpham!=null?sanpham.getSuper_id():""));
 		}
-		response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + (sanpham!=null?sanpham.getSuper_id():""));
+		else
+			response.sendRedirect(request.getContextPath() + "/admin/danhmuc/" + id + "/editsp");
 	}
 	
 	protected void delete(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {

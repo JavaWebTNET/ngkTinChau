@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lang.Lang;
 import models.DanhMuc;
 import utils.ConnectDB;
 
@@ -26,7 +27,7 @@ public class DanhMucDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<DanhMuc> danhmucvt=new Vector<DanhMuc>();
 		try {
-			String sql="select id_dm,title,super_id from danhmuc where delete_at is null order by super_id";
+			String sql="select id_dm,title,super_id from danhmuc where delete_at is null order by super_id, id_dm";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			while(rs.next()) {
@@ -205,19 +206,38 @@ public class DanhMucDAO {
 	}
 	 
 	public DanhMuc validAdd(HttpServletRequest request, int supID) {
+		Lang lang = new Lang();
+		ArrayList<String> loi = new ArrayList<String>();
 		DanhMuc danhmuc = new DanhMuc();
 		danhmuc.setTitle(request.getParameter("title"));
 		danhmuc.setDetail(request.getParameter("detail"));
 		danhmuc.setSuper_id(supID);
+		if(danhmuc.getTitle() == null || danhmuc.getTitle().equals("")) {
+			loi.add(lang.getValMsg("title_require"));
+		}
+		if(loi.size()>0) {
+			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+			danhmuc = null;
+		}
 		return danhmuc;
 	}
 	
 	public DanhMuc validUdt(HttpServletRequest request, int id) {
+		Lang lang = new Lang();
+		ArrayList<String> loi = new ArrayList<String>();
 		DanhMuc danhmuc = findDM(id);
 		if(danhmuc!=null) {
-			danhmuc.setTitle(request.getParameter("title"));
+			danhmuc.setTitle(request.getParameter("title").trim());
 			danhmuc.setDetail(request.getParameter("detail"));
-		}
+			if(danhmuc.getTitle() == null || danhmuc.getTitle().equals("")) {
+				loi.add(lang.getValMsg("title_require"));
+			}
+			if(loi.size()>0) {
+				request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
+				danhmuc = null;
+			}
+		}	
+
 		return danhmuc;
 	}
 	
