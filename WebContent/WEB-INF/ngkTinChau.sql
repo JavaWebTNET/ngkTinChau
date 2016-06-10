@@ -69,8 +69,34 @@ CREATE TABLE `dichvu` (
 
 LOCK TABLES `dichvu` WRITE;
 /*!40000 ALTER TABLE `dichvu` DISABLE KEYS */;
-INSERT INTO `dichvu` VALUES (1,'Dịch vụ 1','img39.png','<p>dịch vụ 1</p>\r\n','2016-06-01 15:32:25','2016-06-01 15:59:06',NULL),(2,'Dịch Vụ 2','img781.png','<p>Dịch vụ 2</p>\r\n','2016-06-01 15:34:51',NULL,NULL),(3,'Dịch vụ 3','img353.png','','2016-06-01 16:41:00',NULL,NULL);
+INSERT INTO `dichvu` VALUES (1,'Tư vấn và thiết kế','img39.png','<p>Tư vấn v&agrave; thiết kế</p>\r\n','2016-06-01 15:32:25','2016-06-10 16:46:04',NULL),(2,'Sản xuất','img781.png','<p>Sản xuất</p>\r\n','2016-06-01 15:34:51','2016-06-10 16:45:41',NULL),(3,'Thi công lắp đặt nhôm kính','img353.png','<p>Thi c&ocirc;ng lắp đặt nh&ocirc;m k&iacute;nh</p>\r\n','2016-06-01 16:41:00','2016-06-10 16:45:08',NULL);
 /*!40000 ALTER TABLE `dichvu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `meck`
+--
+
+DROP TABLE IF EXISTS `meck`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `meck` (
+  `ip` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visit_date` date NOT NULL,
+  `hits` int(10) NOT NULL DEFAULT '1',
+  `onl` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`ip`,`visit_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meck`
+--
+
+LOCK TABLES `meck` WRITE;
+/*!40000 ALTER TABLE `meck` DISABLE KEYS */;
+INSERT INTO `meck` VALUES ('127.0.0.1','2015-06-11',1,'1'),('127.0.0.1','2016-05-10',1,'1'),('127.0.0.1','2016-06-08',11,''),('127.0.0.1','2016-06-09',728,'1465472150564'),('127.0.0.1','2016-06-10',131,'1465557952396');
+/*!40000 ALTER TABLE `meck` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -90,7 +116,7 @@ CREATE TABLE `sanpham` (
   `update_at` datetime DEFAULT NULL,
   `delete_at` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_sp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +125,7 @@ CREATE TABLE `sanpham` (
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
+INSERT INTO `sanpham` VALUES (1,'Cửa nhôm XingFa 01','img891.png',1,1,'2016-06-08 09:52:27',NULL,NULL),(2,'Cửa đi mở quay 01','img714.png',1,7,'2016-06-08 09:53:28',NULL,NULL),(3,'Cửa đi 1 cánh mở quay 01','img156.png',0,31,'2016-06-08 09:54:02',NULL,NULL),(4,'Cửa đi 2 cánh mở quay 01','img331.png',0,32,'2016-06-08 09:55:57',NULL,NULL),(5,'Cửa đi 4 cánh mở quay 01','img398.png',0,33,'2016-06-08 09:56:42',NULL,NULL),(6,'Cửa đi mở trượt 01','img591.png',1,8,'2016-06-08 10:15:11',NULL,NULL),(7,'Cửa đi mở trượt 2 cánh 01','img551.png',0,34,'2016-06-08 10:15:37',NULL,NULL),(8,'Cửa đi mở trượt 4 cánh 01','img133.png',0,35,'2016-06-08 10:16:19',NULL,NULL),(9,'Cửa nhựa lõi thép xếp trượt 01','img159.png',1,9,'2016-06-08 10:17:32',NULL,NULL),(10,'Cửa lùa 2 cánh, 4 cánh 01','img265.png',1,10,'2016-06-08 10:18:55',NULL,NULL),(11,'Cửa nhựa lõi thép 01','img547.png',1,2,'2016-06-08 10:37:07',NULL,NULL),(12,'Cửa đi mở quay 01','img483.png',1,11,'2016-06-08 10:37:40',NULL,NULL),(13,'Cửa đi 1 cánh mở quay 01','img83.png',0,36,'2016-06-08 10:38:08',NULL,NULL),(14,'Cửa đi 2 cánh mở quay 01','img121.png',0,37,'2016-06-08 10:38:33',NULL,NULL),(15,'Cửa đi 4 cánh mở quay 01','img561.png',0,38,'2016-06-08 10:39:44',NULL,NULL),(16,'Cửa đi mở trượt 01','img1.png',0,12,'2016-06-08 10:42:45',NULL,NULL),(17,'Cửa đi mở trượt 2 cánh 01','img963.png',0,39,'2016-06-08 10:43:17',NULL,NULL),(18,'Cửa đi mở trượt 4 cánh 01','img91.png',0,40,'2016-06-08 10:44:03',NULL,NULL),(19,'Cửa nhựa lõi thép xếp trượt 01','img570.png',0,13,'2016-06-08 10:45:16',NULL,NULL),(20,'Cửa lùa 2 cánh, 4 cánh 01','img92.png',0,14,'2016-06-08 10:45:47',NULL,NULL),(21,'Mặt dựng nhôm kính 01','img672.png',1,3,'2016-06-08 10:46:29',NULL,NULL),(22,'Mặt dựng nhôm kính Unitized 01','img456.png',0,15,'2016-06-08 10:47:43',NULL,NULL),(23,'Mặt dựng nhôm kính Stick 01','img34.png',0,16,'2016-06-08 10:48:22',NULL,NULL),(24,'Mặt dựng hệ AV 01','img144.png',0,17,'2016-06-08 10:50:01',NULL,NULL),(25,'Mặt dựng đầu số 50x60 01','img943.png',0,18,'2016-06-08 10:50:34',NULL,NULL),(26,'Mặt dựng cover cup 01','img228.png',0,19,'2016-06-08 10:51:06',NULL,NULL),(27,'Mặt dựng spider 01','img704.png',0,20,'2016-06-08 10:52:04',NULL,NULL),(28,'Mặt dựng kính Stick 01','img707.png',0,21,'2016-06-08 10:53:05',NULL,NULL),(29,'Cầu thang, lan can kính 01','img957.png',1,4,'2016-06-08 10:55:02',NULL,NULL),(30,'Cửa kính bản lề sàn 01','img165.png',1,5,'2016-06-08 10:55:44',NULL,NULL),(31,'Cửa, vách kính phòng tắm 01','img10.png',1,6,'2016-06-08 10:56:27',NULL,NULL),(32,'Cửa sổ mở trượt PK 800 01','img444.png',0,22,'2016-06-08 10:56:58',NULL,NULL),(33,'Cửa sổ mở quay lật ( Công nghệ châu âu) hệ 45 01','img676.png',0,23,'2016-06-08 10:57:21',NULL,NULL),(34,'Cửa sổ mở hất ngoài ( Công nghệ châu âu) hệ 55 01','img131.png',0,24,'2016-06-08 10:57:53',NULL,NULL),(35,'Cửa sổ mở quay ( Công nghệ châu âu) hệ 55 01','img86.png',0,25,'2016-06-08 10:58:36',NULL,NULL),(36,'Cửa đi xếp trượt ( Công nghệ châu âu) hệ 45 01','img678.png',0,26,'2016-06-08 10:58:58',NULL,NULL),(37,'Cửa đi mở trượt ( Công nghệ châu âu) hệ SC-95 01','img376.png',0,27,'2016-06-08 10:59:39',NULL,NULL),(38,'Cửa mở trượt ( Công nghệ châu âu) hệ 2001 01','img630.png',0,28,'2016-06-08 11:26:43',NULL,NULL),(39,'Cửa đi mở quay ( Công nghệ châu âu) hệ 55 01','img388.png',0,29,'2016-06-08 11:27:26',NULL,NULL),(40,'Cửa đi và cửa sổ hệ châu âu (P3) 01','img748.png',0,30,'2016-06-08 11:27:59',NULL,NULL);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-07 17:27:04
+-- Dump completed on 2016-06-10 18:30:05

@@ -186,7 +186,7 @@ margin:5px !important;
 }
 
 
-@media(max-width:568px)
+@media(max-width:767px)
 {
 	.contai-baner-namecompany
 	{
@@ -603,11 +603,15 @@ font-size:18px;
 
 padding:0px 0px 0px 0.4vw;
 }
-.right-dichvu-main-title{
+
+.right-dichvu-main-title {
 	padding-left:20%;
 	color:red;
 	font-size:18px;
+}
 
+.right-dichvu-main-title a{
+	color:red;
 }
 /*.right-dichvu-main-titleimg>p
 {
@@ -667,7 +671,7 @@ margin-left:5px !important;
      margin-right:5px !important;
       height:180px;
     
-      width:13.8vw !important;
+      width:16% !important;
 
   }
 

@@ -7,11 +7,20 @@
 Vector<DanhMuc> vtdanhmuc=(Vector<DanhMuc>) request.getAttribute("danhmuc"); %>
 <% DanhMuc dam = (DanhMuc) request.getAttribute("dam"); %>
 <% boolean canAddDM = (boolean) request.getAttribute("canAddDM"); %>
+
+<%if(dam!=null) { %>
+	<form class="form-horizontal" role="form" 
+	action="${ pageContext.request.contextPath}/admin/danhmuc/<%=dam.getSuper_id()>0?dam.getSuper_id():"" %>" method="get" >
+ 	<div class="form-group"> 	
+    	<div class="col-sm-4"><input class="btn btn-primary" type="submit" value="<%="<" %>" /></div>       
+    </div>		 				 				 			
+	</form>
+	<%} %>
+	<%@include file="/View/flash.jsp" %>
 	<% if(canAddDM) {%>
 	<div class="col-sm-12 col-xs-12 center-right-main-admin">
 	<div class="center-right-title">Quản lý Danh Mục<%=(dam!=null)? " - "+ dam.getTitle(): "" %></div>
-	<div class="center-right-main-admin-child"> 				
-	<%@include file="/View/flash.jsp" %>
+	<div class="center-right-main-admin-child"> 					
 	<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
         <table class="table table-bordered table-condensed table-qlslider">
             <tr class="title-table" style="color:#00ff21;height:45px;background-color:#808080">       

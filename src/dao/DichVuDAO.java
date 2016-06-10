@@ -78,7 +78,7 @@ public class DichVuDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<DichVu> vtdv=new Vector<DichVu>();
 		try {		
-			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null limit ? offset ?";
+			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null order by update_at desc limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, limit);
 			pre.setInt(2, (page-1)*limit);

@@ -46,4 +46,17 @@ public class DichVu {
 	public  String imageLink(HttpServletRequest request) {
 		return ImageDao.imageLink(request, DichVu.uploadDir, this.getImage());
 	}
+	
+	public String subDetail() {
+		String plainDetail =detail.replaceAll("\\<.*?\\>", "");
+		String[] arrDetail = plainDetail.split(" ");
+		String subDetail = "";
+		int i = 1;
+		for(String word: arrDetail) {
+			if(i>20) break;
+			subDetail = subDetail + " " + word;
+			i++;
+		}
+		return subDetail;
+	}
 }

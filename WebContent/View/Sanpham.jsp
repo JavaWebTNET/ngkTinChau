@@ -1,20 +1,25 @@
 <%@page import="java.util.Vector"%>
+<%@page import="models.DanhMuc" %>
 <%@page import="models.SanPham" %>
 <%@page import="models.DichVu" %>
 <%@ page pageEncoding="utf-8" %>
 
+<% DanhMuc dam=(DanhMuc)request.getAttribute("dam"); %>
 <% @SuppressWarnings("unchecked")
-Vector<SanPham> vtspm=(Vector<SanPham>)request.getAttribute("sanphammoi"); %>
+Vector<SanPham> vtsp=(Vector<SanPham>)request.getAttribute("sanpham"); %>
 <% @SuppressWarnings("unchecked")
 Vector<DichVu> vtdv=(Vector<DichVu>)request.getAttribute("dichvu"); %>
 	
 	<div class="col-sm-12 col-xs-12 center-right-one">
-	<div class="center-right-title">Sản Phẩm</div>
-
+	<div class="center-right-title">Sản Phẩm<%=dam!=null?" - "+dam.getTitle():"" %></div>
+	<div><br/>
+	<%=dam!=null?dam.getDetail():"" %>
+	</div>
+	<%@ include file="/View/paginate.jsp"%>
 	<div class="col-sm-12 col-xs-12 center-right-main">
 	<!-- ---- -->
 	<% int i=1; 
-		for(SanPham sp: vtspm) {
+		for(SanPham sp: vtsp) {
 			if(i%3==1) {
 				%>
 		<div class="row">
@@ -66,12 +71,11 @@ Vector<DichVu> vtdv=(Vector<DichVu>)request.getAttribute("dichvu"); %>
 		<div class="col-sm-12 col-xs-12 right-dichvu-main-title">
 		<a href="<%=request.getContextPath() %>/dichvu/<%=item.getId_dv() %>"><%=item.getName_dv() %></a>
 		</div>
-		<div class="col-sm-3 col-xs-12 right-dichvu-main-img">
-			
+		<div class="col-sm-3 col-xs-12 right-dichvu-main-img">			
 			<img src="<%= item.imageLink(request) %>">
 		</div>
 		<div class="col-sm-9 col-xs-12 right-dichvu-main-nd">
-		<p><%= item.subDetail() %></p>
+		<p><%= item.getDetail() %></p>
 			
 		</div>
 

@@ -1,5 +1,9 @@
 	<%@ page pageEncoding="utf-8" %>
+	<%@page import="java.util.Vector"%>
+	<%@page import="models.SanPham" %>
 	
+	<% @SuppressWarnings("unchecked")
+	Vector<SanPham> vtspnb=(Vector<SanPham>)request.getAttribute("spnb"); %>
 	<!-- phần slider footer -->
 	 <div class="row">
 	 	<div class="col-sm-12 col-xs-12 contai-lidersp">
@@ -8,40 +12,35 @@
 	 	<div class="col-sm-12 col-xs-12 carousel slide contai-slidersp-child" data-ride="carousel" id="myCarouselSp">
       
         <ol class="carousel-indicators">
-           
-	         <li data-target="#myCarouselSp" data-slide-to="0" class="active"></li>
-	         <li data-target="#myCarouselSp" data-slide-to="1"></li>
-	         <li data-target="#myCarouselSp" data-slide-to="2"></li>
-            
+           <% int numSlider = vtspnb.size()/6;
+           	  if(vtspnb.size()%6!=0) numSlider++;
+           for(int i=0; i<numSlider; i++){ %>
+	         <li data-target="#myCarouselSp" data-slide-to="<%=i %>" <%if(i==0){%>class="active"<%} %>></li>
+           <%} %> 
         </ol>
 
         <div class="col-sm-12 col-xs-12 carousel-inner contai-slider-sp-img" role="listbox">
-        <div class="col-sm-12 col-xs-12  item active ">
-        	<a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>        
-            <a href="#"> <img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>           
-            <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-            <a href="#"> <img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>           
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>                                       
-            <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
+        <% int islider = 1;
+        for(SanPham spnb:vtspnb) { 
+        	if(islider%6 == 1) {
+        		%>
+        <div class="col-sm-12 col-xs-12  item <%=islider==1?"active":"" %> ">
+        		<%
+        	}
+        	%>
+        	<a href="<%=request.getContextPath()%>/sanpham/<%=spnb.getSuper_id() %>">
+        	<img  src="<%=spnb.imageLink(request) %>" alt="<%=spnb.getTitle() %>" class="col-sm-12 col-xs-2">
+        	</a>  
+        	<%
+        	if(islider%6 == 0) {
+        		%>
         </div>
-
-        <div class="col-sm-12 col-xs-12  item">
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>                           
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>                                     
-            <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>                            
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>                                     
-            <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-        </div>
-
-        <div class="col-sm-12 col-xs-12  item">
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-12 col-xs-2"></a>                            
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>                                       
-            <a href="#"><img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp2.png" alt="Chania" class="col-sm-12 col-xs-2"></a>                          
-            <a href="#"><img  src="<%=request.getContextPath()%>/View/Image/sp1.png" alt="Chania" class="col-sm-2 col-xs-2"></a>                                     
-            <a href="#"> <img src="<%=request.getContextPath()%>/View/Image/sp3.png" class="col-sm-2 col-xs-2"></a>
-        </div>             
+        		<%
+        	}
+        	islider++;
+        }
+        %>
+        	       
         </div>
 
         </div>  

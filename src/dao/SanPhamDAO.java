@@ -20,7 +20,7 @@ public class SanPhamDAO {
 	private PreparedStatement pre;
 	private Connection connection;
 	private ResultSet rs;
-	public static int limit = 10;
+	public static int limit = 12;
 	
 	public SanPhamDAO() { 
 				 
@@ -32,6 +32,35 @@ public class SanPhamDAO {
 		try {		
 			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where delete_at is null";
 			pre=connection.prepareStatement(sql);
+			rs=pre.executeQuery();
+			while(rs.next()) {
+				SanPham sp=new SanPham();
+				sp.setId(rs.getInt("id_sp"));
+				sp.setTitle(rs.getString("title"));
+				sp.setImage(rs.getString("image"));
+				sp.setProminent(rs.getBoolean("prominent"));
+				sp.setSuper_id(rs.getInt("super_ID"));
+				vtsp.add(sp);
+			}		
+		}
+		catch(SQLException ex) {			
+			System.out.println("SQLException: " + ex.getMessage());			    
+		    System.out.println(DanhMucDAO.class.getName()); 
+		    ex.printStackTrace();	    		        
+		} 
+		finally {			
+			ConnectDB.closeConnection(connection,pre, rs);					
+		}
+		return vtsp;	
+	}
+	
+	public Vector<SanPham> allproSanPham() {
+		connection=ConnectDB.ConnectData();
+		Vector<SanPham> vtsp=new Vector<SanPham>();
+		try {		
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where prominent=? and delete_at is null order by update_at desc";
+			pre=connection.prepareStatement(sql);
+			pre.setBoolean(1, true);
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();
@@ -98,6 +127,8 @@ public class SanPhamDAO {
 	}
 	
 	public int offsetsAll(int idDM) {
+		if(idDM == 0)
+			return offsets();
 		DanhMucDAO danhmucDao = new DanhMucDAO();
 		ArrayList<Integer> subIdList = danhmucDao.subIdDanhMuc(idDM);
 		subIdList.add(idDM);
@@ -127,7 +158,7 @@ public class SanPhamDAO {
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where delete_at is null limit ? offset ?";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where delete_at is null order by update_at desc limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, limit);
 			pre.setInt(2, (page-1)*limit);
@@ -185,18 +216,20 @@ public class SanPhamDAO {
 	}
 	
 	public Vector<SanPham> pageAllSanPham(int page, int idDM) {
+		if(idDM==0)
+			return pageSanPham(page);
 		DanhMucDAO danhmucDao = new DanhMucDAO();
 		ArrayList<Integer> subIdList = danhmucDao.subIdDanhMuc(idDM);
 		subIdList.add(idDM);
 		String subIds = subIdList.toString();
+		subIds = subIds.substring(1, subIds.length() -1);
 		connection=ConnectDB.ConnectData();
 		Vector<SanPham> vtsp=new Vector<SanPham>();
 		try {		
-			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where superID in (?) and delete_at is null limit ? offset ?";
+			String sql="SELECT id_sp,title,image,prominent,super_ID from sanpham where super_ID in ("+ subIds +") and delete_at is null order by update_at desc limit ? offset ?";
 			pre=connection.prepareStatement(sql);
-			pre.setString(1, subIds.substring(1, subIds.length() -1));
-			pre.setInt(2, limit);
-			pre.setInt(3, (page-1)*limit);
+			pre.setInt(1, limit);
+			pre.setInt(2, (page-1)*limit);
 			rs=pre.executeQuery();
 			while(rs.next()) {
 				SanPham sp=new SanPham();

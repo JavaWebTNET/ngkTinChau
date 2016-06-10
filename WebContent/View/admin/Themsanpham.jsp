@@ -2,7 +2,7 @@
 <%@page import="models.DanhMuc"%>
 
 <% DanhMuc dam = (DanhMuc) request.getAttribute("dam"); %>
-<div class="center-right-title">Thêm Sản Phẩm</div>
+<div class="center-right-title">Thêm Sản Phẩm<%=(dam!=null)? " - "+ dam.getTitle(): "" %></div>
 <%@ include file="/View/flash.jsp" %>	
 <div class="col-sm-12 col-xs-12 center-right-main-admin">
   <div class="center-right-main-admin-child"> 	

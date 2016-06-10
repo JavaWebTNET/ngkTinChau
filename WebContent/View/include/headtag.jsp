@@ -1,6 +1,10 @@
-<title></title>
+<%@page pageEncoding="UTF-8"%>
+<%@page import="models.ThongTin" %>
+<% ThongTin thongtinhtag=(ThongTin) request.getAttribute("thongtin"); %>
+<link rel="icon" href="<%=thongtinhtag.imageLink(request) %>">
+<title><%=thongtinhtag.getType_company() %> <%=thongtinhtag.getName_company() %></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="w@idth=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

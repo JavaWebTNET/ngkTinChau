@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
 <%@ include file="/View/admin/includeAdmin/headtag.jsp" %>
 </head>
 <body>

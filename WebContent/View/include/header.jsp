@@ -40,11 +40,11 @@
 		<div class="navbar-collapse collapse div-menu-main-collaspe" id="menu">
 			<ul class="nav navbar-nav " >
 				<li class="icon-alt"> <A HREF="<%=request.getContextPath() %>" >Trang Chủ</A></li>	
-                <li><a href="#"  title="SỰ KIỆN">Giới Thiệu</a></li>
-                <li><a href="#" title="THẾ GIỚI" >Sản Phẩm</a></li>
-                <li><a href="#" title="KHUYẾN MẠI"  >Dịch Vụ</a></li>                     
-                <li class="menu-cuoi"><a href="#" title="VISA"  >Tuyển Dụng</a></li>
-                <li class="menu-cuoi"><a href="#" title="VISA"  >Liên Hệ</a></li>
+                <li><a href="<%=request.getContextPath() %>/gioithieu" >Giới Thiệu</a></li>
+                <li><a href="<%=request.getContextPath() %>/sanpham" >Sản Phẩm</a></li>
+                <li><a href="<%=request.getContextPath() %>/dichvu" >Dịch Vụ</a></li>                     
+                <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/tuyendung" >Tuyển Dụng</a></li>
+                <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/lienhe" >Liên Hệ</a></li>
 			</ul>
 		</div>
 
