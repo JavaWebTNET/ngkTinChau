@@ -1,4 +1,4 @@
-package Controller;
+package Controller.admin;
 
 import java.io.IOException;
 import java.util.Vector;

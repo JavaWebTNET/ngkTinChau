@@ -56,7 +56,7 @@ public class SliderDAO {
 	public boolean addSlider(Slider sld) {		
 		connection=ConnectDB.ConnectData();	
 		try {
-			String sql="insert into slider(title,image,create_at) values(?,?,now())";
+			String sql="insert into slider(title,image,create_at,update_at) values(?,?,now(),now())";
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,sld.getTitle());
 			pre.setString(2,sld.getImage());	

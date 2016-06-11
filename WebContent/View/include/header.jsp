@@ -42,7 +42,8 @@
 				<li class="icon-alt"> <A HREF="<%=request.getContextPath() %>" >Trang Chủ</A></li>	
                 <li><a href="<%=request.getContextPath() %>/gioithieu" >Giới Thiệu</a></li>
                 <li><a href="<%=request.getContextPath() %>/sanpham" >Sản Phẩm</a></li>
-                <li><a href="<%=request.getContextPath() %>/dichvu" >Dịch Vụ</a></li>                     
+                <li><a href="<%=request.getContextPath() %>/dichvu" >Dịch Vụ</a></li> 
+                <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/tintuc" >Tin Tức</a></li>                    
                 <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/tuyendung" >Tuyển Dụng</a></li>
                 <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/lienhe" >Liên Hệ</a></li>
 			</ul>

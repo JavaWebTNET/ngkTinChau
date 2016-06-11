@@ -255,7 +255,7 @@ public class SanPhamDAO {
 	public boolean addSanPham(SanPham sp) {			
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="insert into sanpham(title,image,prominent,super_ID,create_at) values(?,?,?,?,now())";
+			String sql="insert into sanpham(title,image,prominent,super_ID,create_at,update_at) values(?,?,?,?,now(),now())";
 			pre=connection.prepareStatement(sql);
 			
 			pre.setString(1,sp.getTitle());

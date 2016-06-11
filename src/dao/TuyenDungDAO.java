@@ -10,36 +10,34 @@ import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 
 import lang.Lang;
-import models.DichVu;
+import models.TuyenDung;
 import utils.ConnectDB;
 
-public class DichVuDAO {
+public class TuyenDungDAO {
 	private PreparedStatement pre;
 	private Connection connection;
 	private ResultSet rs;
 	public static int limit = 10;
 	
-	public DichVuDAO() { 
+	public TuyenDungDAO() { 
 				 
 	}	
 	
-	public Vector<DichVu> allDichVu() {
+	public Vector<TuyenDung> allTuyenDung() {
 		connection=ConnectDB.ConnectData();
-		Vector<DichVu> vtdv=new Vector<DichVu>();
+		Vector<TuyenDung> vttd=new Vector<TuyenDung>();
 		try {		
-			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null";
+			String sql="SELECT id,title,detail from tuyendung where delete_at is null";
 			pre=connection.prepareStatement(sql);
 			rs=pre.executeQuery();
 			while(rs.next()) {
-				DichVu dv=new DichVu();
-				dv.setId_dv(rs.getInt("id_dv"));
-				dv.setName_dv(rs.getString("name_dv"));
-				dv.setImage(rs.getString("image"));
-				dv.setDetail(rs.getString("detail"));
-				vtdv.add(dv);
+				TuyenDung td=new TuyenDung();
+				td.setId(rs.getInt("id"));
+				td.setTitle(rs.getString("title"));
+				td.setDetail(rs.getString("detail"));
+				vttd.add(td);
 			}		
 		}
 		catch(SQLException ex) {			
@@ -50,13 +48,13 @@ public class DichVuDAO {
 		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}
-		return vtdv;	
+		return vttd;	
 	}
 	
 	public int offsets() {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="SELECT count(id_dv) as offset from dichvu where delete_at is null";
+			String sql="SELECT count(id) as offset from tuyendung where delete_at is null";
 			pre=connection.prepareStatement(sql);			
 			rs=pre.executeQuery();
 			if(rs.next()) {
@@ -74,22 +72,23 @@ public class DichVuDAO {
 		return 0;
 	}
 	
-	public Vector<DichVu> pageDichVu(int page) {
+	public Vector<TuyenDung> pageTuyenDung(int page) {
 		connection=ConnectDB.ConnectData();
-		Vector<DichVu> vtdv=new Vector<DichVu>();
+		Vector<TuyenDung> vttd=new Vector<TuyenDung>();
 		try {		
-			String sql="SELECT id_dv,name_dv,image,detail from dichvu where delete_at is null order by update_at desc limit ? offset ?";
+			String sql="SELECT id,title,detail,create_at,update_at from tuyendung where delete_at is null order by update_at desc limit ? offset ?";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, limit);
 			pre.setInt(2, (page-1)*limit);
 			rs=pre.executeQuery();
 			while(rs.next()) {
-				DichVu dv=new DichVu();
-				dv.setId_dv(rs.getInt("id_dv"));
-				dv.setName_dv(rs.getString("name_dv"));
-				dv.setImage(rs.getString("image"));
-				dv.setDetail(rs.getString("detail"));
-				vtdv.add(dv);
+				TuyenDung td=new TuyenDung();
+				td.setId(rs.getInt("id"));
+				td.setTitle(rs.getString("title"));
+				td.setDetail(rs.getString("detail"));
+				td.setCreate_at(rs.getTimestamp("create_at"));
+				td.setUpdate_at(rs.getTimestamp("update_at"));
+				vttd.add(td);
 			}		
 		}
 		catch(SQLException ex) {			
@@ -100,18 +99,16 @@ public class DichVuDAO {
 		finally {			
 			ConnectDB.closeConnection(connection,pre, rs);					
 		}
-		return vtdv;	
+		return vttd;	
 	}
 	
-	public boolean addDichVu(DichVu dv) {	
+	public boolean addTuyenDung(TuyenDung td) {	
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="insert into dichvu(name_dv,image,detail,create_at,update_at) values(?,?,?,now(),now())";
+			String sql="insert into tuyendung(title,detail,create_at,update_at) values(?,?,now(),now())";
 			pre=connection.prepareStatement(sql);
-			
-			pre.setString(1,dv.getName_dv());
-			pre.setString(2,dv.getImage());
-			pre.setString(3,dv.getDetail());
+			pre.setString(1, td.getTitle());
+			pre.setString(2,td.getDetail());
 			
 			return pre.executeUpdate()>0;
 		}
@@ -126,20 +123,21 @@ public class DichVuDAO {
 		return false;			
 	}
 	
-	public DichVu findDV(int id) {
+	public TuyenDung findTD(int id) {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="SELECT id_dv,name_dv,image,detail from dichvu where id_dv=? and delete_at is null";
+			String sql="SELECT id,title,detail,create_at,update_at from tuyendung where id=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, id);
 			rs=pre.executeQuery();
 			if(rs.next()) {
-				DichVu dv=new DichVu();
-				dv.setId_dv(rs.getInt("id_dv"));
-				dv.setName_dv(rs.getString("name_dv"));
-				dv.setImage(rs.getString("image"));
-				dv.setDetail(rs.getString("detail"));
-				return dv;
+				TuyenDung td=new TuyenDung();
+				td.setId(id);
+				td.setTitle(rs.getString("title"));
+				td.setDetail(rs.getString("detail"));
+				td.setCreate_at(rs.getTimestamp("create_at"));
+				td.setUpdate_at(rs.getTimestamp("update_at"));
+				return td;
 			}		
 		}
 		catch(SQLException ex) {			
@@ -153,15 +151,14 @@ public class DichVuDAO {
 		return null;
 	}
 	
-	public boolean udtDichVu(DichVu dv) {
+	public boolean udtTuyenDung(TuyenDung td) {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="update dichvu set name_dv=?,image=?,detail=?,update_at=now() where id_dv=? and delete_at is null";
+			String sql="update tuyendung set title=?,detail=?,update_at=now() where id=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
-			pre.setString(1, dv.getName_dv());
-			pre.setString(2, dv.getImage());
-			pre.setString(3, dv.getDetail());
-			pre.setInt(4, dv.getId_dv());
+			pre.setString(1,td.getTitle());
+			pre.setString(2, td.getDetail());
+			pre.setInt(3, td.getId());
 			return pre.executeUpdate()>0;	
 		}
 		catch(SQLException ex) {			
@@ -175,10 +172,10 @@ public class DichVuDAO {
 		return false;
 	}
 	
-	public boolean delDichVu(int id) {
+	public boolean delTuyenDung(int id) {
 		connection=ConnectDB.ConnectData();
 		try {		
-			String sql="update dichvu set delete_at=now() where id_dv=? and delete_at is null";
+			String sql="update tuyendung set delete_at=now() where id=? and delete_at is null";
 			pre=connection.prepareStatement(sql);
 			pre.setInt(1, id);
 			return pre.executeUpdate()>0;	
@@ -194,59 +191,40 @@ public class DichVuDAO {
 		return false;
 	}
 	
-	public DichVu validAdd(HttpServletRequest request) throws IOException, ServletException {
+	public TuyenDung validAdd(HttpServletRequest request) throws IOException, ServletException {
 		ArrayList<String> loi = new ArrayList<String>();
 		Lang lang = new Lang();
-		DichVu dichvu = new DichVu();
+		TuyenDung tuyendung = new TuyenDung();
 		
-		dichvu.setName_dv(request.getParameter("name_dv").trim());
-		dichvu.setDetail(request.getParameter("detail"));
-		if(dichvu.getName_dv() == null || dichvu.getName_dv().equals(""))
-			loi.add(lang.getValMsg("name_require"));
-		
-		Part part = request.getPart("file-image");
-		if(part.getSubmittedFileName().equals("")) {
-			loi.add(lang.getValMsg("image_null"));
-		}
-		else {
-			String image_dv = ImageDao.imageUpload(request, DichVu.uploadDir, part);
-			if(image_dv!=null) {
-				dichvu.setImage(image_dv);
-			}
-			
-		}
+		tuyendung.setTitle(request.getParameter("title").trim());
+		tuyendung.setDetail(request.getParameter("detail"));
+		if(tuyendung.getTitle() == null || tuyendung.getTitle().equals(""))
+			loi.add(lang.getValMsg("title_require"));
 		
 		if(loi.size()>0) {
 			request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
-			dichvu = null;
+			tuyendung = null;
 		}
-		return dichvu;
+		return tuyendung;
 	}
 	
-	public DichVu validUdt(HttpServletRequest request, int id) throws IOException, ServletException {
+	public TuyenDung validUdt(HttpServletRequest request, int id) throws IOException, ServletException {
 		ArrayList<String> loi = new ArrayList<String>();
 		Lang lang = new Lang();
-		DichVu dichvu = findDV(id);
+		TuyenDung tuyendung = findTD(id);
 		
-		if(dichvu!=null) {
-			dichvu.setName_dv(request.getParameter("name_dv"));
-			dichvu.setDetail(request.getParameter("detail"));
-			if(dichvu.getName_dv() == null || dichvu.getName_dv().equals(""))
-				loi.add(lang.getValMsg("name_require"));
-			
-			Part part = request.getPart("file-image");
-			if(!part.getSubmittedFileName().equals("")) {
-				String image_dv = ImageDao.imageUpload(request, DichVu.uploadDir, part); 
-				if(image_dv!=null)
-					dichvu.setImage(image_dv);
-			}
+		if(tuyendung!=null) {
+			tuyendung.setTitle(request.getParameter("title"));
+			tuyendung.setDetail(request.getParameter("detail"));
+			if(tuyendung.getTitle() == null || tuyendung.getTitle().equals(""))
+				loi.add(lang.getValMsg("title_require"));
 			
 			if(loi.size()>0) {
 				request.getSession().setAttribute("flash_valid", loi.toArray(new String[loi.size()]));
-				dichvu = null;
+				tuyendung = null;
 			}
 		}
 		
-		return dichvu;
+		return tuyendung;
 	}
 }

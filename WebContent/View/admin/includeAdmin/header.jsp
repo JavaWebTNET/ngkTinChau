@@ -41,11 +41,12 @@
 			<ul class="nav navbar-nav " >
 				<li class="icon-alt"> <A HREF="<%=request.getContextPath() %>" >Trang Chủ</A></li>	
 
-                      <li><a href="#"  title="SỰ KIỆN">Giới Thiệu</a></li>
-                      <li><a href="#" title="THẾ GIỚI" >Sản Phẩm</a></li>
-                      <li><a href="#" title="KHUYẾN MẠI"  >Dịch Vụ</a></li>
-                      <li class="menu-cuoi"><a href="#" title="VISA"  >Tuyển Dụng</a></li>
-                      <li class="menu-cuoi"><a href="#" title="VISA"  >Liên Hệ</a></li>
+                      <li><a href="<%=request.getContextPath() %>/gioithieu"  title="Giới Thiệu">Giới Thiệu</a></li>
+                      <li><a href="<%=request.getContextPath() %>/sanpham" title="Sản Phẩm" >Sản Phẩm</a></li>
+                      <li><a href="<%=request.getContextPath() %>/dichvu" title="Dịch Vụ"  >Dịch Vụ</a></li>
+                      <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/tintuc" title="Tin Tức"  >Tin Tức</a></li>
+                      <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/tuyendung" title="Tuyển Dụng"  >Tuyển Dụng</a></li>
+                      <li class="menu-cuoi"><a href="<%=request.getContextPath() %>/lienhe" title="Liên Hệ"  >Liên Hệ</a></li>
 			</ul>
 		</div>
 	</div>

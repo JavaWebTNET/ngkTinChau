@@ -36,6 +36,8 @@
 		<p>Truy Cập Tháng Này: <span><%=mecks.get("visit_month") %></span></p>
 		<p>Truy Cập Năm Nay: <span><%=mecks.get("visit_year") %></span></p>
 		<p>Tổng Số Truy Cập: <span><%=mecks.get("visit_total") %></span></p>
+		<br/>
+		<br/>
 	</div>
 
 	<!-- --------------- -->

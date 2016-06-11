@@ -88,10 +88,6 @@
          	<button type="submit" class="btn btn-primary">Cập nhật trang Giới thiệu</button>  
          </form><br/>
          <form role="form" method="get" enctype="multipart/form-data"
-               		action="${ pageContext.request.contextPath}/admin/thongtin/recruit">
-         	<button type="submit" class="btn btn-primary">Cập nhật trang Tuyển dụng</button>  
-         </form><br/>
-         <form role="form" method="get" enctype="multipart/form-data"
                		action="${ pageContext.request.contextPath}/admin/thongtin/contact">
          	<button type="submit" class="btn btn-primary">Cập nhật trang Liên hệ</button>  
          </form> 

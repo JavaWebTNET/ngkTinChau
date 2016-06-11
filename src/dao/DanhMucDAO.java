@@ -143,7 +143,7 @@ public class DanhMucDAO {
 	public boolean addDanhMuc(DanhMuc dam) {	
 		connection=ConnectDB.ConnectData();
 		try {
-			String sql="insert into danhmuc(title,detail,super_id,create_at) values(?,?,?,now())";		
+			String sql="insert into danhmuc(title,detail,super_id,create_at,update_at) values(?,?,?,now(),,now())";		
 			pre=connection.prepareStatement(sql);
 			pre.setString(1,dam.getTitle());
 			pre.setString(2, dam.getDetail());

@@ -31,4 +31,16 @@
 	<%@ include file="/View/admin/Suatrangtt.jsp"%>
 	<% } else if(center.equals("Error")) { %>
 	<%@ include file="/View/admin/Error.jsp"%>
+	<% } else if(center.equals("QLtintuc")) { %>
+	<%@ include file="/View/admin/QLtintuc.jsp"%>
+	<% } else if(center.equals("Themtintuc")) { %>
+	<%@ include file="/View/admin/Themtintuc.jsp"%>
+	<% } else if(center.equals("Suatintuc")) { %>
+	<%@ include file="/View/admin/Suatintuc.jsp"%>
+	<% } else if(center.equals("QLtuyendung")) { %>
+	<%@ include file="/View/admin/QLtuyendung.jsp"%>
+	<% } else if(center.equals("Themtuyendung")) { %>
+	<%@ include file="/View/admin/Themtuyendung.jsp"%>
+	<% } else if(center.equals("Suatuyendung")) { %>
+	<%@ include file="/View/admin/Suatuyendung.jsp"%>
 	<% } %>	
